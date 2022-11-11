@@ -30,9 +30,6 @@ export default function DrawerAppBar(props: Props) {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleButton = (item: string) => {
-    // item === 'Sing in' ? <Link to="/registration" data-testid="registration" /> : '';
-  };
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
@@ -40,16 +37,25 @@ export default function DrawerAppBar(props: Props) {
       </Typography>
       <Divider />
       <List>
-        ru
-        <RuEnSwitches />
-        en
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
+        <ListItem disablePadding sx={{ justifyContent: 'center' }}>
+          ru
+          <RuEnSwitches />
+          en
+        </ListItem>
+        <Link to="/login" data-testid="login" style={{ textDecoration: 'none' }}>
+          <ListItem disablePadding>
+            <ListItemButton sx={{ textAlign: 'center', color: 'rgb(17 15 15 / 0.87)' }}>
+              <ListItemText primary={'Sing in'} />
             </ListItemButton>
           </ListItem>
-        ))}
+        </Link>
+        <Link to="/registration" data-testid="registration" style={{ textDecoration: 'none' }}>
+          <ListItem disablePadding>
+            <ListItemButton sx={{ textAlign: 'center', color: 'rgb(17 15 15 / 0.87)' }}>
+              <ListItemText primary={'Sing up'} />
+            </ListItemButton>
+          </ListItem>
+        </Link>
       </List>
     </Box>
   );
@@ -81,18 +87,12 @@ export default function DrawerAppBar(props: Props) {
             ru
             <RuEnSwitches />
             en
-            {navItems.map((item) => (
-              // <>
-              <Link key={item} to="/registration" data-testid="registration">
-                <Button
-                  sx={{ color: '#fff', marginLeft: '20px' }}
-                  onClick={() => handleButton(item)}
-                >
-                  {item}
-                </Button>
-              </Link>
-              // </>
-            ))}
+            <Link to="/login" data-testid="login" style={{ textDecoration: 'none' }}>
+              <Button sx={{ color: '#fff', marginLeft: '20px' }}>Sing in</Button>
+            </Link>
+            <Link to="/registration" data-testid="registration" style={{ textDecoration: 'none' }}>
+              <Button sx={{ color: '#fff', marginLeft: '20px' }}>Sing up</Button>
+            </Link>
           </Box>
         </Toolbar>
       </AppBar>
