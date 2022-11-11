@@ -8,7 +8,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
+// import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -29,9 +29,10 @@ export default function DrawerAppBar(props: Props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  // const handleButton = (item: string) => {
-  //   item === 'Sing in' ? <Link to="registration" data-testid="registration" /> : '';
-  // };
+
+  const handleButton = (item: string) => {
+    // item === 'Sing in' ? <Link to="/registration" data-testid="registration" /> : '';
+  };
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
@@ -66,7 +67,8 @@ export default function DrawerAppBar(props: Props) {
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
           >
-            <MenuIcon />
+            {/* <MenuIcon /> */}
+            XX
           </IconButton>
           <Typography
             variant="h6"
@@ -80,13 +82,16 @@ export default function DrawerAppBar(props: Props) {
             <RuEnSwitches />
             en
             {navItems.map((item) => (
-              <Button
-                key={item}
-                sx={{ color: '#fff', marginLeft: '20px' }}
-                // onClick={() => handleButton(item)}
-              >
-                {item}
-              </Button>
+              // <>
+              <Link key={item} to="/registration" data-testid="registration">
+                <Button
+                  sx={{ color: '#fff', marginLeft: '20px' }}
+                  onClick={() => handleButton(item)}
+                >
+                  {item}
+                </Button>
+              </Link>
+              // </>
             ))}
           </Box>
         </Toolbar>
