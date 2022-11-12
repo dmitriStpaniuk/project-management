@@ -1,5 +1,3 @@
-import { ITokenResponse } from './userServiceTypes';
-
 export enum EApiParametrs {
   baseUrl = 'https://mysterious-escarpment-15159.herokuapp.com', // heroku postgress
   // baseUrl = 'https://final-task-backend-production-336e.up.railway.app' // railway Mongo
@@ -13,12 +11,9 @@ export enum EApiRoutes {
 }
 
 export const getTokenLocalStorage = (): string => {
-  let res = '';
-  if (localStorage.getItem(EApiParametrs.tokenLocalStorage)) {
-    const token = localStorage.getItem(EApiParametrs.tokenLocalStorage);
-    res = `Bearer ${token}`;
-  }
-  return res;
+  const token = localStorage.getItem(EApiParametrs.tokenLocalStorage);
+
+  return token ? `Bearer ${token}` : '';
 };
 
 export const setTokenLocalStorage = (token: string): void => {
