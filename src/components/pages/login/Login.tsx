@@ -1,5 +1,7 @@
+import { useTranslate } from 'components/languageContext/languageContext';
 import React from 'react';
 
 export default function Login() {
-  return <div className="container">Login</div>;
+  const buttonSubmitText = useTranslate('buttons.submit');
+  return <div className="container">{buttonSubmitText}</div>;
 }
