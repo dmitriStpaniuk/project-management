@@ -11,12 +11,9 @@ export enum EApiRoutes {
 }
 
 export const getTokenLocalStorage = (): string => {
-  let res = '';
-  if (localStorage.getItem(EApiParametrs.tokenLocalStorage)) {
-    const token = localStorage.getItem(EApiParametrs.tokenLocalStorage);
-    res = `Bearer ${token}`;
-  }
-  return res;
+  const token = localStorage.getItem(EApiParametrs.tokenLocalStorage);
+
+  return token ? `Bearer ${token}` : '';
 };
 
 export const setTokenLocalStorage = (token: string): void => {
