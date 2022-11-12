@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TUserResponse } from '../../services/userServiceTypes';
+import { UserResponse } from '../../services/userServiceTypes';
 
 type UserInitialState = {
-  user?: TUserResponse;
+  user?: UserResponse;
   isUserFetching: boolean;
   isUserLogined: boolean;
-  allUsersList?: TUserResponse[];
+  allUsersList?: UserResponse[];
   isAllUsersFetching?: boolean;
 };
 
@@ -20,7 +20,7 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<TUserResponse | undefined>) => {
+    setUser: (state, action: PayloadAction<UserResponse | undefined>) => {
       state.user = action.payload;
     },
     setIsUserFetching: (state, action: PayloadAction<boolean>) => {
@@ -29,7 +29,7 @@ export const userSlice = createSlice({
     setIsUserLogined: (state, action: PayloadAction<boolean>) => {
       state.isUserLogined = action.payload;
     },
-    setAllUsersList: (state, action: PayloadAction<TUserResponse[]>) => {
+    setAllUsersList: (state, action: PayloadAction<UserResponse[]>) => {
       state.allUsersList = action.payload;
     },
     setIsAllUsersFetching: (state, action: PayloadAction<boolean>) => {

@@ -1,7 +1,7 @@
 import { userSlice } from 'store/slices/userSlice';
 import { AppDispatch } from 'store/store';
 import * as userService from '../../services/userService';
-import { TSignupUserData, TLoginUserData } from '../../services/userServiceTypes';
+import { SignupUserData, LoginUserData } from '../../services/userServiceTypes';
 import { setTokenLocalStorage } from '../../services/apiConstants';
 
 export const getAllUsersList = () => async (dispatch: AppDispatch) => {
@@ -27,21 +27,21 @@ export const deleteUserByIdThunk = (userId: string) => async (dispatch: AppDispa
 };
 
 export const updateUserThunk =
-  (userId: string, userData: TSignupUserData) => async (dispatch: AppDispatch) => {
+  (userId: string, userData: SignupUserData) => async (dispatch: AppDispatch) => {
     dispatch(userSlice.actions.setIsUserFetching(true));
     const user = await userService.updateUser(userId, userData);
     dispatch(userSlice.actions.setIsUserFetching(false));
     dispatch(userSlice.actions.setUser(user));
   };
 
-export const createNewUserThunk = (userData: TSignupUserData) => async (dispatch: AppDispatch) => {
+export const createNewUserThunk = (userData: SignupUserData) => async (dispatch: AppDispatch) => {
   dispatch(userSlice.actions.setIsUserFetching(true));
   const user = await userService.createNewUser(userData);
   dispatch(userSlice.actions.setIsUserFetching(false));
   dispatch(userSlice.actions.setUser(user));
 };
 
-export const signinThunk = (userData: TLoginUserData) => async (dispatch: AppDispatch) => {
+export const signinThunk = (userData: LoginUserData) => async (dispatch: AppDispatch) => {
   dispatch(userSlice.actions.setIsUserFetching(true));
   const res = await userService.signin(userData);
   if (res.token) {

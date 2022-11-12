@@ -4,8 +4,9 @@ import { Controller, useFormContext } from 'react-hook-form';
 type FormInputProps = {
   name: string;
   label: string;
+  type: string;
 };
-export const Input = ({ name, label }: FormInputProps) => {
+export const FormInputText = ({ name, label, type }: FormInputProps) => {
   const { control } = useFormContext();
   return (
     <Controller
@@ -13,6 +14,7 @@ export const Input = ({ name, label }: FormInputProps) => {
       control={control}
       render={({ field: { onChange, value }, fieldState: { error }, formState }) => (
         <TextField
+          type={type}
           helperText={error ? error.message : null}
           size={'small'}
           error={!!error}

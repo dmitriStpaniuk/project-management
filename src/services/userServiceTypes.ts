@@ -1,20 +1,20 @@
-export type TUserResponse = {
+export type UserResponse = {
   id: string;
-  name: string;
+  // name: string;
   login: string;
 };
 
-export type TSignupUserData = {
+export type SignupUserData = {
   name: string;
   login: string;
   password: string;
 };
 
-export type TLoginUserData = {
+export type LoginUserData = {
   login: string;
   password: string;
 };
 
-export type ITokenResponse = {
+export type TokenResponse = {
   token: string;
 };

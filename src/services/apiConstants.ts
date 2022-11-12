@@ -1,5 +1,3 @@
-import { ITokenResponse } from './userServiceTypes';
-
 export enum EApiParametrs {
   baseUrl = 'https://mysterious-escarpment-15159.herokuapp.com', // heroku postgress
   // baseUrl = 'https://final-task-backend-production-336e.up.railway.app' // railway Mongo
