@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import RuEnSwitches from './RuEnSwitches';
 import { Link } from 'react-router-dom';
-
+import logo from './../../../assets/svg/monitor.svg';
 interface Props {
   window?: () => Window;
 }
@@ -22,7 +22,7 @@ interface Props {
 const drawerWidth = 240;
 const navItems = ['Sing in', 'Sing up'];
 
-export default function DrawerAppBar(props: Props) {
+export default function Header(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -33,7 +33,7 @@ export default function DrawerAppBar(props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        PSM
+        {/* <span>d{logo}</span> */}
       </Typography>
       <Divider />
       <List>
@@ -81,7 +81,7 @@ export default function DrawerAppBar(props: Props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            PMS
+            <img src={logo} width={'30px'} />
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             ru
