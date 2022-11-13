@@ -21,6 +21,7 @@ export const userSlice = createSlice({
     setUser: (state, action: PayloadAction<User | undefined>) => {
       state.user = action.payload;
     },
+
     setIsUserFetching: (state, action: PayloadAction<boolean>) => {
       state.isUserFetching = action.payload;
     },
@@ -28,6 +29,7 @@ export const userSlice = createSlice({
     setAllUsersList: (state, action: PayloadAction<User[]>) => {
       state.allUsersList = action.payload;
     },
+
     setIsAllUsersFetching: (state, action: PayloadAction<boolean>) => {
       state.isAllUsersFetching = action.payload;
     },

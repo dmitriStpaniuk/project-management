@@ -1,4 +1,8 @@
 export type User = {
+  id: string;
+  login: string;
+};
+export type DecodedToken = {
   userId: string;
   login: string;
 };
