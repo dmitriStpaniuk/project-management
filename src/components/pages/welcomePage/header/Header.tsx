@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { PublicWrapper } from 'routes/PublicWrapper';
 import styles from './Header.module.css';
-import logo from './../../../assets/svg/monitor.svg';
+import logo from './../../../assets/svg/logo.svg';
 interface Props {
   window?: () => Window;
 }
@@ -75,7 +75,7 @@ export default function Header(props: Props) {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <AppBar component="nav">
+      <AppBar position="sticky" component="nav">
         <Toolbar sx={{ justifyContent: 'space-between', backgroundColor: '#0070A0' }}>
           <IconButton
             color="inherit"
