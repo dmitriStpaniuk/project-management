@@ -1,5 +1,5 @@
-import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, RouteProps, Routes, Navigate } from 'react-router-dom';
 import Layout from 'components/pages/layout/Layout';
 import Board from 'components/pages/board/Board';
 import Login from 'components/pages/login/Login';
@@ -8,7 +8,22 @@ import Registration from 'components/pages/registration/Registration';
 import WelcomePage from 'components/pages/welcomePage/WelcomePage';
 import './App.css';
 import Profile from 'components/pages/profile/Profile';
+import { useAppDispatch } from 'store/store';
+import jwt_decode from 'jwt-decode';
+import { getTokenLocalStorage } from 'services/apiConstants';
+import { DecodedToken } from 'services/userServiceTypes';
+import { PrivateRoute } from './routes/PrivateRoute';
+import { getCurrentUserByIdThunk } from 'store/thunks/userThunk';
+
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const token = getTokenLocalStorage();
+    if (!token) return;
+    const decodedToken = jwt_decode<DecodedToken>(token);
+    if (decodedToken) dispatch(getCurrentUserByIdThunk(decodedToken.userId));
+  }, [dispatch]);
   return (
     <div>
       <Routes>
@@ -17,9 +32,16 @@ function App() {
           <Route path="registration" element={<Registration />} />
           <Route path="login" element={<Login />} />
           <Route path="profile" element={<Profile />} />
-          <Route path="board/*" element={<Board />} />
+          <Route
+            path="board/*"
+            element={
+              <PrivateRoute>
+                <Board />
+              </PrivateRoute>
+            }
+          />
           <Route path="Page404" element={<Page404 />} />
-          {/* <Route path="*" element={<Navigate to={'/Page404'} />} /> */}
+          <Route path="*" element={<Navigate to={'/Page404'} />} />
         </Route>
       </Routes>
     </div>

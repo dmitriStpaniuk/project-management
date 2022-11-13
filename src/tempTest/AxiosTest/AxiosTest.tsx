@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import {
   getAllUsersList,
-  getUserByIdThunk,
+  getCurrentUserByIdThunk,
   deleteUserByIdThunk,
   updateUserThunk,
   createNewUserThunk,
@@ -20,7 +20,6 @@ export const AxiosTest = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user);
   const isUserFetching = useAppSelector((state) => state.user.isUserFetching);
-  const isUserLogined = useAppSelector((state) => state.user.isUserLogined);
   const isAllUsersFetching = useAppSelector((state) => state.user.isAllUsersFetching);
   const allUsersList = useAppSelector((state) => state.user.allUsersList);
 
@@ -32,7 +31,6 @@ export const AxiosTest = () => {
     <>
       <div>user: {JSON.stringify(user)}</div>
       <div>isUserFetching: {JSON.stringify(isUserFetching)}</div>
-      <div>isUserLogined: {JSON.stringify(isUserLogined)}</div>
       <div>isAllUsersFetching: {JSON.stringify(isAllUsersFetching)}</div>
       <div>isAllUsersFetching: {JSON.stringify(allUsersList)}</div>
     </>

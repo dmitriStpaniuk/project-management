@@ -14,21 +14,34 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import RuEnSwitches from './RuEnSwitches';
 import { Link } from 'react-router-dom';
-import logo from './../../../assets/svg/monitor.svg';
-import styles from './Header.module.css';
 import { useTranslate } from 'components/languageContext/languageContext';
-import { style } from '@mui/system';
+import { PublicWrapper } from 'routes/PublicWrapper';
+import styles from './Header.module.css';
+import logo from './../../../assets/svg/monitor.svg';
 interface Props {
   window?: () => Window;
 }
 
 const drawerWidth = 240;
-const navItems = ['Sing in', 'Sing up'];
+// const navItems = ['Sing in', 'Sing up'];
 
 export default function Header(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const buttonNameText = useTranslate('buttons.naming');
+  const linkSignIn = useTranslate('links.signIn');
+  const linkSignUp = useTranslate('links.signUp');
+
+  const navItems = [
+    {
+      name: linkSignIn,
+      to: '/login',
+    },
+    {
+      name: linkSignUp,
+      to: '/registration',
+    },
+  ];
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -42,25 +55,18 @@ export default function Header(props: Props) {
       </Typography>
       <Divider />
       <List>
-        <ListItem disablePadding sx={{ justifyContent: 'center' }}>
-          ru
-          <RuEnSwitches />
-          en
-        </ListItem>
-        <Link to="/login" data-testid="login" style={{ textDecoration: 'none' }}>
-          <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: 'center', color: 'rgb(17 15 15 / 0.87)' }}>
-              <ListItemText primary={'Sing in'} />
-            </ListItemButton>
-          </ListItem>
-        </Link>
-        <Link to="/registration" data-testid="registration" style={{ textDecoration: 'none' }}>
-          <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: 'center', color: 'rgb(17 15 15 / 0.87)' }}>
-              <ListItemText primary={'Sing up'} />
-            </ListItemButton>
-          </ListItem>
-        </Link>
+        ru
+        <RuEnSwitches />
+        en
+        <PublicWrapper>
+          {navItems.map((item) => (
+            <ListItem disablePadding key={item.name}>
+              <ListItemButton sx={{ textAlign: 'center' }}>
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </PublicWrapper>
       </List>
     </Box>
   );
@@ -96,20 +102,13 @@ export default function Header(props: Props) {
             ru
             <RuEnSwitches />
             en
-            <Link to="/login" data-testid="login" style={{ textDecoration: 'none' }}>
-              <Button sx={{ color: '#fff', marginLeft: '20px' }}>Sing in</Button>
-            </Link>
-            <Link to="/registration" data-testid="registration" style={{ textDecoration: 'none' }}>
-              <Button sx={{ color: '#fff', marginLeft: '20px' }}>Sing up</Button>
-            </Link>
-          </Box>
-          <Box sx={{ display: { xs: 'block', sm: 'none' }, textAlign: 'right' }}>
-            <Link to="/" data-testid="welcome" style={{ textDecoration: 'none' }}>
-              <Box className={styles.logo}>
-                <Box className={styles.naming}>{buttonNameText}</Box>
-                <img src={logo} className={styles.logotype} />
-              </Box>
-            </Link>
+            <PublicWrapper>
+              {navItems.map((item) => (
+                <Link key={item.name} to={item.to} data-testid="registration">
+                  <Button sx={{ color: '#fff', marginLeft: '20px' }}>{item.name}</Button>
+                </Link>
+              ))}
+            </PublicWrapper>
           </Box>
         </Toolbar>
       </AppBar>
