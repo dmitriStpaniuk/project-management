@@ -9,6 +9,16 @@ export const text = {
       ru: 'Сброс',
     },
   },
+  links: {
+    signIn: {
+      en: 'Sign In',
+      ru: 'Логин',
+    },
+    signUp: {
+      en: 'Sign Up',
+      ru: 'Регистрация',
+    },
+  },
 };
 
 export type Text = typeof text;
