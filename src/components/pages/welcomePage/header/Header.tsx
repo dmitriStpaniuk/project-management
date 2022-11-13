@@ -15,6 +15,9 @@ import Button from '@mui/material/Button';
 import RuEnSwitches from './RuEnSwitches';
 import { Link } from 'react-router-dom';
 import logo from './../../../assets/svg/monitor.svg';
+import styles from './Header.module.css';
+import { useTranslate } from 'components/languageContext/languageContext';
+import { style } from '@mui/system';
 interface Props {
   window?: () => Window;
 }
@@ -25,6 +28,7 @@ const navItems = ['Sing in', 'Sing up'];
 export default function Header(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const buttonNameText = useTranslate('buttons.naming');
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -34,6 +38,7 @@ export default function Header(props: Props) {
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
         {/* <span>d{logo}</span> */}
+        {buttonNameText}
       </Typography>
       <Divider />
       <List>
@@ -65,7 +70,7 @@ export default function Header(props: Props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar component="nav">
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -73,15 +78,19 @@ export default function Header(props: Props) {
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
           >
-            {/* <MenuIcon /> */}
-            XX
+            {/* <MenuIcon /> */}X
           </IconButton>
           <Typography
             variant="h6"
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            <img src={logo} width={'30px'} />
+            <Link to="/" data-testid="welcome" style={{ textDecoration: 'none' }}>
+              <div className={styles.logo}>
+                <img src={logo} className={styles.logotype} />
+                <div className={styles.naming}>{buttonNameText}</div>
+              </div>
+            </Link>
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             ru
@@ -92,6 +101,14 @@ export default function Header(props: Props) {
             </Link>
             <Link to="/registration" data-testid="registration" style={{ textDecoration: 'none' }}>
               <Button sx={{ color: '#fff', marginLeft: '20px' }}>Sing up</Button>
+            </Link>
+          </Box>
+          <Box sx={{ display: { xs: 'block', sm: 'none' }, textAlign: 'right' }}>
+            <Link to="/" data-testid="welcome" style={{ textDecoration: 'none' }}>
+              <Box className={styles.logo}>
+                <Box className={styles.naming}>{buttonNameText}</Box>
+                <img src={logo} className={styles.logotype} />
+              </Box>
             </Link>
           </Box>
         </Toolbar>

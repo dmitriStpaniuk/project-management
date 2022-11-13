@@ -7,7 +7,7 @@ import Page404 from 'components/pages/page404/Page404';
 import Registration from 'components/pages/registration/Registration';
 import WelcomePage from 'components/pages/welcomePage/WelcomePage';
 import './App.css';
-import Profile from 'components/pages/layout/profile/Profile';
+import Profile from 'components/pages/profile/Profile';
 function App() {
   return (
     <div>
