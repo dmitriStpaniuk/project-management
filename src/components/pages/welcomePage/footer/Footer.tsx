@@ -11,12 +11,10 @@ export default function Footer() {
       </a>
       <p>2022</p>
       <div>
-        <a href="https://github.com/VladimirKukolovich/VPK" className={style.git}>
+        <a href="https://github.com/dmitriStpaniuk/project-management" className={style.git}>
           <img width={'20px'} src={git} />
           Git
         </a>
-        {/* <a href="https://github.com/VladimirKukolovich/VPK">Git</a>
-        <a href="https://github.com/VladimirKukolovich/VPK">Git</a> */}
       </div>
     </div>
   );
