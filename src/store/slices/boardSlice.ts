@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TBoardMainResponse, TBoardDataResponse } from '../../services/boardServiceTypes';
+import { BoardMainResponse, BoardDataResponse } from '../../services/boardServiceTypes';
 
 type BoardInitialState = {
-  boardMain?: TBoardMainResponse;
+  boardMain?: BoardMainResponse;
   isBoardMainFetching: boolean;
-  boardData?: TBoardDataResponse;
+  boardData?: BoardDataResponse;
   isBoardDataFetching: boolean;
-  allBoardsList?: TBoardMainResponse[];
+  allBoardsList?: BoardMainResponse[];
   isAllBoardsFetching: boolean;
 };
 
@@ -23,19 +23,19 @@ export const boardSlice = createSlice({
   name: 'board',
   initialState,
   reducers: {
-    setBoardMain: (state, action: PayloadAction<TBoardMainResponse>) => {
+    setBoardMain: (state, action: PayloadAction<BoardMainResponse>) => {
       state.boardMain = action.payload;
     },
     setIsBoardMainFetching: (state, action: PayloadAction<boolean>) => {
       state.isBoardMainFetching = action.payload;
     },
-    setBoardData: (state, action: PayloadAction<TBoardDataResponse>) => {
+    setBoardData: (state, action: PayloadAction<BoardDataResponse>) => {
       state.boardData = action.payload;
     },
     setIsBoardDataFetching: (state, action: PayloadAction<boolean>) => {
       state.isBoardDataFetching = action.payload;
     },
-    setAllBoardsList: (state, action: PayloadAction<TBoardMainResponse[]>) => {
+    setAllBoardsList: (state, action: PayloadAction<BoardMainResponse[]>) => {
       state.allBoardsList = action.payload;
     },
     setIsAllBoardsFetching: (state, action: PayloadAction<boolean>) => {

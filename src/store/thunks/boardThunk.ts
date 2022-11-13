@@ -1,7 +1,7 @@
 import { boardSlice } from '../../store/slices/boardSlice';
 import { AppDispatch } from '../../store/store';
 import * as boardService from '../../services/boardService';
-import { TCreateBoardData } from '../../services/boardServiceTypes';
+import { CreateBoardData } from '../../services/boardServiceTypes';
 
 export const getAllUBoardsList = () => async (dispatch: AppDispatch) => {
   dispatch(boardSlice.actions.setIsAllBoardsFetching(true));
@@ -11,7 +11,7 @@ export const getAllUBoardsList = () => async (dispatch: AppDispatch) => {
 };
 
 export const createNewBoardThunk =
-  (boardData: TCreateBoardData) => async (dispatch: AppDispatch) => {
+  (boardData: CreateBoardData) => async (dispatch: AppDispatch) => {
     dispatch(boardSlice.actions.setIsBoardMainFetching(true));
     const result = await boardService.createNewBoard(boardData);
     dispatch(boardSlice.actions.setIsBoardMainFetching(false));
@@ -32,7 +32,7 @@ export const deleteBoardByIdThunk = (boardId: string) => async (dispatch: AppDis
 };
 
 export const updateBoardThunk =
-  (boardId: string, boardData: TCreateBoardData) => async (dispatch: AppDispatch) => {
+  (boardId: string, boardData: CreateBoardData) => async (dispatch: AppDispatch) => {
     dispatch(boardSlice.actions.setIsBoardMainFetching(true));
     const result = await boardService.updateBoard(boardId, boardData);
     dispatch(boardSlice.actions.setIsBoardMainFetching(false));

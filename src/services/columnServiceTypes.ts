@@ -1,18 +1,13 @@
-import { TTaskDataResponse } from './taskServiceTypes';
+import { TaskDataResponse } from './taskServiceTypes';
 
-export type TColumnDataResponse = {
-  id: string;
-  title: string;
-  order: number;
-  tasks: TTaskDataResponse[];
-};
-
-export type TColumnMainResponse = {
+export type ColumnMainResponse = {
   id: string;
   title: string;
   order: number;
 };
 
-export type TCreateColumnData = {
+export type ColumnDataResponse = ColumnMainResponse & { tasks: TaskDataResponse[] };
+
+export type CreateColumnData = {
   title: string;
 };

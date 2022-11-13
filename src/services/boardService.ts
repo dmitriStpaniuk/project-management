@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { EApiParametrs, getTokenLocalStorage, EApiRoutes } from './apiConstants';
-import { TBoardMainResponse, TCreateBoardData, TBoardDataResponse } from './boardServiceTypes';
+import { BoardMainResponse, CreateBoardData, BoardDataResponse } from './boardServiceTypes';
 
 const instanceBoardAxios = axios.create({
   baseURL: `${EApiParametrs.baseUrl}/${EApiRoutes.boards}`,
@@ -20,17 +20,17 @@ instanceBoardAxios.interceptors.request.use(
   }
 );
 
-export const getAllUBoards = async (): Promise<TBoardMainResponse[]> => {
+export const getAllUBoards = async (): Promise<BoardMainResponse[]> => {
   const result = await instanceBoardAxios.get('');
   return result.data;
 };
 
-export const createNewBoard = async (boardData: TCreateBoardData): Promise<TBoardMainResponse> => {
+export const createNewBoard = async (boardData: CreateBoardData): Promise<BoardMainResponse> => {
   const result = await instanceBoardAxios.post('', boardData);
   return result.data;
 };
 
-export const getBoardById = async (boardId: string): Promise<TBoardDataResponse> => {
+export const getBoardById = async (boardId: string): Promise<BoardDataResponse> => {
   const result = await instanceBoardAxios.get(`/${boardId}`);
   return result.data;
 };
@@ -41,8 +41,8 @@ export const deleteBoardById = async (boardId: string): Promise<void> => {
 
 export const updateBoard = async (
   boardId: string,
-  boardData: TCreateBoardData
-): Promise<TBoardMainResponse> => {
+  boardData: CreateBoardData
+): Promise<BoardMainResponse> => {
   const result = await instanceBoardAxios.put(`/${boardId}`, boardData);
   return result.data;
 };

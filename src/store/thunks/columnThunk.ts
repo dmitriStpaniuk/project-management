@@ -1,7 +1,7 @@
 import { columnSlice } from '../../store/slices/columnSlice';
 import { AppDispatch } from '../../store/store';
 import * as columnService from '../../services/columnService';
-import { TCreateColumnData } from '../../services/columnServiceTypes';
+import { CreateColumnData } from '../../services/columnServiceTypes';
 
 export const getAllUColumnsList = (boardId: string) => async (dispatch: AppDispatch) => {
   dispatch(columnSlice.actions.setIsAllColumnsFetching(true));
@@ -11,7 +11,7 @@ export const getAllUColumnsList = (boardId: string) => async (dispatch: AppDispa
 };
 
 export const createNewColumnThunk =
-  (boardId: string, columnData: TCreateColumnData) => async (dispatch: AppDispatch) => {
+  (boardId: string, columnData: CreateColumnData) => async (dispatch: AppDispatch) => {
     dispatch(columnSlice.actions.setIsColumnMainFetching(true));
     const result = await columnService.createNewColumn(boardId, columnData);
     dispatch(columnSlice.actions.setIsColumnMainFetching(false));
@@ -34,7 +34,7 @@ export const deleteColumnByIdThunk =
   };
 
 export const updateColumnThunk =
-  (boardId: string, columnId: string, columnData: TCreateColumnData) =>
+  (boardId: string, columnId: string, columnData: CreateColumnData) =>
   async (dispatch: AppDispatch) => {
     dispatch(columnSlice.actions.setIsColumnMainFetching(true));
     const result = await columnService.updateColumn(boardId, columnId, columnData);

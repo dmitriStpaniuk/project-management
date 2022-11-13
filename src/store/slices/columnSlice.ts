@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TColumnMainResponse, TColumnDataResponse } from '../../services/columnServiceTypes';
+import { ColumnMainResponse, ColumnDataResponse } from '../../services/columnServiceTypes';
 
 type ColumnInitialState = {
-  columnMain?: TColumnMainResponse;
+  columnMain?: ColumnMainResponse;
   isColumnMainFetching: boolean;
-  columnData?: TColumnDataResponse;
+  columnData?: ColumnDataResponse;
   isColumnDataFetching: boolean;
-  allColumnsList?: TColumnMainResponse[];
+  allColumnsList?: ColumnMainResponse[];
   isAllColumnsFetching: boolean;
 };
 
@@ -23,19 +23,19 @@ export const columnSlice = createSlice({
   name: 'column',
   initialState,
   reducers: {
-    setColumnMain: (state, action: PayloadAction<TColumnMainResponse>) => {
+    setColumnMain: (state, action: PayloadAction<ColumnMainResponse>) => {
       state.columnMain = action.payload;
     },
     setIsColumnMainFetching: (state, action: PayloadAction<boolean>) => {
       state.isColumnMainFetching = action.payload;
     },
-    setColumnData: (state, action: PayloadAction<TColumnDataResponse>) => {
+    setColumnData: (state, action: PayloadAction<ColumnDataResponse>) => {
       state.columnData = action.payload;
     },
     setIsColumnDataFetching: (state, action: PayloadAction<boolean>) => {
       state.isColumnDataFetching = action.payload;
     },
-    setAllColumnsList: (state, action: PayloadAction<TColumnMainResponse[]>) => {
+    setAllColumnsList: (state, action: PayloadAction<ColumnMainResponse[]>) => {
       state.allColumnsList = action.payload;
     },
     setIsAllColumnsFetching: (state, action: PayloadAction<boolean>) => {

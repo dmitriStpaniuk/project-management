@@ -1,19 +1,11 @@
-import { TColumnDataResponse } from './columnServiceTypes';
+import { ColumnDataResponse } from './columnServiceTypes';
 
-export type TBoardDataResponse = {
-  id: string;
-  title: string;
-  description: string;
-  columns: TColumnDataResponse[];
-};
-
-export type TBoardMainResponse = {
+export type BoardMainResponse = {
   id: string;
   title: string;
   description: string;
 };
 
-export type TCreateBoardData = {
-  title: string;
-  description: string;
-};
+export type BoardDataResponse = BoardMainResponse & { columns: ColumnDataResponse[] };
+
+export type CreateBoardData = Omit<BoardMainResponse, 'id'>;

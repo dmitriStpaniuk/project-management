@@ -1,6 +1,6 @@
-import { TFileDataResponse } from './fileServiceTypes';
+import { FileDataResponse } from './fileServiceTypes';
 
-export type TTaskDataResponse = {
+export type TaskDataResponse = {
   id: string;
   title: string;
   order: number;
@@ -8,18 +8,18 @@ export type TTaskDataResponse = {
   userId: string;
   boardId?: string;
   columnId?: string;
-  files: TFileDataResponse[];
+  files: FileDataResponse[];
 };
 
-export type TCreateTaskData = {
+export type CreateTaskData = {
   title: string;
   description: string;
   userId: string;
 };
 
-export type TTaskMainResponse = TCreateTaskData & { id: string };
+export type CreateTaskResponse = CreateTaskData & { id: string };
 
-export type TUpdateTaskData = {
+export type UpdateTaskData = {
   title: string;
   order: number;
   description: string;
@@ -28,4 +28,4 @@ export type TUpdateTaskData = {
   columnId: string;
 };
 
-export type TUpdateTaskResponse = TUpdateTaskData & { id: string };
+export type UpdateTaskResponse = UpdateTaskData & { id: string };

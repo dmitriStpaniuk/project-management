@@ -1,4 +1,4 @@
-export type TFileDataResponse = {
+export type FileDataResponse = {
   filename: string;
   fileSize: number;
 };

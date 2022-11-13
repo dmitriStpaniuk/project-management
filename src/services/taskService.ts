@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { EApiParametrs, getTokenLocalStorage, EApiRoutes } from './apiConstants';
 import {
-  TTaskDataResponse,
-  TUpdateTaskData,
-  TCreateTaskData,
-  TTaskMainResponse,
+  TaskDataResponse,
+  UpdateTaskData,
+  CreateTaskData,
+  CreateTaskResponse,
 } from './taskServiceTypes';
 
 const instanceTasksAxios = axios.create({
@@ -28,7 +28,7 @@ instanceTasksAxios.interceptors.request.use(
 export const getAllUTasks = async (
   boardId: string,
   columnId: string
-): Promise<TTaskDataResponse[]> => {
+): Promise<TaskDataResponse[]> => {
   const result = await instanceTasksAxios.get(
     `/${boardId}/${EApiRoutes.columns}/${columnId}/${EApiRoutes.tasks}`
   );
@@ -38,8 +38,8 @@ export const getAllUTasks = async (
 export const createNewTask = async (
   boardId: string,
   columnId: string,
-  taskData: TCreateTaskData
-): Promise<TTaskMainResponse> => {
+  taskData: CreateTaskData
+): Promise<CreateTaskResponse> => {
   const result = await instanceTasksAxios.post(
     `/${boardId}/${EApiRoutes.columns}/${columnId}/${EApiRoutes.tasks}`,
     taskData
@@ -51,7 +51,7 @@ export const getTaskById = async (
   boardId: string,
   columnId: string,
   taskId: string
-): Promise<TTaskDataResponse> => {
+): Promise<TaskDataResponse> => {
   const result = await instanceTasksAxios.get(
     `/${boardId}/${EApiRoutes.columns}/${columnId}/${EApiRoutes.tasks}/${taskId}`
   );
@@ -72,8 +72,8 @@ export const updateTask = async (
   boardId: string,
   columnId: string,
   taskId: string,
-  taskData: TUpdateTaskData
-): Promise<TTaskMainResponse> => {
+  taskData: UpdateTaskData
+): Promise<CreateTaskResponse> => {
   const result = await instanceTasksAxios.put(
     `/${boardId}/${EApiRoutes.columns}/${columnId}/${EApiRoutes.tasks}/${taskId}`,
     taskData

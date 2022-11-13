@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { EApiParametrs, getTokenLocalStorage, EApiRoutes } from './apiConstants';
-import { TColumnDataResponse, TColumnMainResponse, TCreateColumnData } from './columnServiceTypes';
+import { ColumnDataResponse, ColumnMainResponse, CreateColumnData } from './columnServiceTypes';
 
 const instanceColumnAxios = axios.create({
   baseURL: `${EApiParametrs.baseUrl}/${EApiRoutes.boards}`,
@@ -20,15 +20,15 @@ instanceColumnAxios.interceptors.request.use(
   }
 );
 
-export const getAllUColumns = async (boardId: string): Promise<TColumnMainResponse[]> => {
+export const getAllUColumns = async (boardId: string): Promise<ColumnMainResponse[]> => {
   const result = await instanceColumnAxios.get(`/${boardId}/${EApiRoutes.columns}`);
   return result.data;
 };
 
 export const createNewColumn = async (
   boardId: string,
-  columnData: TCreateColumnData
-): Promise<TColumnMainResponse> => {
+  columnData: CreateColumnData
+): Promise<ColumnMainResponse> => {
   const result = await instanceColumnAxios.post(`/${boardId}/${EApiRoutes.columns}`, columnData);
   return result.data;
 };
@@ -36,7 +36,7 @@ export const createNewColumn = async (
 export const getColumnById = async (
   boardId: string,
   columnId: string
-): Promise<TColumnDataResponse> => {
+): Promise<ColumnDataResponse> => {
   const result = await instanceColumnAxios.get(`/${boardId}/${EApiRoutes.columns}/${columnId}`);
   return result.data;
 };
@@ -48,8 +48,8 @@ export const deleteColumnById = async (boardId: string, columnId: string): Promi
 export const updateColumn = async (
   boardId: string,
   columnId: string,
-  columnData: TCreateColumnData
-): Promise<TColumnMainResponse> => {
+  columnData: CreateColumnData
+): Promise<ColumnMainResponse> => {
   const result = await instanceColumnAxios.put(
     `/${boardId}/${EApiRoutes.columns}/${columnId}`,
     columnData
