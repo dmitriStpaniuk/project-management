@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from 'components/pages/layout/Layout';
 import Board from 'components/pages/board/Board';
@@ -10,13 +10,17 @@ import './App.css';
 import { useAppDispatch } from 'store/store';
 import jwt_decode from 'jwt-decode';
 import { getTokenLocalStorage } from 'services/apiConstants';
-import { User } from 'services/userServiceTypes';
-import { getUserByIdThunk } from 'store/thunks/userThunk';
+import { DecodedToken } from 'services/userServiceTypes';
+import { userSlice } from 'store/slices/userSlice';
 
 function App() {
   const dispatch = useAppDispatch();
-  const decodedToken = jwt_decode<User>(getTokenLocalStorage());
-  if (decodedToken) dispatch(getUserByIdThunk(decodedToken.userId));
+
+  useEffect(() => {
+    const decodedToken = jwt_decode<DecodedToken>(getTokenLocalStorage());
+    if (decodedToken)
+      dispatch(userSlice.actions.setUser({ id: decodedToken.userId, login: decodedToken.login }));
+  }, [dispatch]);
 
   return (
     <div>
