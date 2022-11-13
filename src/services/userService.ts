@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { EApiParametrs, getTokenLocalStorage, EApiRoutes } from './apiConstants';
-import { TUserResponse, TSignupUserData, TLoginUserData, ITokenResponse } from './userServiceTypes';
+import { User, SignupUserData, LoginUserData, TokenResponse } from './userServiceTypes';
 
 const instanceUserAxios = axios.create({
   baseURL: EApiParametrs.baseUrl,
@@ -20,13 +20,14 @@ instanceUserAxios.interceptors.request.use(
   }
 );
 
-export const getAllUsers = async (): Promise<TUserResponse[]> => {
-  const result = await instanceUserAxios.get(`/${EApiRoutes.users}`);
+export const getAllUsers = async (): Promise<User[]> => {
+  const result = await instanceUserAxios.get(EApiRoutes.users);
   return result.data;
 };
 
-export const getUserById = async (userId: string): Promise<TUserResponse> => {
-  const result = await instanceUserAxios.get(`/${EApiRoutes.users}/${userId}`);
+export const getUserById = async (userId: string): Promise<User> => {
+  const result = await instanceUserAxios.get(`${EApiRoutes.users}/${userId}`);
+
   return result.data;
 };
 
@@ -34,20 +35,18 @@ export const deleteUserById = async (userId: string): Promise<void> => {
   await instanceUserAxios.delete(`/${EApiRoutes.users}/${userId}`);
 };
 
-export const updateUser = async (
-  userId: string,
-  userData: TSignupUserData
-): Promise<TUserResponse> => {
-  const result = await instanceUserAxios.put(`/${EApiRoutes.users}/${userId}`, userData);
+export const updateUser = async (userId: string, userData: SignupUserData): Promise<User> => {
+  const result = await instanceUserAxios.put(`${EApiRoutes.users}/${userId}`, userData);
   return result.data;
 };
 
-export const createNewUser = async (userData: TSignupUserData): Promise<TUserResponse> => {
-  const result = await instanceUserAxios.post(`/${EApiRoutes.signup}`, userData);
+export const createNewUser = async (userData: SignupUserData): Promise<User> => {
+  const result = await instanceUserAxios.post(EApiRoutes.signup, userData);
   return result.data;
 };
 
-export const signin = async (userData: TLoginUserData): Promise<ITokenResponse> => {
-  const result = await instanceUserAxios.post(`${EApiRoutes.signin}`, userData);
+export const signin = async (userData: LoginUserData): Promise<TokenResponse> => {
+  const result = await instanceUserAxios.post(EApiRoutes.signin, userData);
+
   return result.data;
 };

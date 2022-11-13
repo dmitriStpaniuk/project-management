@@ -14,17 +14,32 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import RuEnSwitches from './RuEnSwitches';
 import { Link } from 'react-router-dom';
+import { useTranslate } from 'components/languageContext/languageContext';
+import { PublicWrapper } from 'routes/PublicWrapper';
 
 interface Props {
   window?: () => Window;
 }
 
 const drawerWidth = 240;
-const navItems = ['Sing in', 'Sing up'];
+// const navItems = ['Sing in', 'Sing up'];
 
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const linkSignIn = useTranslate('links.signIn');
+  const linkSignUp = useTranslate('links.signUp');
+
+  const navItems = [
+    {
+      name: linkSignIn,
+      to: '/login',
+    },
+    {
+      name: linkSignUp,
+      to: '/registration',
+    },
+  ];
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -43,13 +58,15 @@ export default function DrawerAppBar(props: Props) {
         ru
         <RuEnSwitches />
         en
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <PublicWrapper>
+          {navItems.map((item) => (
+            <ListItem disablePadding key={item.name}>
+              <ListItemButton sx={{ textAlign: 'center' }}>
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </PublicWrapper>
       </List>
     </Box>
   );
@@ -81,18 +98,18 @@ export default function DrawerAppBar(props: Props) {
             ru
             <RuEnSwitches />
             en
-            {navItems.map((item) => (
-              // <>
-              <Link key={item} to="/registration" data-testid="registration">
-                <Button
-                  sx={{ color: '#fff', marginLeft: '20px' }}
-                  onClick={() => handleButton(item)}
-                >
-                  {item}
-                </Button>
-              </Link>
-              // </>
-            ))}
+            <PublicWrapper>
+              {navItems.map((item) => (
+                <Link key={item.name} to={item.to} data-testid="registration">
+                  <Button
+                    sx={{ color: '#fff', marginLeft: '20px' }}
+                    onClick={() => handleButton(item.name)}
+                  >
+                    {item.name}
+                  </Button>
+                </Link>
+              ))}
+            </PublicWrapper>
           </Box>
         </Toolbar>
       </AppBar>

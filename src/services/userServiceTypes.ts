@@ -1,20 +1,21 @@
-export type TUserResponse = {
+export type User = {
   id: string;
+  login: string;
   name: string;
+};
+export type DecodedToken = {
+  userId: string;
   login: string;
 };
 
-export type TSignupUserData = {
+export type SignupUserData = {
   name: string;
   login: string;
   password: string;
 };
 
-export type TLoginUserData = {
-  login: string;
-  password: string;
-};
+export type LoginUserData = Omit<SignupUserData, 'name'>;
 
-export type ITokenResponse = {
+export type TokenResponse = {
   token: string;
 };
