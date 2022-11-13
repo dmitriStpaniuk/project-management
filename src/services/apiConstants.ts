@@ -5,9 +5,13 @@ export enum EApiParametrs {
 }
 
 export enum EApiRoutes {
-  users = '/users',
-  signin = '/signin',
-  signup = '/signup',
+  users = 'users',
+  signin = 'signin',
+  signup = 'signup',
+  boards = 'boards',
+  columns = 'columns',
+  tasks = 'tasks',
+  file = 'file',
 }
 
 export const getTokenLocalStorage = (): string => {

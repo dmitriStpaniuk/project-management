@@ -27,11 +27,12 @@ export const getAllUsers = async (): Promise<User[]> => {
 
 export const getUserById = async (userId: string): Promise<User> => {
   const result = await instanceUserAxios.get(`${EApiRoutes.users}/${userId}`);
+
   return result.data;
 };
 
 export const deleteUserById = async (userId: string): Promise<void> => {
-  await instanceUserAxios.delete(`${EApiRoutes.users}/${userId}`);
+  await instanceUserAxios.delete(`/${EApiRoutes.users}/${userId}`);
 };
 
 export const updateUser = async (userId: string, userData: SignupUserData): Promise<User> => {
@@ -46,5 +47,6 @@ export const createNewUser = async (userData: SignupUserData): Promise<User> => 
 
 export const signin = async (userData: LoginUserData): Promise<TokenResponse> => {
   const result = await instanceUserAxios.post(EApiRoutes.signin, userData);
+
   return result.data;
 };
