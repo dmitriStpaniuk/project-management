@@ -2,7 +2,6 @@ import { Button, Paper } from '@mui/material';
 import { FormInputText } from 'components/FormInputText';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-
 import { SignupUserData } from 'services/userServiceTypes';
 import { useAppDispatch } from 'store/store';
 import { createNewUserThunk } from 'store/thunks/userThunk';

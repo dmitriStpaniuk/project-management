@@ -1,8 +1,9 @@
 import { userSlice } from 'store/slices/userSlice';
 import { AppDispatch } from 'store/store';
 import * as userService from '../../services/userService';
-import { SignupUserData, LoginUserData } from '../../services/userServiceTypes';
+import { SignupUserData, LoginUserData, User } from '../../services/userServiceTypes';
 import { setTokenLocalStorage } from '../../services/apiConstants';
+import jwt_decode from 'jwt-decode';
 
 export const getAllUsersList = () => async (dispatch: AppDispatch) => {
   dispatch(userSlice.actions.setIsAllUsersFetching(true));
@@ -23,7 +24,6 @@ export const deleteUserByIdThunk = (userId: string) => async (dispatch: AppDispa
   await userService.deleteUserById(userId);
   dispatch(userSlice.actions.setIsUserFetching(false));
   dispatch(userSlice.actions.setUser(undefined));
-  dispatch(userSlice.actions.setIsUserLogined(false));
 };
 
 export const updateUserThunk =
@@ -46,7 +46,8 @@ export const signinThunk = (userData: LoginUserData) => async (dispatch: AppDisp
   const res = await userService.signin(userData);
   if (res.token) {
     setTokenLocalStorage(res.token);
-    dispatch(userSlice.actions.setIsUserLogined(true));
+    const decodedToken = jwt_decode<User>(res.token);
+    dispatch(userSlice.actions.setUser(decodedToken));
+    dispatch(userSlice.actions.setIsUserFetching(false));
   }
-  dispatch(userSlice.actions.setIsUserFetching(false));
 };

@@ -1,6 +1,5 @@
-export type UserResponse = {
-  id: string;
-  // name: string;
+export type User = {
+  userId: string;
   login: string;
 };
 
@@ -10,10 +9,7 @@ export type SignupUserData = {
   password: string;
 };
 
-export type LoginUserData = {
-  login: string;
-  password: string;
-};
+export type LoginUserData = Omit<SignupUserData, 'name'>;
 
 export type TokenResponse = {
   token: string;

@@ -14,17 +14,31 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import RuEnSwitches from './RuEnSwitches';
 import { Link } from 'react-router-dom';
+import { useTranslate } from 'components/languageContext/languageContext';
 
 interface Props {
   window?: () => Window;
 }
 
 const drawerWidth = 240;
-const navItems = ['Sing in', 'Sing up'];
+// const navItems = ['Sing in', 'Sing up'];
 
 export default function DrawerAppBar(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const linkSignIn = useTranslate('links.signIn');
+  const linkSignUp = useTranslate('links.signUp');
+
+  const navItems = [
+    {
+      name: linkSignIn,
+      to: '/login',
+    },
+    {
+      name: linkSignUp,
+      to: '/registration',
+    },
+  ];
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -44,9 +58,9 @@ export default function DrawerAppBar(props: Props) {
         <RuEnSwitches />
         en
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+          <ListItem key={item.name} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
+              <ListItemText primary={item.name} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -82,16 +96,14 @@ export default function DrawerAppBar(props: Props) {
             <RuEnSwitches />
             en
             {navItems.map((item) => (
-              // <>
-              <Link key={item} to="/registration" data-testid="registration">
+              <Link key={item.name} to={item.to} data-testid="registration">
                 <Button
                   sx={{ color: '#fff', marginLeft: '20px' }}
-                  onClick={() => handleButton(item)}
+                  onClick={() => handleButton(item.name)}
                 >
-                  {item}
+                  {item.name}
                 </Button>
               </Link>
-              // </>
             ))}
           </Box>
         </Toolbar>
