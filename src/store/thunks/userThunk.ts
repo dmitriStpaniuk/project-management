@@ -1,5 +1,5 @@
-import { userSlice } from 'store/slices/userSlice';
-import { AppDispatch } from 'store/store';
+import { userSlice } from '../../store/slices/userSlice';
+import { AppDispatch } from '../../store/store';
 import * as userService from '../../services/userService';
 import { SignupUserData, LoginUserData, User, DecodedToken } from '../../services/userServiceTypes';
 import { setTokenLocalStorage } from '../../services/apiConstants';
