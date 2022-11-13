@@ -7,6 +7,7 @@ import Page404 from 'components/pages/page404/Page404';
 import Registration from 'components/pages/registration/Registration';
 import WelcomePage from 'components/pages/welcomePage/WelcomePage';
 import './App.css';
+import Profile from 'components/pages/profile/Profile';
 import { useAppDispatch } from 'store/store';
 import jwt_decode from 'jwt-decode';
 import { getTokenLocalStorage } from 'services/apiConstants';
@@ -30,6 +31,7 @@ function App() {
           <Route index element={<WelcomePage />} />
           <Route path="registration" element={<Registration />} />
           <Route path="login" element={<Login />} />
+          <Route path="profile" element={<Profile />} />
           <Route
             path="board/*"
             element={

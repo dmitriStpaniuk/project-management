@@ -16,7 +16,8 @@ import RuEnSwitches from './RuEnSwitches';
 import { Link } from 'react-router-dom';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { PublicWrapper } from 'routes/PublicWrapper';
-
+import styles from './Header.module.css';
+import logo from './../../../assets/svg/monitor.svg';
 interface Props {
   window?: () => Window;
 }
@@ -24,9 +25,10 @@ interface Props {
 const drawerWidth = 240;
 // const navItems = ['Sing in', 'Sing up'];
 
-export default function DrawerAppBar(props: Props) {
+export default function Header(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const buttonNameText = useTranslate('welcomeText.naming');
   const linkSignIn = useTranslate('links.signIn');
   const linkSignUp = useTranslate('links.signUp');
 
@@ -45,13 +47,11 @@ export default function DrawerAppBar(props: Props) {
     setMobileOpen(!mobileOpen);
   };
 
-  const handleButton = (item: string) => {
-    // item === 'Sing in' ? <Link to="/registration" data-testid="registration" /> : '';
-  };
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        PSM
+        {/* <span>d{logo}</span> */}
+        {buttonNameText}
       </Typography>
       <Divider />
       <List>
@@ -76,7 +76,7 @@ export default function DrawerAppBar(props: Props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar component="nav">
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: 'space-between', backgroundColor: '#0070A0' }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -84,15 +84,19 @@ export default function DrawerAppBar(props: Props) {
             onClick={handleDrawerToggle}
             sx={{ mr: 2, display: { sm: 'none' } }}
           >
-            {/* <MenuIcon /> */}
-            XX
+            {/* <MenuIcon /> */}X
           </IconButton>
           <Typography
             variant="h6"
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            PMS
+            <Link to="/" data-testid="welcome" style={{ textDecoration: 'none' }}>
+              <div className={styles.logo}>
+                <img src={logo} className={styles.logotype} />
+                <div className={styles.naming}>{buttonNameText}</div>
+              </div>
+            </Link>
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             ru
@@ -101,12 +105,7 @@ export default function DrawerAppBar(props: Props) {
             <PublicWrapper>
               {navItems.map((item) => (
                 <Link key={item.name} to={item.to} data-testid="registration">
-                  <Button
-                    sx={{ color: '#fff', marginLeft: '20px' }}
-                    onClick={() => handleButton(item.name)}
-                  >
-                    {item.name}
-                  </Button>
+                  <Button sx={{ color: '#fff', marginLeft: '20px' }}>{item.name}</Button>
                 </Link>
               ))}
             </PublicWrapper>

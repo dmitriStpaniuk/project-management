@@ -15,7 +15,7 @@ export default function RuEnSwitches() {
       checked={currentLanguage === 'en'}
       onChange={handleChange}
       inputProps={{ 'aria-label': 'controlled' }}
-      color="default"
+      color={'default'}
     />
   );
 }
