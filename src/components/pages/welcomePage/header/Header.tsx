@@ -15,6 +15,7 @@ import Button from '@mui/material/Button';
 import RuEnSwitches from './RuEnSwitches';
 import { Link } from 'react-router-dom';
 import { useTranslate } from 'components/languageContext/languageContext';
+import { PublicWrapper } from 'routes/PublicWrapper';
 
 interface Props {
   window?: () => Window;
@@ -57,13 +58,15 @@ export default function DrawerAppBar(props: Props) {
         ru
         <RuEnSwitches />
         en
-        {navItems.map((item) => (
-          <ListItem key={item.name} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item.name} />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        <PublicWrapper>
+          {navItems.map((item) => (
+            <ListItem disablePadding key={item.name}>
+              <ListItemButton sx={{ textAlign: 'center' }}>
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </PublicWrapper>
       </List>
     </Box>
   );
@@ -95,16 +98,18 @@ export default function DrawerAppBar(props: Props) {
             ru
             <RuEnSwitches />
             en
-            {navItems.map((item) => (
-              <Link key={item.name} to={item.to} data-testid="registration">
-                <Button
-                  sx={{ color: '#fff', marginLeft: '20px' }}
-                  onClick={() => handleButton(item.name)}
-                >
-                  {item.name}
-                </Button>
-              </Link>
-            ))}
+            <PublicWrapper>
+              {navItems.map((item) => (
+                <Link key={item.name} to={item.to} data-testid="registration">
+                  <Button
+                    sx={{ color: '#fff', marginLeft: '20px' }}
+                    onClick={() => handleButton(item.name)}
+                  >
+                    {item.name}
+                  </Button>
+                </Link>
+              ))}
+            </PublicWrapper>
           </Box>
         </Toolbar>
       </AppBar>

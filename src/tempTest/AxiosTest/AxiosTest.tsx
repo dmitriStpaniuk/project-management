@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import {
   getAllUsersList,
-  getUserByIdThunk,
+  getCurrentUserByIdThunk,
   deleteUserByIdThunk,
   updateUserThunk,
   createNewUserThunk,
