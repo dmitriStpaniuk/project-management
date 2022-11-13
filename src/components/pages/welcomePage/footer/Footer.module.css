@@ -1,5 +1,5 @@
 .footer {
-  background-color: #1976d2;
+  background-color:#0070A0;
   width: 100%;
   height: 64px;
   display: flex;
@@ -9,5 +9,11 @@
 }
 .rs {
     width: 60px;
+}
+.git {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 4px;
     color: white;
 }

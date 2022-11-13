@@ -28,7 +28,7 @@ const drawerWidth = 240;
 export default function Header(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const buttonNameText = useTranslate('buttons.naming');
+  const buttonNameText = useTranslate('welcomeText.naming');
   const linkSignIn = useTranslate('links.signIn');
   const linkSignUp = useTranslate('links.signUp');
 
@@ -76,7 +76,7 @@ export default function Header(props: Props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar component="nav">
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Toolbar sx={{ justifyContent: 'space-between', backgroundColor: '#0070A0' }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"

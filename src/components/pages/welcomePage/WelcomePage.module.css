@@ -2,49 +2,69 @@
   background-image: url('./../../assets/images/background.jpg');
   background-size: cover;
   background-repeat: no-repeat;
-  /* background-position: center; */
   margin-top: 64px;
-  height: calc(100vh - 128px);
+  min-height: calc(100vh - 128px);
 }
 @media (max-width: 600px) {
   .welcome {
     margin-top: 56px;
-    height: calc(100vh - 112px);
+    min-height: calc(100vh - 112px);
   }
 }
 .projectInfo {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  padding: 7vw;
+  padding: 5vw;
   gap: 3vw;
 }
 @media (max-width: 600px) {
-  .projectInfo{
+  .projectInfo {
     column-gap: 1rem;
   }
 }
 .welcomeText {
   display: flex;
   align-items: center;
-  font-size: calc(1rem + 0.3vw);
-  width: 35vw;
+  font-size: calc(.7rem + 0.6vw);
+  font-weight: 600;
+  color: #1F1F1F;
+  width: 45%;
 }
 @media (max-width: 600px) {
   .welcomeText {
     font-size: calc(1rem);
-    width: 65vw;
-text-align: center;
+    width: 75vw;
+    text-align: center;
   }
 }
 .welcomeImage {
-  width: 45vw;
-  /* height: 45vw; */
-  /* min-width: 350px; */
+  width: 45%;
+  /* min-width: 240px; */
+  height: 38%;
 }
 @media (max-width: 600px) {
-  .welcomeImage{
+  .welcomeImage {
     width: 70vw;
-    height: 65vw;
+    /* height: 65vw; */
   }
+}
+.about {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding-bottom: 1.5rem;
+}
+.cardDev {
+  width: 250px;
+  /* background-color: #dcf0f4; */
+  border: solid 0px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 8px #747474;
+  padding-bottom: .5rem;
+}
+.nameDev {
+  margin: 5px 0;
+  text-align: center;
 }
