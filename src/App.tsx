@@ -25,24 +25,26 @@ function App() {
     if (decodedToken) dispatch(getCurrentUserByIdThunk(decodedToken.userId));
   }, [dispatch]);
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<WelcomePage />} />
-        <Route path="registration" element={<Registration />} />
-        <Route path="login" element={<Login />} />
-        <Route path="profile" element={<Profile />} />
-        <Route
-          path="board/*"
-          element={
-            <PrivateRoute>
-              <Board />
-            </PrivateRoute>
-          }
-        />
-        <Route path="Page404" element={<Page404 />} />
-        <Route path="*" element={<Navigate to={'/Page404'} />} />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<WelcomePage />} />
+          <Route path="registration" element={<Registration />} />
+          <Route path="login" element={<Login />} />
+          <Route path="profile" element={<Profile />} />
+          <Route
+            path="board/*"
+            element={
+              <PrivateRoute>
+                <Board />
+              </PrivateRoute>
+            }
+          />
+          <Route path="Page404" element={<Page404 />} />
+          <Route path="*" element={<Navigate to={'/Page404'} />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 

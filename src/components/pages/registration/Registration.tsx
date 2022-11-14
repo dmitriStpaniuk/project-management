@@ -1,8 +1,10 @@
 import { Button, Paper } from '@mui/material';
 import { FormInputText } from 'components/FormInputText';
+import { useAlerts } from 'components/SnackbarPanel';
 import { loginRegExp, passwordRegExp } from 'components/utils/constants';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { SignupUserData } from 'services/userServiceTypes';
 import { useAppDispatch } from 'store/store';
 import { createNewUserThunk } from 'store/thunks/userThunk';
@@ -16,6 +18,10 @@ export default function Registration() {
   const resetLabel = useTranslate('buttons.reset');
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const addAlert = useAlerts();
+  const RegistrationSuccessMessage = useTranslate('alerts.successRegistration');
+
   const methods = useForm({
     defaultValues: { name: '', login: '', password: '' },
     mode: 'onChange',
@@ -27,8 +33,10 @@ export default function Registration() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: SignupUserData) => {
-    dispatch(createNewUserThunk(data));
+  const onSubmit = async (data: SignupUserData) => {
+    await dispatch(createNewUserThunk(data));
+    addAlert({ type: 'success', message: RegistrationSuccessMessage });
+    navigate('/board');
   };
 
   return (

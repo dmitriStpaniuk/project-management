@@ -10,7 +10,7 @@ type UserInitialState = {
 
 const initialState: UserInitialState = {
   user: undefined,
-  isUserFetching: false,
+  isUserFetching: true,
   isAllUsersFetching: false,
 };
 

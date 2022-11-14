@@ -1,4 +1,14 @@
 export const text = {
+  alerts: {
+    successfullLogin: {
+      en: 'Logged in successfully',
+      ru: 'Вы вошли в аккаунт',
+    },
+    successRegistration: {
+      en: 'Registration in successfully',
+      ru: 'Вы успншно зарегестрировались',
+    },
+  },
   buttons: {
     submit: {
       en: 'Submit',
