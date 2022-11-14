@@ -43,6 +43,36 @@ export const text = {
       ru: 'Регистрация',
     },
   },
+  form: {
+    required: {
+      en: 'Required field',
+      ru: 'Поле обязательно для заполнения',
+    },
+    minLength: {
+      en: 'Minimum length',
+      ru: 'Минимальная длинна',
+    },
+    maxLength: {
+      en: 'Maximum length',
+      ru: 'Максимальная длинна',
+    },
+    pattern: {
+      en: 'Only en letters and numbers, at least one letter and one number',
+      ru: 'Только en буквы и цифры, одна буква и одна цифра',
+    },
+    name: {
+      en: 'name',
+      ru: 'имя',
+    },
+    login: {
+      en: 'login',
+      ru: 'логин',
+    },
+    password: {
+      en: 'password',
+      ru: 'пароль',
+    },
+  },
 };
 
 export type Text = typeof text;

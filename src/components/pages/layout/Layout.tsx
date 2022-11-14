@@ -9,6 +9,7 @@ const Layout = () => {
   return (
     <>
       <Header />
+
       <div className={style.outletWrapper}>
         <Outlet />
       </div>
