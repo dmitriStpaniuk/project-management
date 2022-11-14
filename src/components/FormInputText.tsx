@@ -1,13 +1,17 @@
 import { TextField } from '@mui/material';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+
 type FormInputProps = {
   name: string;
   label: string;
   type: string;
+  required?: boolean;
 };
+
 export const FormInputText = ({ name, label, type }: FormInputProps) => {
   const { control } = useFormContext();
+
   return (
     <Controller
       name={name}

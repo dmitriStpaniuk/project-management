@@ -6,7 +6,7 @@ import Login from 'components/pages/login/Login';
 import Page404 from 'components/pages/page404/Page404';
 import Registration from 'components/pages/registration/Registration';
 import WelcomePage from 'components/pages/welcomePage/WelcomePage';
-import './App.css';
+import styles from './App.module.css';
 import Profile from 'components/pages/profile/Profile';
 import { useAppDispatch } from 'store/store';
 import jwt_decode from 'jwt-decode';
@@ -25,7 +25,7 @@ function App() {
     if (decodedToken) dispatch(getCurrentUserByIdThunk(decodedToken.userId));
   }, [dispatch]);
   return (
-    <div>
+    <div className={styles.wrap}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<WelcomePage />} />

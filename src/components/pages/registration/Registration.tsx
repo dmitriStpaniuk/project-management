@@ -19,7 +19,16 @@ export default function Registration() {
   };
 
   return (
-    <Paper style={{ marginTop: '65px', display: 'grid', gridRowGap: '20px', padding: '20px' }}>
+    <Paper
+      style={{
+        maxWidth: '600px',
+        margin: '65px auto',
+        padding: '20px',
+        display: 'grid',
+        gridRowGap: '20px',
+        justifyItems: 'center',
+      }}
+    >
       <FormProvider {...methods}>
         <FormInputText name="name" label="name" type="text" />
         <FormInputText name="login" label="login" type="text" />
