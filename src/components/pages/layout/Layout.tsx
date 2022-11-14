@@ -7,11 +7,13 @@ import style from './Layout.module.css';
 
 const Layout = () => {
   return (
-    <div>
+    <>
       <Header />
-      <Outlet />
+      <div className={style.outletWrapper}>
+        <Outlet />
+      </div>
       <Footer />
-    </div>
+    </>
   );
 };
 export default Layout;

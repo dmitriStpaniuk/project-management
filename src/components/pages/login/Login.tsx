@@ -22,10 +22,10 @@ export default function Login() {
   };
 
   return (
-    <Paper style={{ marginTop: '65px', display: 'grid', gridRowGap: '20px', padding: '20px' }}>
+    <Paper style={{ display: 'grid', gridRowGap: '20px', padding: '20px' }}>
       <FormProvider {...methods}>
-        <FormInputText name="login" label="login" type="text" />
-        <FormInputText name="password" label="password" type="password" />
+        <FormInputText name="login" label="Login" type="text" />
+        <FormInputText name="password" label="Password" type="password" />
       </FormProvider>
       <Button onClick={handleSubmit(onSubmit)} variant={'contained'} disabled={isSubmitting}>
         Submit
