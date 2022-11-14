@@ -30,6 +30,7 @@ a:hover {
   color: rgb(255, 255, 255);
   cursor: pointer;
 }
+
 .outletWrapper {
   min-height: calc(100vh - 128px);
 }
