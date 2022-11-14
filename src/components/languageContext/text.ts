@@ -1,4 +1,14 @@
 export const text = {
+  alerts: {
+    successfullLogin: {
+      en: 'Logged in successfully',
+      ru: 'Вы вошли в аккаунт',
+    },
+    successRegistration: {
+      en: 'Registration in successfully',
+      ru: 'Вы успншно зарегестрировались',
+    },
+  },
   buttons: {
     submit: {
       en: 'Submit',
@@ -35,6 +45,36 @@ export const text = {
     signUp: {
       en: 'Sign Up',
       ru: 'Регистрация',
+    },
+  },
+  form: {
+    required: {
+      en: 'Required field',
+      ru: 'Поле обязательно для заполнения',
+    },
+    minLength: {
+      en: 'Minimum length',
+      ru: 'Минимальная длинна',
+    },
+    maxLength: {
+      en: 'Maximum length',
+      ru: 'Максимальная длинна',
+    },
+    pattern: {
+      en: 'Only en letters and numbers, at least one letter and one number',
+      ru: 'Только en буквы и цифры, одна буква и одна цифра',
+    },
+    name: {
+      en: 'name',
+      ru: 'имя',
+    },
+    login: {
+      en: 'login',
+      ru: 'логин',
+    },
+    password: {
+      en: 'password',
+      ru: 'пароль',
     },
   },
 };
