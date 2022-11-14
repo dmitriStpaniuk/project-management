@@ -31,6 +31,6 @@ a:hover {
   cursor: pointer;
 }
 
-.main {
-  flex-grow: 1;
+.outletWrapper {
+  min-height: calc(100vh - 128px);
 }
