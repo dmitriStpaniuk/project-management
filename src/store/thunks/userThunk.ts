@@ -16,7 +16,7 @@ export const getCurrentUserByIdThunk = (userId: string) => async (dispatch: AppD
   dispatch(userSlice.actions.setIsUserFetching(true));
   const user = await userService.getUserById(userId);
   dispatch(userSlice.actions.setIsUserFetching(false));
-  dispatch(userSlice.actions.setUser(user));
+  return dispatch(userSlice.actions.setUser(user));
 };
 
 export const deleteUserByIdThunk = (userId: string) => async (dispatch: AppDispatch) => {
@@ -47,6 +47,6 @@ export const signinThunk = (userData: LoginUserData) => async (dispatch: AppDisp
   if (res.token) {
     setTokenLocalStorage(res.token);
     const decodedToken = jwt_decode<DecodedToken>(res.token);
-    dispatch(getCurrentUserByIdThunk(decodedToken.userId));
+    return dispatch(getCurrentUserByIdThunk(decodedToken.userId));
   }
 };

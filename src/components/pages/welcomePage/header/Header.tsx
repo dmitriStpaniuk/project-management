@@ -18,6 +18,8 @@ import { useTranslate } from 'components/languageContext/languageContext';
 import { PublicWrapper } from 'routes/PublicWrapper';
 import styles from './Header.module.css';
 import logo from './../../../assets/svg/logo.svg';
+import { HeaderAvatar } from 'components/HeaderAvatar';
+import { PrivateWrapper } from 'routes/PrivateWrapper';
 interface Props {
   window?: () => Window;
 }
@@ -110,6 +112,9 @@ export default function Header(props: Props) {
               ))}
             </PublicWrapper>
           </Box>
+          <PrivateWrapper>
+            <HeaderAvatar />
+          </PrivateWrapper>
         </Toolbar>
       </AppBar>
       <Box component="nav">

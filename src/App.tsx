@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route, RouteProps, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Layout from 'components/pages/layout/Layout';
 import Board from 'components/pages/board/Board';
 import Login from 'components/pages/login/Login';
@@ -25,26 +25,24 @@ function App() {
     if (decodedToken) dispatch(getCurrentUserByIdThunk(decodedToken.userId));
   }, [dispatch]);
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<WelcomePage />} />
-          <Route path="registration" element={<Registration />} />
-          <Route path="login" element={<Login />} />
-          <Route path="profile" element={<Profile />} />
-          <Route
-            path="board/*"
-            element={
-              <PrivateRoute>
-                <Board />
-              </PrivateRoute>
-            }
-          />
-          <Route path="Page404" element={<Page404 />} />
-          <Route path="*" element={<Navigate to={'/Page404'} />} />
-        </Route>
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<WelcomePage />} />
+        <Route path="registration" element={<Registration />} />
+        <Route path="login" element={<Login />} />
+        <Route path="profile" element={<Profile />} />
+        <Route
+          path="board/*"
+          element={
+            <PrivateRoute>
+              <Board />
+            </PrivateRoute>
+          }
+        />
+        <Route path="Page404" element={<Page404 />} />
+        <Route path="*" element={<Navigate to={'/Page404'} />} />
+      </Route>
+    </Routes>
   );
 }
 

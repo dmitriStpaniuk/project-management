@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function Board() {
-  return <div className="container">Board</div>;
+  return <div className="container">Boards</div>;
 }

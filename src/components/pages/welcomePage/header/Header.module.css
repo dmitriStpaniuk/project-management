@@ -3,13 +3,11 @@
   align-items: center;
   color: white;
   line-height: 14px;
-  /* font-family: Georgia, 'Times New Roman', Times, serif; */
   font-size: small;
   gap: 0.5rem;
   cursor: pointer;
 }
 .logotype:hover {
-  /* width: 36px; */
   border-radius: 50%;
   border: 1.5px solid #032092;
   box-sizing: border-box;
