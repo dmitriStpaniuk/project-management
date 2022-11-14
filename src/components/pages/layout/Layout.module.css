@@ -31,5 +31,6 @@ a:hover {
   cursor: pointer;
 }
 .outletWrapper {
+  position: relative;
   min-height: calc(100vh - 128px);
 }

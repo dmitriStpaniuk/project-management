@@ -1,4 +1,10 @@
 export const text = {
+  alerts: {
+    successfullLogin: {
+      en: 'Logged in successfully',
+      ru: 'Вы вошли в аккаунт',
+    },
+  },
   buttons: {
     submit: {
       en: 'Submit',
