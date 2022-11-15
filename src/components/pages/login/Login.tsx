@@ -2,6 +2,7 @@ import { Button, Paper } from '@mui/material';
 import { FormInputText } from 'components/FormInputText';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
+import { loginRegExp, passwordRegExp } from 'components/utils/constants';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +15,15 @@ export default function Login() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const loginSuccessMessage = useTranslate('alerts.successfullLogin');
-  const methods = useForm({ defaultValues: { login: '', password: '' } });
+  const loginLabel = useTranslate('form.login');
+  const passwordLabel = useTranslate('form.password');
+  const submitLabel = useTranslate('buttons.submit');
+  const resetLabel = useTranslate('buttons.reset');
+  const methods = useForm({
+    defaultValues: { login: '', password: '' },
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+  });
   const addAlert = useAlerts();
   const loginLabel = useTranslate('form.login');
   const passwordLabel = useTranslate('form.password');
@@ -33,44 +42,47 @@ export default function Login() {
   };
 
   return (
-    <div className={styles.login}>
-      <div className="container">
-        <div className={styles.wrapper}>
-          <Paper
-            style={{
-              width: '100%',
-              padding: '20px',
-              display: 'grid',
-              gridRowGap: '20px',
-              justifyItems: 'center',
-            }}
-          >
-            <FormProvider {...methods}>
-              <FormInputText name="login" label={loginLabel} type="text" />
-              <FormInputText name="password" label={passwordLabel} type="password" />
-            </FormProvider>
-            <Button
-              className={styles.formButton}
-              onClick={handleSubmit(onSubmit)}
-              variant={'contained'}
-              disabled={isSubmitting}
-              color="info"
-            >
-              {submitLabel}
-            </Button>
-            <Button
-              className={styles.formButton}
-              onClick={() => {
-                reset();
-              }}
-              variant={'outlined'}
-              color="error"
-            >
-              {resetLabel}
-            </Button>
-          </Paper>
-        </div>
-      </div>
-    </div>
+    <Paper
+      style={{
+        maxWidth: '600px',
+        margin: '65px auto',
+        padding: '20px',
+        display: 'grid',
+        gridRowGap: '20px',
+        justifyItems: 'center',
+      }}
+    >
+      <FormProvider {...methods}>
+        <FormInputText
+          name="login"
+          label={loginLabel}
+          type="text"
+          required={true}
+          minLength={2}
+          maxLength={15}
+          pattern={loginRegExp}
+        />
+        <FormInputText
+          name="password"
+          label={passwordLabel}
+          type="password"
+          required={true}
+          minLength={2}
+          maxLength={15}
+          pattern={passwordRegExp}
+        />
+      </FormProvider>
+      <Button onClick={handleSubmit(onSubmit)} variant={'contained'} disabled={isSubmitting}>
+        {submitLabel}
+      </Button>
+      <Button
+        onClick={() => {
+          reset();
+        }}
+        variant={'outlined'}
+      >
+        {resetLabel}
+      </Button>
+    </Paper>
   );
 }
