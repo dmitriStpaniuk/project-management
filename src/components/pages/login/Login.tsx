@@ -25,10 +25,6 @@ export default function Login() {
     reValidateMode: 'onChange',
   });
   const addAlert = useAlerts();
-  const loginLabel = useTranslate('form.login');
-  const passwordLabel = useTranslate('form.password');
-  const submitLabel = useTranslate('buttons.submit');
-  const resetLabel = useTranslate('buttons.reset');
 
   const {
     handleSubmit,
@@ -42,47 +38,61 @@ export default function Login() {
   };
 
   return (
-    <Paper
-      style={{
-        maxWidth: '600px',
-        margin: '65px auto',
-        padding: '20px',
-        display: 'grid',
-        gridRowGap: '20px',
-        justifyItems: 'center',
-      }}
-    >
-      <FormProvider {...methods}>
-        <FormInputText
-          name="login"
-          label={loginLabel}
-          type="text"
-          required={true}
-          minLength={2}
-          maxLength={15}
-          pattern={loginRegExp}
-        />
-        <FormInputText
-          name="password"
-          label={passwordLabel}
-          type="password"
-          required={true}
-          minLength={2}
-          maxLength={15}
-          pattern={passwordRegExp}
-        />
-      </FormProvider>
-      <Button onClick={handleSubmit(onSubmit)} variant={'contained'} disabled={isSubmitting}>
-        {submitLabel}
-      </Button>
-      <Button
-        onClick={() => {
-          reset();
-        }}
-        variant={'outlined'}
-      >
-        {resetLabel}
-      </Button>
-    </Paper>
+    <div className={styles.login}>
+      <div className="container">
+        <div className={styles.wrapper}>
+          <Paper
+            style={{
+              width: '100%',
+              padding: '20px',
+              display: 'grid',
+              gridRowGap: '20px',
+              justifyItems: 'center',
+            }}
+          >
+            <FormProvider {...methods}>
+              <FormInputText
+                name="login"
+                label={loginLabel}
+                type="text"
+                required={true}
+                minLength={2}
+                maxLength={15}
+                pattern={loginRegExp}
+              />
+              <FormInputText
+                name="password"
+                label={passwordLabel}
+                type="password"
+                required={true}
+                minLength={2}
+                maxLength={15}
+                pattern={passwordRegExp}
+              />
+            </FormProvider>
+
+            <Button
+              onClick={handleSubmit(onSubmit)}
+              className={styles.formButton}
+              color="info"
+              variant={'contained'}
+              disabled={isSubmitting}
+            >
+              {submitLabel}
+            </Button>
+            <Button
+              className={styles.formButton}
+              onClick={() => {
+                reset();
+              }}
+              variant={'outlined'}
+              color="error"
+            >
+              {resetLabel}
+            </Button>
+          </Paper>
+        </div>
+      </div>
+    </div>
   );
 }
