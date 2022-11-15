@@ -54,7 +54,7 @@ export const FormInputText = ({
         return (
           <TextField
             type={type}
-            helperText={error ? inputsErrorMessage[error?.type as ErrorMessage] : null}
+            helperText={error ? inputsErrorMessage[error?.type as ErrorMessage] : ' '}
             size={'small'}
             error={!!error}
             onChange={onChange}

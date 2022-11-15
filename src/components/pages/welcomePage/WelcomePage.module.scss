@@ -11,6 +11,7 @@
   align-items: center;
   @media (max-width: 600px) {
     column-gap: 1rem;
+  min-height: calc(100vh - 120px);
   }
 }
 .projectInfo {
@@ -29,10 +30,10 @@
   font-size: calc(0.7rem + 0.6vw);
   font-weight: 600;
   color: #1f1f1f;
-  // max-width: 45%;
   @media (max-width: 600px) {
       font-size: calc(1rem);
       text-align: center;
+      padding-top: 1.5rem;
   }
 }
 .welcomeImage {
