@@ -43,43 +43,43 @@ export default function Registration() {
   return (
     <Paper
       style={{
-        maxWidth: '600px',
-        margin: '65px auto',
-        padding: '20px',
-        display: 'grid',
-        gridRowGap: '20px',
-        justifyItems: 'center',
-      }}
-    >
-      <FormProvider {...methods}>
-        <FormInputText
-          name="name"
-          label={nameLabel}
-          type="text"
-          required={true}
-          minLength={2}
-          maxLength={15}
-          pattern={loginRegExp}
-        />
-        <FormInputText
-          name="login"
-          label={loginLabel}
-          type="text"
-          required={true}
-          minLength={2}
-          maxLength={15}
-          pattern={loginRegExp}
-        />
-        <FormInputText
-          name="password"
-          label={passwordLabel}
-          type="password"
-          required={true}
-          minLength={2}
-          maxLength={15}
-          pattern={passwordRegExp}
-        />
-      </FormProvider>
+              minWidth: '400px',
+              margin: '0 15px',
+              padding: '20px',
+              display: 'grid',
+              gridRowGap: '20px',
+              justifyItems: 'center',
+            }}
+          >
+            <FormProvider {...methods}>
+              <FormInputText
+                name="name"
+                label={nameLabel}
+                type="text"
+                required={true}
+                minLength={2}
+                maxLength={15}
+                pattern={loginRegExp}
+              />
+              <FormInputText
+                name="login"
+                label={loginLabel}
+                type="text"
+                required={true}
+                minLength={2}
+                maxLength={15}
+                pattern={loginRegExp}
+              />
+              <FormInputText
+                name="password"
+                label={passwordLabel}
+                type="password"
+                required={true}
+                minLength={2}
+                maxLength={15}
+                pattern={passwordRegExp}
+              />
+            </FormProvider>
       <Button onClick={handleSubmit(onSubmit)} variant={'contained'} disabled={isSubmitting}>
         {submitLabel}
       </Button>
