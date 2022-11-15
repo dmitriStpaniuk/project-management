@@ -46,6 +46,14 @@ export const text = {
       en: 'Sign Up',
       ru: 'Регистрация',
     },
+    en: {
+      en: 'en',
+      ru: 'анг',
+    },
+    ru: {
+      en: 'ru',
+      ru: 'рус',
+    },
   },
   form: {
     required: {

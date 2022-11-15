@@ -41,10 +41,12 @@ export default function Registration() {
   };
 
   return (
-    <Paper
-      style={{
-              minWidth: '400px',
-              margin: '0 15px',
+    <div className={styles.registration}>
+      <div className="container">
+        <div className={styles.wrapper}>
+          <Paper
+            style={{
+              width: '100%',
               padding: '20px',
               display: 'grid',
               gridRowGap: '20px',
@@ -80,12 +82,26 @@ export default function Registration() {
                 pattern={passwordRegExp}
               />
             </FormProvider>
-      <Button onClick={handleSubmit(onSubmit)} variant={'contained'} disabled={isSubmitting}>
-        {submitLabel}
-      </Button>
-      <Button onClick={() => reset()} variant={'outlined'}>
-        {resetLabel}
-      </Button>
-    </Paper>
+            <Button
+              className={styles.formButton}
+              color="info"
+              onClick={handleSubmit(onSubmit)}
+              variant={'contained'}
+              disabled={isSubmitting}
+            >
+              {submitLabel}
+            </Button>
+            <Button
+              onClick={() => reset()}
+              variant={'outlined'}
+              className={styles.formButton}
+              color="error"
+            >
+              {resetLabel}
+            </Button>
+          </Paper>
+        </div>
+      </div>
+    </div>
   );
 }

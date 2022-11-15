@@ -20,6 +20,7 @@ import styles from './Header.module.css';
 import logo from './../../../assets/svg/logo.svg';
 import { HeaderAvatar } from 'components/HeaderAvatar';
 import { PrivateWrapper } from 'routes/PrivateWrapper';
+import { flexbox } from '@mui/system';
 interface Props {
   window?: () => Window;
 }
@@ -33,6 +34,8 @@ export default function Header(props: Props) {
   const buttonNameText = useTranslate('welcomeText.naming');
   const linkSignIn = useTranslate('links.signIn');
   const linkSignUp = useTranslate('links.signUp');
+  const en = useTranslate('links.en');
+  const ru = useTranslate('links.ru');
 
   const navItems = [
     {
@@ -57,9 +60,9 @@ export default function Header(props: Props) {
       </Typography>
       <Divider />
       <List>
-        ru
+        <span>{ru}</span>
         <RuEnSwitches />
-        en
+        <span>{en}</span>
         <PublicWrapper>
           {navItems.map((item) => (
             <ListItem disablePadding key={item.name}>
@@ -84,10 +87,22 @@ export default function Header(props: Props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ ml: 2, display: { sm: 'none' } }}
           >
             {/* <MenuIcon /> */}X
           </IconButton>
+          <Typography
+            className={styles.miniHeader}
+            component="div"
+            sx={{ flexGrow: 1, display: { sm: 'none' } }}
+          >
+            <Link to="/" data-testid="welcome" style={{ textDecoration: 'none' }}>
+              <div className={styles.logoSm}>
+                <div className={styles.naming}>{buttonNameText}</div>
+                <img src={logo} className={styles.logotype} />
+              </div>
+            </Link>
+          </Typography>
           <Typography
             variant="h6"
             component="div"
@@ -100,14 +115,20 @@ export default function Header(props: Props) {
               </div>
             </Link>
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            ru
+          <Box
+            sx={{
+              display: { xs: 'none', sm: 'block' },
+              minWidth: '350px',
+              justifyContent: 'space-around',
+            }}
+          >
+            {ru}
             <RuEnSwitches />
-            en
+            {en}
             <PublicWrapper>
               {navItems.map((item) => (
                 <Link key={item.name} to={item.to} data-testid="registration">
-                  <Button sx={{ color: '#fff', marginLeft: '20px' }}>{item.name}</Button>
+                  <Button sx={{ color: '#fff', width: '123px' }}>{item.name}</Button>
                 </Link>
               ))}
             </PublicWrapper>
