@@ -2,6 +2,7 @@ import { Button, Paper } from '@mui/material';
 import { FormInputText } from 'components/FormInputText';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
+import { loginRegExp, passwordRegExp } from 'components/utils/constants';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +14,15 @@ export default function Login() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const loginSuccessMessage = useTranslate('alerts.successfullLogin');
-  const methods = useForm({ defaultValues: { login: '', password: '' } });
+  const loginLabel = useTranslate('form.login');
+  const passwordLabel = useTranslate('form.password');
+  const submitLabel = useTranslate('buttons.submit');
+  const resetLabel = useTranslate('buttons.reset');
+  const methods = useForm({
+    defaultValues: { login: '', password: '' },
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+  });
   const addAlert = useAlerts();
 
   const {
@@ -28,13 +37,38 @@ export default function Login() {
   };
 
   return (
-    <Paper style={{ display: 'grid', gridRowGap: '20px', padding: '20px' }}>
+    <Paper
+      style={{
+        maxWidth: '600px',
+        margin: '65px auto',
+        padding: '20px',
+        display: 'grid',
+        gridRowGap: '20px',
+        justifyItems: 'center',
+      }}
+    >
       <FormProvider {...methods}>
-        <FormInputText name="login" label="Login" type="text" />
-        <FormInputText name="password" label="Password" type="password" />
+        <FormInputText
+          name="login"
+          label={loginLabel}
+          type="text"
+          required={true}
+          minLength={2}
+          maxLength={15}
+          pattern={loginRegExp}
+        />
+        <FormInputText
+          name="password"
+          label={passwordLabel}
+          type="password"
+          required={true}
+          minLength={2}
+          maxLength={15}
+          pattern={passwordRegExp}
+        />
       </FormProvider>
       <Button onClick={handleSubmit(onSubmit)} variant={'contained'} disabled={isSubmitting}>
-        Submit
+        {submitLabel}
       </Button>
       <Button
         onClick={() => {
@@ -42,7 +76,7 @@ export default function Login() {
         }}
         variant={'outlined'}
       >
-        Reset
+        {resetLabel}
       </Button>
     </Paper>
   );
