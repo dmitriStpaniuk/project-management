@@ -9,8 +9,9 @@ import MenuItem from '@mui/material/MenuItem';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import { userSlice } from 'store/slices/userSlice';
 import { User } from 'services/userServiceTypes';
+import { Link } from 'react-router-dom';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Users', 'Logout'];
 
 export const HeaderAvatar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -55,7 +56,9 @@ export const HeaderAvatar = () => {
       >
         {settings.map((setting) => (
           <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            <Typography textAlign="center">{setting}</Typography>
+            <Link to={setting} style={{ color: 'gray' }}>
+              <Typography textAlign="center">{setting}</Typography>
+            </Link>
           </MenuItem>
         ))}
       </Menu>

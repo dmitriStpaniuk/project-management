@@ -53,14 +53,22 @@ export default function Header(props: Props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        {namingText}
+      <Typography
+        variant="h6"
+        component="div"
+        sx={{ my: 2, display: 'flex', justifyContent: 'center' }}
+      >
+        <Link to="/" data-testid="welcome" style={{ textDecoration: 'none' }}>
+          <div className={styles.logo}>
+            <img src={logo} className={styles.logotype} />
+            <div className={styles.naming} style={{ color: 'black', fontWeight: '700' }}>
+              {namingText}
+            </div>
+          </div>
+        </Link>
       </Typography>
       <Divider />
       <List>
-        <span>{ru}</span>
-        <RuEnSwitches />
-        <span>{en}</span>
         <PublicWrapper>
           {navItems.map((item) => (
             <Link key={item.name} to={item.to} data-testid={item.name}>
@@ -87,22 +95,10 @@ export default function Header(props: Props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ ml: 2, display: { sm: 'none' } }}
+            sx={{ ml: 1, display: { sm: 'none' } }}
           >
             {/* <MenuIcon /> */}X
           </IconButton>
-          <Typography
-            className={styles.miniHeader}
-            component="div"
-            sx={{ display: { sm: 'none' } }}
-          >
-            <Link to="/" data-testid="welcome" style={{ textDecoration: 'none' }}>
-              <div className={styles.logoSm}>
-                <div className={styles.naming}>{namingText}</div>
-                <img src={logo} className={styles.logotype} />
-              </div>
-            </Link>
-          </Typography>
           <Typography variant="h6" component="div" sx={{ display: { xs: 'none', sm: 'block' } }}>
             <Link to="/" data-testid="welcome" style={{ textDecoration: 'none' }}>
               <div className={styles.logo}>
