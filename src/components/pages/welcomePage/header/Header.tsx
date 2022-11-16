@@ -26,12 +26,11 @@ interface Props {
 }
 
 const drawerWidth = 240;
-// const navItems = ['Sing in', 'Sing up'];
 
 export default function Header(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const buttonNameText = useTranslate('welcomeText.naming');
+  const namingText = useTranslate('welcomeText.naming');
   const linkSignIn = useTranslate('links.signIn');
   const linkSignUp = useTranslate('links.signUp');
   const en = useTranslate('links.en');
@@ -55,8 +54,7 @@ export default function Header(props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        {/* <span>d{logo}</span> */}
-        {buttonNameText}
+        {namingText}
       </Typography>
       <Divider />
       <List>
@@ -65,11 +63,13 @@ export default function Header(props: Props) {
         <span>{en}</span>
         <PublicWrapper>
           {navItems.map((item) => (
-            <ListItem disablePadding key={item.name}>
-              <ListItemButton sx={{ textAlign: 'center' }}>
-                <ListItemText primary={item.name} />
-              </ListItemButton>
-            </ListItem>
+            <Link key={item.name} to={item.to} data-testid={item.name}>
+              <ListItem disablePadding key={item.name}>
+                <ListItemButton sx={{ textAlign: 'center', color: 'gray' }}>
+                  <ListItemText primary={item.name} />
+                </ListItemButton>
+              </ListItem>
+            </Link>
           ))}
         </PublicWrapper>
       </List>
@@ -94,40 +94,45 @@ export default function Header(props: Props) {
           <Typography
             className={styles.miniHeader}
             component="div"
-            sx={{ flexGrow: 1, display: { sm: 'none' } }}
+            sx={{ display: { sm: 'none' } }}
           >
             <Link to="/" data-testid="welcome" style={{ textDecoration: 'none' }}>
               <div className={styles.logoSm}>
-                <div className={styles.naming}>{buttonNameText}</div>
+                <div className={styles.naming}>{namingText}</div>
                 <img src={logo} className={styles.logotype} />
               </div>
             </Link>
           </Typography>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-          >
+          <Typography variant="h6" component="div" sx={{ display: { xs: 'none', sm: 'block' } }}>
             <Link to="/" data-testid="welcome" style={{ textDecoration: 'none' }}>
               <div className={styles.logo}>
                 <img src={logo} className={styles.logotype} />
-                <div className={styles.naming}>{buttonNameText}</div>
+                <div className={styles.naming}>{namingText}</div>
               </div>
             </Link>
           </Typography>
           <Box
             sx={{
-              display: { xs: 'none', sm: 'block' },
-              minWidth: '350px',
+              display: 'inline-flex',
+              width: '120px',
+              alignItems: 'center',
               justifyContent: 'space-around',
+              ml: 'auto',
             }}
           >
             {ru}
             <RuEnSwitches />
             {en}
+          </Box>
+          <Box
+            sx={{
+              display: { xs: 'none', sm: 'block' },
+              justifyContent: 'flex-end',
+            }}
+          >
             <PublicWrapper>
               {navItems.map((item) => (
-                <Link key={item.name} to={item.to} data-testid="registration">
+                <Link key={item.name} to={item.to} data-testid={item.name}>
                   <Button sx={{ color: '#fff', width: '123px' }}>{item.name}</Button>
                 </Link>
               ))}
