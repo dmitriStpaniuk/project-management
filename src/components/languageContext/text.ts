@@ -58,6 +58,10 @@ export const text = {
       en: 'Page not found',
       ru: ' Страница не найдена',
     },
+    userLinks: {
+      en: 'Profile, Account, Dashboard, All users, Logout',
+      ru: 'Профиль, Аккаунт, Доска, Пользователи, Выход',
+    },
   },
   form: {
     required: {
