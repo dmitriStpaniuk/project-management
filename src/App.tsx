@@ -41,14 +41,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="users"
-            element={
-              <PrivateRoute>
-                <Users />
-              </PrivateRoute>
-            }
-          />
+          <Route path="users" element={<Users />} />
           <Route path="page404" element={<Page404 />} />
           <Route path="*" element={<Navigate to={'/page404'} />} />
         </Route>
