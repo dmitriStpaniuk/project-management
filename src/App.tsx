@@ -14,6 +14,7 @@ import { getTokenLocalStorage } from 'services/apiConstants';
 import { DecodedToken } from 'services/userServiceTypes';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { getCurrentUserByIdThunk } from 'store/thunks/userThunk';
+import Users from 'components/pages/users/Users';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -40,8 +41,9 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="Page404" element={<Page404 />} />
-          <Route path="*" element={<Navigate to={'/Page404'} />} />
+          <Route path="users" element={<Users />} />
+          <Route path="page404" element={<Page404 />} />
+          <Route path="*" element={<Navigate to={'/page404'} />} />
         </Route>
       </Routes>
     </>

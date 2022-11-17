@@ -8,9 +8,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import { userSlice } from 'store/slices/userSlice';
-import { User } from 'services/userServiceTypes';
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import { Link } from 'react-router-dom';
+import { useTranslate } from './languageContext/languageContext';
+const settings = ['Profile', 'Account', 'Dashboard', 'Users', 'Logout'];
 
 export const HeaderAvatar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -20,6 +20,7 @@ export const HeaderAvatar = () => {
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
+  const users = useTranslate('links.userLinks');
 
   const handleCloseUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(null);
@@ -53,9 +54,11 @@ export const HeaderAvatar = () => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting) => (
+        {settings.map((setting, index) => (
           <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            <Typography textAlign="center">{setting}</Typography>
+            <Link to={setting} style={{ color: 'gray' }}>
+              <Typography textAlign="center">{users.split(',')[index]}</Typography>
+            </Link>
           </MenuItem>
         ))}
       </Menu>
