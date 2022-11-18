@@ -57,7 +57,7 @@ export const HeaderAvatar = () => {
         {settings.map((setting, index) => (
           <MenuItem key={setting} onClick={handleCloseUserMenu}>
             <Link to={setting} style={{ color: 'gray' }}>
-              <Typography textAlign="center">{links.split(', ')[index]}</Typography>
+              <Typography textAlign="center">{links.split(',')[index]}</Typography>
             </Link>
           </MenuItem>
         ))}
