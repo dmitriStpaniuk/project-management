@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -20,7 +20,7 @@ import styles from './Header.module.css';
 import logo from './../../../assets/svg/logo.svg';
 import { HeaderAvatar } from 'components/HeaderAvatar';
 import { PrivateWrapper } from 'routes/PrivateWrapper';
-import { flexbox } from '@mui/system';
+import { useScrollTrigger } from '@mui/material';
 interface Props {
   window?: () => Window;
 }
@@ -30,11 +30,31 @@ const drawerWidth = 240;
 export default function Header(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [currentScroll, setCurrentScroll] = useState<number>(0);
   const namingText = useTranslate('welcomeText.naming');
   const linkSignIn = useTranslate('links.signIn');
   const linkSignUp = useTranslate('links.signUp');
   const en = useTranslate('links.en');
   const ru = useTranslate('links.ru');
+
+  useEffect(() => {
+    document.addEventListener('scroll', handleScroll);
+    setCurrentScroll(Math.round(scrollY));
+    return () => {
+      document.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollY]);
+
+  const handleScroll = () => {
+    // Math.round(scrollY) > currentScroll
+    //   ? (setCurrentScroll(Math.round(scrollY)), console.log('down'))
+    //   : (setCurrentScroll(Math.round(scrollY)), console.log('up'));
+  };
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+  });
+  console.log(trigger);
+  //////
 
   const navItems = [
     {

@@ -7,24 +7,15 @@
   gap: 0.5rem;
   cursor: pointer;
 }
-.miniHeader {
+/* .miniHeader {
   display: flex;
   justify-content: end;
-}
-.logoSm {
-  display: flex;
-  align-items: center;
-  color: white;
-  line-height: 14px;
-  font-size: small;
-  gap: 1.2rem;
-  cursor: pointer;
-}
-.logotype:hover {
+} */
+/* .logotype:hover {
   border-radius: 50%;
   border: 1.5px solid #032092;
   box-sizing: border-box;
-}
+} */
 .naming {
   text-align: center;
   width: 45px;
