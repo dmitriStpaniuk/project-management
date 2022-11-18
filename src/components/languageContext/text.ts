@@ -56,11 +56,11 @@ export const text = {
     },
     page404: {
       en: 'Page not found',
-      ru: ' Страница не найдена',
+      ru: 'Страница не найдена',
     },
     userLinks: {
-      en: 'Profile, Account, Dashboard, All users, Logout',
-      ru: 'Профиль, Аккаунт, Доска, Пользователи, Выход',
+      en: 'Profile, All users, Logout',
+      ru: 'Профиль, Пользователи, Выход',
     },
   },
   form: {
