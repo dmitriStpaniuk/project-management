@@ -8,6 +8,10 @@ export const text = {
       en: 'Registration in successfully',
       ru: 'Вы успншно зарегестрировались',
     },
+    errorLogin: {
+      en: 'Login required',
+      ru: 'Необходимо войти в систему',
+    },
   },
   buttons: {
     submit: {

@@ -8,7 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import { userSlice } from 'store/slices/userSlice';
-import { User } from 'services/userServiceTypes';
+import { useNavigate } from 'react-router-dom';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -16,6 +16,7 @@ export const HeaderAvatar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
   const userName = useAppSelector((state) => state.user.user?.name);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -27,6 +28,9 @@ export const HeaderAvatar = () => {
     if (currentTarget === 'Logout') {
       localStorage.clear();
       dispatch(userSlice.actions.setUser(undefined));
+    }
+    if (currentTarget === 'Profile') {
+      navigate('/profile');
     }
   };
 
