@@ -58,6 +58,14 @@ export const text = {
       en: 'ru',
       ru: 'рус',
     },
+    page404: {
+      en: 'Page not found',
+      ru: 'Страница не найдена',
+    },
+    userLinks: {
+      en: 'Profile, All users, Logout',
+      ru: 'Профиль, Пользователи, Выход',
+    },
   },
   form: {
     required: {
@@ -77,16 +85,16 @@ export const text = {
       ru: 'Только en буквы и цифры, одна буква и одна цифра',
     },
     name: {
-      en: 'name',
-      ru: 'имя',
+      en: 'Name',
+      ru: 'Имя',
     },
     login: {
-      en: 'login',
-      ru: 'логин',
+      en: 'Login',
+      ru: 'Логин',
     },
     password: {
-      en: 'password',
-      ru: 'пароль',
+      en: 'Password',
+      ru: 'Пароль',
     },
   },
 };
