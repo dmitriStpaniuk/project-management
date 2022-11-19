@@ -36,6 +36,8 @@ export default function Header(props: Props) {
   const linkSignUp = useTranslate('links.signUp');
   const en = useTranslate('links.en');
   const ru = useTranslate('links.ru');
+  const boards = useTranslate('buttons.boards');
+  const addBoard = useTranslate('buttons.addBoard');
 
   const trigger = useScrollTrigger({
     threshold: 0,
@@ -86,6 +88,31 @@ export default function Header(props: Props) {
             </Link>
           ))}
         </PublicWrapper>
+        {/* <Box sx={{ m: '0 auto' }}> */}
+        <PrivateWrapper>
+          <Button
+            sx={{
+              color: 'gray',
+              width: '121px',
+              fontWeight: '600',
+              textTransform: 'none',
+            }}
+          >
+            {boards}
+          </Button>
+          <Button
+            sx={{
+              color: 'gray',
+              width: '121px',
+              fontWeight: '600',
+              padding: '6px 0',
+              textTransform: 'none',
+            }}
+          >
+            {addBoard}
+          </Button>
+        </PrivateWrapper>
+        {/* </Box> */}
       </List>
     </Box>
   );
@@ -128,20 +155,50 @@ export default function Header(props: Props) {
                 <img src={logo} className={styles.logotype} />
                 <Box
                   className={styles.naming}
-                  sx={{ color: trigger ? 'rgb(133, 133, 133)' : 'white', fontWeight: '600' }}
+                  sx={{
+                    color: trigger ? 'rgb(133, 133, 133)' : 'white',
+                    fontSize: '0.875rem',
+                  }}
                 >
                   {namingText}
                 </Box>
               </div>
             </Link>
           </Typography>
+          <Box sx={{ m: '0 auto', display: { xs: 'none', sm: 'block' } }}>
+            <PrivateWrapper>
+              <Link to={'boards'}>
+                <Button
+                  sx={{
+                    color: trigger ? 'rgb(133, 133, 133)' : 'white',
+                    width: '121px',
+                    fontWeight: '600',
+                    textTransform: 'none',
+                  }}
+                >
+                  {boards}
+                </Button>
+              </Link>
+              <Button
+                sx={{
+                  color: trigger ? 'rgb(133, 133, 133)' : 'white',
+                  width: '121px',
+                  fontWeight: '600',
+                  padding: '6px 0',
+                  textTransform: 'none',
+                }}
+              >
+                {addBoard}
+              </Button>
+            </PrivateWrapper>
+          </Box>
           <Box
             sx={{
               display: 'inline-flex',
               width: '120px',
               alignItems: 'center',
               justifyContent: 'space-evenly',
-              ml: 'auto',
+              fontSize: '0.875rem',
             }}
           >
             {ru}
@@ -162,6 +219,7 @@ export default function Header(props: Props) {
                       color: trigger ? 'rgb(133, 133, 133)' : 'white',
                       width: '123px',
                       fontWeight: '600',
+                      textTransform: 'none',
                     }}
                   >
                     {item.name}

@@ -22,6 +22,14 @@ export const text = {
       en: 'Reset',
       ru: 'Сброс',
     },
+    boards: {
+      en: 'All boards',
+      ru: 'Все доски',
+    },
+    addBoard: {
+      en: 'Add board',
+      ru: 'Создать доску',
+    },
   },
   welcomeText: {
     naming: {
@@ -43,11 +51,11 @@ export const text = {
   },
   links: {
     signIn: {
-      en: 'Sign In',
+      en: 'Sign in',
       ru: 'Логин',
     },
     signUp: {
-      en: 'Sign Up',
+      en: 'Sign up',
       ru: 'Регистрация',
     },
     en: {
