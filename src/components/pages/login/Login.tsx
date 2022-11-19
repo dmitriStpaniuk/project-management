@@ -34,7 +34,7 @@ export default function Login() {
   const onSubmit = async (data: LoginUserData) => {
     await dispatch(signinThunk(data));
     addAlert({ type: 'success', message: loginSuccessMessage });
-    navigate('/board');
+    navigate('/boards');
   };
 
   return (

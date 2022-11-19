@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Layout from 'components/pages/layout/Layout';
-import Board from 'components/pages/board/Board';
 import Login from 'components/pages/login/Login';
 import Page404 from 'components/pages/page404/Page404';
 import Registration from 'components/pages/registration/Registration';
@@ -15,7 +14,7 @@ import { DecodedToken } from 'services/userServiceTypes';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { getCurrentUserByIdThunk } from 'store/thunks/userThunk';
 import Users from 'components/pages/users/Users';
-
+import Boards from 'components/pages/boards/Boards';
 function App() {
   const dispatch = useAppDispatch();
 
@@ -34,10 +33,10 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="profile" element={<Profile />} />
           <Route
-            path="board/*"
+            path="boards/*"
             element={
               <PrivateRoute>
-                <Board />
+                <Boards />
               </PrivateRoute>
             }
           />
