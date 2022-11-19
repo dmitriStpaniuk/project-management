@@ -17,17 +17,18 @@ export default function Registration() {
   const passwordLabel = useTranslate('form.password');
   const submitLabel = useTranslate('buttons.submit');
   const resetLabel = useTranslate('buttons.reset');
+  const RegistrationSuccessMessage = useTranslate('alerts.successRegistration');
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const addAlert = useAlerts();
-  const RegistrationSuccessMessage = useTranslate('alerts.successRegistration');
 
   const methods = useForm({
     defaultValues: { name: '', login: '', password: '' },
     mode: 'onChange',
     reValidateMode: 'onChange',
   });
+
   const {
     handleSubmit,
     reset,

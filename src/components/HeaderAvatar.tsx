@@ -8,7 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import { userSlice } from 'store/slices/userSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslate } from './languageContext/languageContext';
 const settings = ['Profile', 'Users'];
 
