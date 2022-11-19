@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -20,7 +20,7 @@ import styles from './Header.module.css';
 import logo from './../../../assets/svg/logo.svg';
 import { HeaderAvatar } from 'components/HeaderAvatar';
 import { PrivateWrapper } from 'routes/PrivateWrapper';
-import { flexbox } from '@mui/system';
+import { useScrollTrigger } from '@mui/material';
 interface Props {
   window?: () => Window;
 }
@@ -30,11 +30,17 @@ const drawerWidth = 240;
 export default function Header(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [currentScroll, setCurrentScroll] = useState<number>(0);
   const namingText = useTranslate('welcomeText.naming');
   const linkSignIn = useTranslate('links.signIn');
   const linkSignUp = useTranslate('links.signUp');
   const en = useTranslate('links.en');
   const ru = useTranslate('links.ru');
+
+  const trigger = useScrollTrigger({
+    threshold: 0,
+    disableHysteresis: true,
+  });
 
   const navItems = [
     {
@@ -87,9 +93,26 @@ export default function Header(props: Props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <AppBar position="sticky" component="nav">
-        <Toolbar sx={{ justifyContent: 'space-between', backgroundColor: '#0070A0' }}>
+    <Box sx={{ display: 'flex', top: '0', zIndex: '1' }} position="sticky">
+      <AppBar
+        component="nav"
+        position="sticky"
+        sx={{
+          color: trigger ? 'black' : 'white',
+          fontWeight: '500',
+          boxShadow: trigger
+            ? '0px 2px 4px -1px rgb(0 0 0 / 0%)'
+            : '0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);',
+        }}
+      >
+        <Toolbar
+          sx={{
+            justifyContent: 'space-between',
+            backgroundColor: trigger ? 'white' : '#0070A0',
+            transition: '1s',
+            color: trigger ? 'rgb(133, 133, 133)' : 'white',
+          }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -103,7 +126,12 @@ export default function Header(props: Props) {
             <Link to="/" data-testid="welcome" style={{ textDecoration: 'none' }}>
               <div className={styles.logo}>
                 <img src={logo} className={styles.logotype} />
-                <div className={styles.naming}>{namingText}</div>
+                <Box
+                  className={styles.naming}
+                  sx={{ color: trigger ? 'rgb(133, 133, 133)' : 'white', fontWeight: '600' }}
+                >
+                  {namingText}
+                </Box>
               </div>
             </Link>
           </Typography>
@@ -112,7 +140,7 @@ export default function Header(props: Props) {
               display: 'inline-flex',
               width: '120px',
               alignItems: 'center',
-              justifyContent: 'space-around',
+              justifyContent: 'space-evenly',
               ml: 'auto',
             }}
           >
@@ -129,7 +157,15 @@ export default function Header(props: Props) {
             <PublicWrapper>
               {navItems.map((item) => (
                 <Link key={item.name} to={item.to} data-testid={item.name}>
-                  <Button sx={{ color: '#fff', width: '123px' }}>{item.name}</Button>
+                  <Button
+                    sx={{
+                      color: trigger ? 'rgb(133, 133, 133)' : 'white',
+                      width: '123px',
+                      fontWeight: '600',
+                    }}
+                  >
+                    {item.name}
+                  </Button>
                 </Link>
               ))}
             </PublicWrapper>
