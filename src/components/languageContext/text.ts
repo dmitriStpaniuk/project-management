@@ -16,6 +16,14 @@ export const text = {
       en: 'Data updated successfully',
       ru: 'Данные успешно обновлены',
     },
+    deleteAccount: {
+      en: 'Account successfully deleted',
+      ru: 'Аккаунт успешно удален',
+    },
+    userNotFouted: {
+      en: 'User was not founded!',
+      ru: 'Пользователь не существует',
+    },
   },
   buttons: {
     submit: {
@@ -113,6 +121,10 @@ export const text = {
     title: {
       en: 'Edit profile',
       ru: 'Редактировать профиль',
+    },
+    deleteButton: {
+      en: 'Delete account',
+      ru: 'Удалить аккаунт',
     },
   },
 };
