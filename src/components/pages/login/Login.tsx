@@ -15,6 +15,7 @@ export default function Login() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const loginSuccessMessage = useTranslate('alerts.successfullLogin');
+  const UserNotFounted = useTranslate('alerts.userNotFouted');
   const loginLabel = useTranslate('form.login');
   const passwordLabel = useTranslate('form.password');
   const submitLabel = useTranslate('buttons.submit');
@@ -32,9 +33,13 @@ export default function Login() {
     formState: { isSubmitting },
   } = methods;
   const onSubmit = async (data: LoginUserData) => {
-    await dispatch(signinThunk(data));
-    addAlert({ type: 'success', message: loginSuccessMessage });
-    navigate('/boards');
+    try {
+      await dispatch(signinThunk(data));
+      addAlert({ type: 'success', message: loginSuccessMessage });
+      navigate('/boards');
+    } catch {
+      addAlert({ type: 'error', message: UserNotFounted });
+    }
   };
 
   return (

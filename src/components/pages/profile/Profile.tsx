@@ -8,7 +8,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { DecodedToken, SignupUserData } from 'services/userServiceTypes';
 import { useAppDispatch } from 'store/store';
-import { updateUserThunk } from 'store/thunks/userThunk';
+import { deleteUserByIdThunk, updateUserThunk } from 'store/thunks/userThunk';
 import styles from './../registration/Registration.module.scss';
 import Typography from '@mui/material/Typography';
 import { getTokenLocalStorage } from 'services/apiConstants';
@@ -25,7 +25,9 @@ export default function Board() {
   const submitLabel = useTranslate('buttons.submit');
   const resetLabel = useTranslate('buttons.reset');
   const SuccessUpdateUserData = useTranslate('alerts.successUpdateUserData');
+  const SuccessDeleteAccount = useTranslate('alerts.deleteAccount');
   const TitleUpdateUserData = useTranslate('profile.title');
+  const DeleteAccauntText = useTranslate('profile.deleteButton');
 
   const errorLoginMessage = useTranslate('alerts.errorLogin');
   const token = getTokenLocalStorage();
@@ -43,7 +45,13 @@ export default function Board() {
     addAlert({ type: 'success', message: SuccessUpdateUserData });
     navigate('/boards');
   };
-
+  const hendleDeleteUser = async () => {
+    console.log(decodedToken.userId);
+    await dispatch(deleteUserByIdThunk(decodedToken.userId));
+    localStorage.clear();
+    addAlert({ type: 'success', message: SuccessDeleteAccount });
+    navigate('/');
+  };
   const methods = useForm({
     defaultValues: { name: '', login: '', password: '' },
     mode: 'onChange',
@@ -117,6 +125,14 @@ export default function Board() {
               color="error"
             >
               {resetLabel}
+            </Button>
+            <Button
+              onClick={hendleDeleteUser}
+              variant={'outlined'}
+              className={styles.formButton}
+              color="error"
+            >
+              {DeleteAccauntText}
             </Button>
           </Paper>
         </div>
