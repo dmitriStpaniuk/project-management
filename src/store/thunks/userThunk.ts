@@ -37,6 +37,7 @@ export const updateUserThunk =
 export const createNewUserThunk = (userData: SignupUserData) => async (dispatch: AppDispatch) => {
   dispatch(userSlice.actions.setIsUserFetching(true));
   const user = await userService.createNewUser(userData);
+
   dispatch(userSlice.actions.setIsUserFetching(false));
   dispatch(userSlice.actions.setUser(user));
 };

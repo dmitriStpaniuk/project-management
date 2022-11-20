@@ -6,13 +6,11 @@ import { loginRegExp, passwordRegExp } from 'components/utils/constants';
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { DecodedToken, SignupUserData } from 'services/userServiceTypes';
-import { useAppDispatch } from 'store/store';
+import { SignupUserData } from 'services/userServiceTypes';
+import { useAppDispatch, useAppSelector } from 'store/store';
 import { deleteUserByIdThunk, updateUserThunk } from 'store/thunks/userThunk';
 import styles from './../registration/Registration.module.scss';
 import Typography from '@mui/material/Typography';
-import { getTokenLocalStorage } from 'services/apiConstants';
-import jwt_decode from 'jwt-decode';
 
 export default function Board() {
   const dispatch = useAppDispatch();
@@ -28,26 +26,24 @@ export default function Board() {
   const SuccessDeleteAccount = useTranslate('alerts.deleteAccount');
   const TitleUpdateUserData = useTranslate('profile.title');
   const DeleteAccauntText = useTranslate('profile.deleteButton');
-
   const errorLoginMessage = useTranslate('alerts.errorLogin');
-  const token = getTokenLocalStorage();
-  const decodedToken = jwt_decode<DecodedToken>(token);
+
+  const userId = useAppSelector((state) => state.user.user?.id);
 
   useEffect(() => {
-    if (!token) {
+    if (!userId) {
       addAlert({ type: 'error', message: errorLoginMessage });
       navigate('/login');
     }
   }, []);
 
   const onSubmit = async (data: SignupUserData) => {
-    await dispatch(updateUserThunk(decodedToken.userId, data));
+    if (userId) await dispatch(updateUserThunk(userId, data));
     addAlert({ type: 'success', message: SuccessUpdateUserData });
     navigate('/boards');
   };
   const hendleDeleteUser = async () => {
-    console.log(decodedToken.userId);
-    await dispatch(deleteUserByIdThunk(decodedToken.userId));
+    if (userId) await dispatch(deleteUserByIdThunk(userId));
     localStorage.clear();
     addAlert({ type: 'success', message: SuccessDeleteAccount });
     navigate('/');
