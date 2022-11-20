@@ -12,8 +12,8 @@ import { getTokenLocalStorage } from 'services/apiConstants';
 import { DecodedToken } from 'services/userServiceTypes';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { getCurrentUserByIdThunk } from 'store/thunks/userThunk';
-import Users from 'components/pages/users/Users';
 import Boards from 'components/pages/boards/Boards';
+import Users from 'components/pages/users/users';
 function App() {
   const dispatch = useAppDispatch();
 
