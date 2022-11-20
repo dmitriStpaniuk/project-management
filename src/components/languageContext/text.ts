@@ -8,6 +8,14 @@ export const text = {
       en: 'Registration in successfully',
       ru: 'Вы успншно зарегестрировались',
     },
+    errorLogin: {
+      en: 'Login required',
+      ru: 'Необходимо войти в систему',
+    },
+    successUpdateUserData: {
+      en: 'Data updated successfully',
+      ru: 'Данные успешно обновлены',
+    },
   },
   buttons: {
     submit: {
@@ -99,6 +107,12 @@ export const text = {
     password: {
       en: 'Password',
       ru: 'Пароль',
+    },
+  },
+  profile: {
+    title: {
+      en: 'Edit profile',
+      ru: 'Редактировать профиль',
     },
   },
 };

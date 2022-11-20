@@ -8,7 +8,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import { userSlice } from 'store/slices/userSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslate } from './languageContext/languageContext';
 const settings = ['Profile', 'Users'];
 
@@ -17,6 +17,7 @@ export const HeaderAvatar = () => {
   const userName = useAppSelector((state) => state.user.user?.name);
   const dispatch = useAppDispatch();
   const links = useTranslate('links.userLinks');
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -28,6 +29,9 @@ export const HeaderAvatar = () => {
     if (currentTarget === 'Logout' || currentTarget === 'Выход') {
       localStorage.clear();
       dispatch(userSlice.actions.setUser(undefined));
+    }
+    if (currentTarget === 'Profile') {
+      navigate('/profile');
     }
   };
 
