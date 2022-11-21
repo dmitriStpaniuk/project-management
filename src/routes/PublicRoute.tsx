@@ -6,7 +6,7 @@ import { useAppSelector } from 'store/store';
 type PrivateRouteProps = {
   children: React.ReactNode;
 };
-export const PrivateRoute = ({ children }: PrivateRouteProps) => {
+export const PublicRoute = ({ children }: PrivateRouteProps) => {
   const user = useAppSelector((state) => state.user.user);
   const isUserFetching = useAppSelector((state) => state.user.isUserFetching);
   if (isUserFetching) {
@@ -24,5 +24,5 @@ export const PrivateRoute = ({ children }: PrivateRouteProps) => {
     );
   }
 
-  return user ? <> {children} </> : <Navigate to="/login" />;
+  return user ? <Navigate to="/boards" /> : <> {children} </>;
 };

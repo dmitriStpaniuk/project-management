@@ -42,12 +42,14 @@ export default function Board() {
     addAlert({ type: 'success', message: SuccessUpdateUserData });
     navigate('/boards');
   };
+
   const hendleDeleteUser = async () => {
     if (userId) await dispatch(deleteUserByIdThunk(userId));
     localStorage.clear();
     addAlert({ type: 'success', message: SuccessDeleteAccount });
     navigate('/');
   };
+
   const methods = useForm({
     defaultValues: { name: '', login: '', password: '' },
     mode: 'onChange',
@@ -61,7 +63,7 @@ export default function Board() {
   } = methods;
 
   return (
-    <div className={styles.registration}>
+    <form className={styles.registration}>
       <div className="container">
         <div className={styles.wrapper}>
           <Paper
@@ -133,6 +135,6 @@ export default function Board() {
           </Paper>
         </div>
       </div>
-    </div>
+    </form>
   );
 }

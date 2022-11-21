@@ -13,6 +13,7 @@ import styles from './Login.module.scss';
 
 export default function Login() {
   const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
   const loginSuccessMessage = useTranslate('alerts.successfullLogin');
   const UserNotFounted = useTranslate('alerts.userNotFouted');
@@ -20,18 +21,20 @@ export default function Login() {
   const passwordLabel = useTranslate('form.password');
   const submitLabel = useTranslate('buttons.submit');
   const resetLabel = useTranslate('buttons.reset');
+  const addAlert = useAlerts();
+
   const methods = useForm({
     defaultValues: { login: '', password: '' },
     mode: 'onChange',
     reValidateMode: 'onChange',
   });
-  const addAlert = useAlerts();
 
   const {
     handleSubmit,
     reset,
     formState: { isSubmitting },
   } = methods;
+
   const onSubmit = async (data: LoginUserData) => {
     try {
       await dispatch(signinThunk(data));
