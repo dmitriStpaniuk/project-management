@@ -35,11 +35,18 @@ export const updateUserThunk =
   };
 
 export const createNewUserThunk = (userData: SignupUserData) => async (dispatch: AppDispatch) => {
+  const userLogin = { login: userData.name, password: userData.password };
   dispatch(userSlice.actions.setIsUserFetching(true));
   const user = await userService.createNewUser(userData);
-
   dispatch(userSlice.actions.setIsUserFetching(false));
   dispatch(userSlice.actions.setUser(user));
+
+  const res = await userService.signin(userLogin);
+  if (res.token) {
+    setTokenLocalStorage(res.token);
+    const decodedToken = jwt_decode<DecodedToken>(res.token);
+    return dispatch(getCurrentUserByIdThunk(decodedToken.userId));
+  }
 };
 
 export const signinThunk = (userData: LoginUserData) => async (dispatch: AppDispatch) => {

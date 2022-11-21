@@ -13,7 +13,8 @@ import { DecodedToken } from 'services/userServiceTypes';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { getCurrentUserByIdThunk } from 'store/thunks/userThunk';
 import Boards from 'components/pages/boards/Boards';
-import Users from 'components/pages/users/users';
+import Users from 'components/pages/users/Users';
+import { PublicRoute } from 'routes/PublicRoute';
 function App() {
   const dispatch = useAppDispatch();
 
@@ -28,8 +29,22 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<WelcomePage />} />
-          <Route path="registration" element={<Registration />} />
-          <Route path="login" element={<Login />} />
+          <Route
+            path="registration"
+            element={
+              <PublicRoute>
+                <Registration />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
           <Route path="profile" element={<Profile />} />
           <Route
             path="boards/*"
