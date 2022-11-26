@@ -136,7 +136,7 @@ export default function Header(props: Props) {
           sx={{
             justifyContent: 'space-between',
             backgroundColor: trigger ? 'white' : '#0070A0',
-            transition: '1s',
+            // transition: '1s',
             color: trigger ? 'rgb(133, 133, 133)' : 'white',
           }}
         >

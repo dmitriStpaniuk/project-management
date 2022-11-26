@@ -75,7 +75,7 @@ export default function Board() {
               justifyItems: 'center',
             }}
           >
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
               {TitleUpdateUserData}
             </Typography>
             <FormProvider {...methods}>
@@ -129,6 +129,7 @@ export default function Board() {
               variant={'outlined'}
               className={styles.formButton}
               color="error"
+              sx={{ height: 'fit-content' }}
             >
               {DeleteAccauntText}
             </Button>

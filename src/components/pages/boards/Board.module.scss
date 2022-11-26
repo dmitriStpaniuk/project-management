@@ -1,0 +1,15 @@
+.board {
+  background-image: url('./../../assets/images/background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: calc(100vh - 128px);
+  @media (max-width: 600px) {
+    min-height: calc(100vh - 120px);
+  }
+}
+.wrapper {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}

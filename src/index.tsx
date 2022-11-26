@@ -12,15 +12,15 @@ import './index.css';
 const store = setupStore();
 
 root.render(
-  <React.StrictMode>
-    <LanguageContextProvider>
-      <SnackbarPanel>
-        <Provider store={store}>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </Provider>
-      </SnackbarPanel>
-    </LanguageContextProvider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <LanguageContextProvider>
+    <SnackbarPanel>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </SnackbarPanel>
+  </LanguageContextProvider>
+  // </React.StrictMode>
 );
