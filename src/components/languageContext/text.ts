@@ -1,5 +1,13 @@
 export const text = {
   alerts: {
+    successCreateBoard: {
+      en: 'Create board in successfully',
+      ru: 'Вы успешно создали доску',
+    },
+    errorCreateBoard: {
+      en: 'Failed to create board',
+      ru: 'Не удалось создать доску',
+    },
     successfullLogin: {
       en: 'Logged in successfully',
       ru: 'Вы вошли в аккаунт',
@@ -26,6 +34,10 @@ export const text = {
     },
   },
   buttons: {
+    close: {
+      en: 'Close',
+      ru: 'Закрыть',
+    },
     submit: {
       en: 'Submit',
       ru: 'Отправить',
@@ -41,6 +53,18 @@ export const text = {
     addBoard: {
       en: 'Add board',
       ru: 'Создать доску',
+    },
+    editBoard: {
+      en: 'Edit',
+      ru: 'Изменить',
+    },
+    deleteBoard: {
+      en: 'Delete',
+      ru: 'Удалить',
+    },
+    neweBoard: {
+      en: 'Add board',
+      ru: 'Добавить доску',
     },
   },
   welcomeText: {
@@ -112,9 +136,21 @@ export const text = {
       en: 'Login',
       ru: 'Логин',
     },
+    boardName: {
+      en: 'Name board',
+      ru: 'Имя доски',
+    },
+    boardDescriptoon: {
+      en: 'Description',
+      ru: 'Описание',
+    },
     password: {
       en: 'Password',
       ru: 'Пароль',
+    },
+    titleCreateBoard: {
+      en: 'Create board',
+      ru: 'Создать доску',
     },
   },
   profile: {
