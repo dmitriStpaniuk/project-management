@@ -25,7 +25,11 @@ export const BoardCard = ({ title, description, id }: BoardCardProps) => {
           {description}
         </Typography>
       </CardContent>
-      <CardActions>
+      <CardActions
+        sx={{
+          justifyContent: 'center',
+        }}
+      >
         <Button variant="outlined" size="small" onClick={handleEdit}>
           {editButton}
         </Button>

@@ -56,6 +56,7 @@ export const AddBoardForm = ({ setPopupFormAddBoard }: FormProps) => {
         gridRowGap: '20px',
         justifyItems: 'center',
         position: 'absolute',
+        top: '30%',
       }}
     >
       <Typography variant="h4" component="h4">
