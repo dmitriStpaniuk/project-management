@@ -1,10 +1,9 @@
-import { Button, FormControl, Paper, Typography } from '@mui/material';
+import { Button, Paper, Typography } from '@mui/material';
 import { FormBoardInputText } from 'components/FormBoardInputText';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { createNewBoard } from 'services/boardService';
 import { CreateBoardData } from 'services/boardServiceTypes';
 import { useAppDispatch } from 'store/store';
 import { createNewBoardThunk } from 'store/thunks/boardThunk';

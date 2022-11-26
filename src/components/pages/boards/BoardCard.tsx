@@ -10,7 +10,7 @@ export const BoardCard = ({ title, description }: BoardCardProps) => {
   const editButton = useTranslate('buttons.editBoard');
   const deleteButton = useTranslate('buttons.deleteBoard');
   const card = (
-    <React.Fragment>
+    <>
       <CardContent>
         <Typography variant="h5" component="div">
           {title}
@@ -23,7 +23,7 @@ export const BoardCard = ({ title, description }: BoardCardProps) => {
         <Button size="small">{editButton}</Button>
         <Button size="small">{deleteButton}</Button>
       </CardActions>
-    </React.Fragment>
+    </>
   );
   return (
     <Box sx={{ minWidth: 275 }}>
