@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { useTranslate } from 'components/languageContext/languageContext';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineCheck } from 'react-icons/ai';
@@ -7,7 +7,7 @@ import { getAllUBoardsList } from 'store/thunks/boardThunk';
 import { AddBoardForm } from './AddBoardForm';
 import { BoardCard } from './BoardCard';
 
-export default function Board() {
+export default function Boards() {
   const [popupFormAddBoard, setPopupFormAddBoard] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const allBoardsList = useAppSelector((state) => state.board.allBoardsList);
@@ -41,13 +41,20 @@ export default function Board() {
         <Typography variant="h2" component="h3" sx={{ textAlign: 'center' }}>
           Boards
         </Typography>
-        {allBoardsList?.map((board) => (
-          <BoardCard key={board.id} title={board.title} description={board.description} />
-        ))}
+        <Box display={'flex'} flexWrap={'wrap'} justifyContent={'center'} sx={{ gap: 1 }}>
+          {allBoardsList?.map((board) => (
+            <BoardCard
+              key={board.id}
+              title={board.title}
+              description={board.description}
+              id={board.id}
+            />
+          ))}
+        </Box>
         {popupFormAddBoard ? <AddBoardForm setPopupFormAddBoard={setPopupFormAddBoard} /> : null}
         <Button
           sx={{ width: '30%', fontSize: 12 }}
-          variant="outlined"
+          variant="contained"
           startIcon={<AiOutlineCheck />}
           onClick={handleClick}
         >
