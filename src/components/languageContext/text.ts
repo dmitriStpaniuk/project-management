@@ -8,6 +8,14 @@ export const text = {
       en: 'Failed to create board',
       ru: 'Не удалось создать доску',
     },
+    successEditBoard: {
+      en: 'Edit board in successfully',
+      ru: 'Вы успешно изменили доску',
+    },
+    errorEditBoard: {
+      en: 'Failed to edit board',
+      ru: 'Не удалось изменить доску',
+    },
     successfullLogin: {
       en: 'Logged in successfully',
       ru: 'Вы вошли в аккаунт',
