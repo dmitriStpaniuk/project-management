@@ -55,6 +55,14 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="boards/:boardId"
+            element={
+              <PrivateRoute>
+                <Board />
+              </PrivateRoute>
+            }
+          />
           <Route path="users" element={<Users />} />
           <Route path="board/*" element={<Board />} />
           <Route path="page404" element={<Page404 />} />
