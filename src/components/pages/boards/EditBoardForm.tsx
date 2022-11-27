@@ -1,8 +1,8 @@
+import React from 'react';
 import { Button, Paper, Typography } from '@mui/material';
 import { FormBoardInputText } from 'components/FormBoardInputText';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { CreateBoardData } from 'services/boardServiceTypes';
 import { useAppDispatch } from 'store/store';
@@ -10,7 +10,7 @@ import { updateBoardThunk } from 'store/thunks/boardThunk';
 import styles from './../login/Login.module.scss';
 
 type FormProps = {
-  setEditFormBoard: (x: boolean) => void;
+  setEditFormBoard: (x: string) => void;
   id: string;
 };
 
@@ -39,7 +39,7 @@ export const EditBoardForm = ({ setEditFormBoard, id }: FormProps) => {
     try {
       await dispatch(updateBoardThunk(id, data));
       addAlert({ type: 'success', message: successEditBoard });
-      setEditFormBoard(false);
+      setEditFormBoard('');
     } catch {
       addAlert({ type: 'error', message: errorEditBoard });
     }
@@ -55,7 +55,8 @@ export const EditBoardForm = ({ setEditFormBoard, id }: FormProps) => {
         justifyItems: 'center',
         position: 'absolute',
         zIndex: 5,
-        top: '30%',
+        left: '20%',
+        top: '20%',
       }}
     >
       <Typography variant="h4" component="h4">
@@ -78,7 +79,7 @@ export const EditBoardForm = ({ setEditFormBoard, id }: FormProps) => {
       <Button
         className={styles.formButton}
         onClick={() => {
-          setEditFormBoard(false);
+          setEditFormBoard('');
         }}
         variant={'outlined'}
         color="error"
