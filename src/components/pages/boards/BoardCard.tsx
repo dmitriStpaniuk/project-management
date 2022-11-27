@@ -1,14 +1,20 @@
 import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import { useTranslate } from 'components/languageContext/languageContext';
-import React from 'react';
+import React, { useState } from 'react';
+import { EditBoardForm } from './EditBoardForm';
 type BoardCardProps = {
   title: string;
   description: string;
+  id: string;
 };
 
-export const BoardCard = ({ title, description }: BoardCardProps) => {
+export const BoardCard = ({ title, description, id }: BoardCardProps) => {
+  const [editFormBoard, setEditFormBoard] = useState<boolean>(false);
   const editButton = useTranslate('buttons.editBoard');
   const deleteButton = useTranslate('buttons.deleteBoard');
+  const handleEdit = () => {
+    setEditFormBoard(true);
+  };
   const card = (
     <>
       <CardContent>
@@ -19,15 +25,26 @@ export const BoardCard = ({ title, description }: BoardCardProps) => {
           {description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">{editButton}</Button>
-        <Button size="small">{deleteButton}</Button>
+      <CardActions
+        sx={{
+          justifyContent: 'center',
+        }}
+      >
+        <Button variant="outlined" size="small" onClick={handleEdit}>
+          {editButton}
+        </Button>
+        <Button variant="outlined" size="small">
+          {deleteButton}
+        </Button>
       </CardActions>
     </>
   );
   return (
-    <Box sx={{ minWidth: 275 }}>
-      <Card variant="outlined">{card}</Card>
-    </Box>
+    <>
+      {editFormBoard ? <EditBoardForm setEditFormBoard={setEditFormBoard} id={id} /> : null}
+      <Box sx={{ minWidth: 275 }}>
+        <Card variant="outlined">{card}</Card>
+      </Box>
+    </>
   );
 };

@@ -6,23 +6,24 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { CreateBoardData } from 'services/boardServiceTypes';
 import { useAppDispatch } from 'store/store';
-import { createNewBoardThunk } from 'store/thunks/boardThunk';
+import { updateBoardThunk } from 'store/thunks/boardThunk';
 import styles from './../login/Login.module.scss';
 
 type FormProps = {
-  setPopupFormAddBoard: (x: boolean) => void;
+  setEditFormBoard: (x: boolean) => void;
+  id: string;
 };
 
-export const AddBoardForm = ({ setPopupFormAddBoard }: FormProps) => {
+export const EditBoardForm = ({ setEditFormBoard, id }: FormProps) => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
-  const successCreateBoard = useTranslate('alerts.successCreateBoard');
-  const errorCreateBoard = useTranslate('alerts.errorCreateBoard');
+  const successEditBoard = useTranslate('alerts.successEditBoard');
+  const errorEditBoard = useTranslate('alerts.errorEditBoard');
   const nameBoard = useTranslate('form.boardName');
   const descriptionBoard = useTranslate('form.boardDescriptoon');
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
-  const titleBoardCreateForm = useTranslate('form.titleCreateBoard');
+  const titleBoardCreateForm = useTranslate('buttons.editBoard');
 
   const methods = useForm({
     defaultValues: { title: '', description: '' },
@@ -35,19 +36,16 @@ export const AddBoardForm = ({ setPopupFormAddBoard }: FormProps) => {
   } = methods;
 
   const onSubmit = async (data: CreateBoardData) => {
-    console.log(data);
     try {
-      await dispatch(createNewBoardThunk(data));
-      addAlert({ type: 'success', message: successCreateBoard });
-      setPopupFormAddBoard(false);
-      // navigate('/boards');
+      await dispatch(updateBoardThunk(id, data));
+      addAlert({ type: 'success', message: successEditBoard });
+      setEditFormBoard(false);
     } catch {
-      addAlert({ type: 'error', message: errorCreateBoard });
+      addAlert({ type: 'error', message: errorEditBoard });
     }
   };
 
   return (
-    // <div className={styles.wrapper}>
     <Paper
       style={{
         width: '50%',
@@ -56,6 +54,7 @@ export const AddBoardForm = ({ setPopupFormAddBoard }: FormProps) => {
         gridRowGap: '20px',
         justifyItems: 'center',
         position: 'absolute',
+        zIndex: 5,
         top: '30%',
       }}
     >
@@ -79,7 +78,7 @@ export const AddBoardForm = ({ setPopupFormAddBoard }: FormProps) => {
       <Button
         className={styles.formButton}
         onClick={() => {
-          setPopupFormAddBoard(false);
+          setEditFormBoard(false);
         }}
         variant={'outlined'}
         color="error"
@@ -87,6 +86,5 @@ export const AddBoardForm = ({ setPopupFormAddBoard }: FormProps) => {
         {closeBoardCreateForm}
       </Button>
     </Paper>
-    // </div>
   );
 };
