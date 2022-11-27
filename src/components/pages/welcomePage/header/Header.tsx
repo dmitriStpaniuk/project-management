@@ -21,6 +21,7 @@ import logo from './../../../assets/svg/logo.svg';
 import { HeaderAvatar } from 'components/HeaderAvatar';
 import { PrivateWrapper } from 'routes/PrivateWrapper';
 import { useScrollTrigger } from '@mui/material';
+import { TfiAlignJustify } from 'react-icons/tfi';
 interface Props {
   window?: () => Window;
 }
@@ -88,18 +89,19 @@ export default function Header(props: Props) {
             </Link>
           ))}
         </PublicWrapper>
-        {/* <Box sx={{ m: '0 auto' }}> */}
         <PrivateWrapper>
-          <Button
-            sx={{
-              color: 'gray',
-              width: '121px',
-              fontWeight: '600',
-              textTransform: 'none',
-            }}
-          >
-            {boards}
-          </Button>
+          <Link to={'boards'}>
+            <Button
+              sx={{
+                color: 'gray',
+                width: '121px',
+                fontWeight: '600',
+                textTransform: 'none',
+              }}
+            >
+              {boards}
+            </Button>
+          </Link>
           <Button
             sx={{
               color: 'gray',
@@ -112,7 +114,6 @@ export default function Header(props: Props) {
             {addBoard}
           </Button>
         </PrivateWrapper>
-        {/* </Box> */}
       </List>
     </Box>
   );
@@ -147,7 +148,7 @@ export default function Header(props: Props) {
             onClick={handleDrawerToggle}
             sx={{ ml: 1, display: { sm: 'none' } }}
           >
-            {/* <MenuIcon /> */}X
+            {<TfiAlignJustify />}
           </IconButton>
           <Typography variant="h6" component="div" sx={{ display: { xs: 'none', sm: 'block' } }}>
             <Link to="/" data-testid="welcome" style={{ textDecoration: 'none' }}>
