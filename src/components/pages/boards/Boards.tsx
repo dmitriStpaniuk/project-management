@@ -2,13 +2,16 @@ import { Box, Button, Container, Typography } from '@mui/material';
 import { useTranslate } from 'components/languageContext/languageContext';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineCheck } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import { getAllUBoardsList } from 'store/thunks/boardThunk';
 import { AddBoardForm } from './AddBoardForm';
 import { BoardCard } from './BoardCard';
+import { EditBoardForm } from './EditBoardForm';
 
 export default function Boards() {
-  const [popupFormAddBoard, setPopupFormAddBoard] = useState<boolean>(false);
+  const [popupFormAddBoard, setPopupFormAddBoard] = useState(false);
+  const [editFormBoardId, setEditFormBoard] = useState('');
   const dispatch = useAppDispatch();
   const allBoardsList = useAppSelector((state) => state.board.allBoardsList);
   const addBoardText = useTranslate('buttons.neweBoard');
@@ -17,13 +20,10 @@ export default function Boards() {
     setPopupFormAddBoard(true);
   };
 
-  const allBoards = async () => {
-    await dispatch(getAllUBoardsList());
-  };
-
   useEffect(() => {
-    allBoards();
-  }, [handleClick]);
+    dispatch(getAllUBoardsList());
+  }, []);
+
   return (
     <div style={{ minHeight: 'inherit', backgroundColor: '#f6f6f6' }}>
       <Container
@@ -41,17 +41,28 @@ export default function Boards() {
         <Typography variant="h2" component="h3" sx={{ textAlign: 'center' }}>
           Boards
         </Typography>
-        <Box display={'flex'} flexWrap={'wrap'} justifyContent={'center'} sx={{ gap: 1 }}>
+        <Box
+          display={'flex'}
+          flexWrap={'wrap'}
+          justifyContent={'center'}
+          alignItems={'center'}
+          sx={{ gap: 1 }}
+        >
           {allBoardsList?.map((board) => (
-            <BoardCard
-              key={board.id}
-              title={board.title}
-              description={board.description}
-              id={board.id}
-            />
+            <Link key={board.id} to={board.id}>
+              <BoardCard
+                title={board.title}
+                description={board.description}
+                id={board.id}
+                setEditFormBoard={setEditFormBoard}
+              />
+            </Link>
           ))}
         </Box>
         {popupFormAddBoard ? <AddBoardForm setPopupFormAddBoard={setPopupFormAddBoard} /> : null}
+        {editFormBoardId ? (
+          <EditBoardForm setEditFormBoard={setEditFormBoard} id={editFormBoardId} />
+        ) : null}
         <Button
           sx={{ width: '30%', fontSize: 12 }}
           variant="contained"

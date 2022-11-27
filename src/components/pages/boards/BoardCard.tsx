@@ -6,14 +6,15 @@ type BoardCardProps = {
   title: string;
   description: string;
   id: string;
+  setEditFormBoard: (id: string) => void;
 };
 
-export const BoardCard = ({ title, description, id }: BoardCardProps) => {
-  const [editFormBoard, setEditFormBoard] = useState<boolean>(false);
+export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCardProps) => {
   const editButton = useTranslate('buttons.editBoard');
   const deleteButton = useTranslate('buttons.deleteBoard');
-  const handleEdit = () => {
-    setEditFormBoard(true);
+  const handleEdit = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setEditFormBoard(id);
   };
   const card = (
     <>
@@ -41,7 +42,6 @@ export const BoardCard = ({ title, description, id }: BoardCardProps) => {
   );
   return (
     <>
-      {editFormBoard ? <EditBoardForm setEditFormBoard={setEditFormBoard} id={id} /> : null}
       <Box sx={{ minWidth: 275 }}>
         <Card variant="outlined">{card}</Card>
       </Box>
