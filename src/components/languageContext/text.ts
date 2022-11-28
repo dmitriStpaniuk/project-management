@@ -74,6 +74,14 @@ export const text = {
       en: 'Add board',
       ru: 'Добавить доску',
     },
+    newColumn: {
+      en: 'Add column',
+      ru: 'Добавить колонку',
+    },
+    newTask: {
+      en: 'Add task',
+      ru: 'Добавить карточку',
+    },
   },
   welcomeText: {
     naming: {

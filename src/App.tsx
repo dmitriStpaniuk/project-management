@@ -64,6 +64,7 @@ function App() {
             }
           />
           <Route path="users" element={<Users />} />
+          <Route path="board/*" element={<Board />} />
           <Route path="page404" element={<Page404 />} />
           <Route path="*" element={<Navigate to={'/page404'} />} />
         </Route>

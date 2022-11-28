@@ -1,0 +1,75 @@
+.wrapper {
+  width: 240px;
+  border: solid 2px;
+  border-radius: 3px;
+  // padding: 8px;
+  height: fit-content;
+  background-color: #faea73;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  gap: 0.8rem;
+}
+
+.title {
+  text-align: center;
+  margin: 0;
+}
+.taskList {
+  flex-direction: column;
+  display: flex;
+  gap: 0.8rem;
+  min-height: 35px;
+}
+.dragactive {
+  background-color: rgb(247, 206, 220);
+  // width: 220px;
+  // border: solid 2px;
+  // border-radius: 3px;
+  padding: 8px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+.nodragactive {
+  // width: 220px;
+  // border: solid 2px;
+  // border-radius: 3px;
+  padding: 8px;
+  // height: fit-content;
+  // background-color: #faea73;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  gap: 0.8rem;
+}
+.line {
+  margin-bottom: 0;
+  height: 2px;
+  background-color: black;
+  border: solid 0;
+  border-radius: 12px;
+}
+.newTask {
+  // position: relative;
+  // left: 1.5rem;
+  // // top: 1.5rem;
+  height: fit-content;
+  width: fit-content;
+  border: solid 2px;
+  border-radius: 3px;
+  padding: 4px 8px;
+  height: fit-content;
+  background-color: #cceff6;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+.newTask:hover {
+  background-color: #fff;
+  color: black;
+}
+.newTask:hover::after {
+  content: attr(data-title);
+}
