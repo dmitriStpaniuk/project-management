@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getBoardById } from 'services/boardService';
-import { BoardDataResponse } from 'services/boardServiceTypes';
 import { initialData } from './beautiful-dnd/initialData';
 import Column from './beautiful-dnd/Column';
 import styles from './Board.module.scss';
@@ -15,7 +14,7 @@ import { useAppSelector } from 'store/store';
 
 const Board = () => {
   const { boardId } = useParams();
-  // const [board, setBoard] = useState<BoardDataResponse | null>(null);
+  // const [board, setBoard] = useState<BoardDataResponse>();
   const [board, setBoard] = useState(initialData);
   const [newColumn, setNewColumn] = useState(false);
   const columnFetching = useAppSelector((state) => state.column.isColumnMainFetching);
