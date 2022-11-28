@@ -1,4 +1,8 @@
-export const initialData = {
+import { BoardDataResponse } from 'services/boardServiceTypes';
+export const initialData: BoardDataResponse = {
+  id: 'kjhkasdasfg6484jh',
+  title: 'First board',
+  description: 'olijhkjihs',
   columns: [
     {
       id: 'column-1',
