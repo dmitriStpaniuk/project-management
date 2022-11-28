@@ -4,29 +4,28 @@ import { FormBoardInputText } from 'components/FormBoardInputText';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
 import { FormProvider, useForm } from 'react-hook-form';
-import { CreateBoardData } from 'services/boardServiceTypes';
 import { useAppDispatch } from 'store/store';
-import { updateBoardThunk } from 'store/thunks/boardThunk';
-import styles from './../login/Login.module.scss';
+import styles from './../../login/Login.module.scss';
+import { createNewColumnThunk } from 'store/thunks/columnThunk';
+import { CreateColumnData } from 'services/columnServiceTypes';
 
 type FormProps = {
-  setEditFormBoard: (x: string) => void;
-  id: string;
+  setNewColumn: (x: boolean) => void;
+  id?: string;
 };
 
-export const EditBoardForm = ({ setEditFormBoard, id }: FormProps) => {
+const CreateNewColumnForm = ({ setNewColumn, id }: FormProps) => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
-  const successEditBoard = useTranslate('alerts.successEditBoard');
-  const errorEditBoard = useTranslate('alerts.errorEditBoard');
+  const successEditBoard = useTranslate('alerts.successCreateColumn');
+  const errorEditBoard = useTranslate('alerts.errorCreateColumn');
   const nameBoard = useTranslate('form.boardName');
-  const descriptionBoard = useTranslate('form.boardDescriptoon');
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
   const titleBoardCreateForm = useTranslate('buttons.editBoard');
 
   const methods = useForm({
-    defaultValues: { title: '', description: '' },
+    defaultValues: { title: '' },
     mode: 'onChange',
   });
 
@@ -35,11 +34,11 @@ export const EditBoardForm = ({ setEditFormBoard, id }: FormProps) => {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = async (data: CreateBoardData) => {
+  const onSubmit = async (data: CreateColumnData) => {
     try {
-      await dispatch(updateBoardThunk(id, data));
+      if (id) await dispatch(createNewColumnThunk(id, data));
       addAlert({ type: 'success', message: successEditBoard });
-      setEditFormBoard('');
+      setNewColumn(false);
     } catch {
       addAlert({ type: 'error', message: errorEditBoard });
     }
@@ -55,8 +54,9 @@ export const EditBoardForm = ({ setEditFormBoard, id }: FormProps) => {
         justifyItems: 'center',
         position: 'absolute',
         zIndex: 5,
-        left: '20%',
-        top: '20%',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
       }}
     >
       <Typography variant="h4" component="h4">
@@ -64,7 +64,6 @@ export const EditBoardForm = ({ setEditFormBoard, id }: FormProps) => {
       </Typography>
       <FormProvider {...methods}>
         <FormBoardInputText name="title" label={nameBoard} type="text" />
-        <FormBoardInputText name="description" label={descriptionBoard} type="text" />
       </FormProvider>
 
       <Button
@@ -79,7 +78,7 @@ export const EditBoardForm = ({ setEditFormBoard, id }: FormProps) => {
       <Button
         className={styles.formButton}
         onClick={() => {
-          setEditFormBoard('');
+          setNewColumn(false);
         }}
         variant={'outlined'}
         color="error"
@@ -89,3 +88,5 @@ export const EditBoardForm = ({ setEditFormBoard, id }: FormProps) => {
     </Paper>
   );
 };
+
+export default CreateNewColumnForm;

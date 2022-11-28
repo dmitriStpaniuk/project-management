@@ -3,10 +3,12 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { combineReducers } from 'redux';
 import { userSlice } from './slices/userSlice';
 import { boardSlice } from './slices/boardSlice';
+import { columnSlice } from './slices/columnSlice';
 
 const rootReducer = combineReducers({
   user: userSlice.reducer,
   board: boardSlice.reducer,
+  column: columnSlice.reducer,
 });
 
 export const setupStore = () => {

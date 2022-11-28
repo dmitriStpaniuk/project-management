@@ -10,15 +10,19 @@ import { TaskDataResponse } from 'services/taskServiceTypes';
 import { ColumnDataResponse } from 'services/columnServiceTypes';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { Container } from '@mui/system';
+import CreateNewColumnForm from './boardForms/CreateNewColumnForm';
+import { useAppSelector } from 'store/store';
 
 const Board = () => {
   const { boardId } = useParams();
   // const [board, setBoard] = useState<BoardDataResponse | null>(null);
   const [board, setBoard] = useState(initialData);
+  const [newColumn, setNewColumn] = useState(false);
+  const columnFetching = useAppSelector((state) => state.column.isColumnMainFetching);
 
   useEffect(() => {
     if (boardId) getBoardById(boardId).then(setBoard);
-  }, [boardId]);
+  }, [boardId, columnFetching]);
 
   const newColumnText = useTranslate('buttons.newColumn');
 
@@ -88,7 +92,9 @@ const Board = () => {
     };
     setBoard(newState);
   };
-  const handleNewColumn = () => {};
+  const handleNewColumn = () => {
+    setNewColumn(true);
+  };
   return (
     <div className={styles.board}>
       <Container>
@@ -96,7 +102,7 @@ const Board = () => {
           <h1 className={styles.title}>{board.title}</h1>
         </div>
         <DragDropContext onDragEnd={onDragEnd}>
-          <div>
+          <div className={styles.relativeWrapper}>
             <div className={styles.wrapper}>
               {board.columns.map((columnX) => {
                 const column = board.columns.find(
@@ -113,6 +119,7 @@ const Board = () => {
               >
                 +
               </button>
+              {newColumn ? <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} /> : null}
             </div>
           </div>
         </DragDropContext>
