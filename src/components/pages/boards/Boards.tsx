@@ -5,15 +5,17 @@ import { AiOutlineCheck } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import { getAllUBoardsList } from 'store/thunks/boardThunk';
-import { AddBoardForm } from './AddBoardForm';
+import { AddBoardForm } from './boardForms/AddBoardForm';
 import { BoardCard } from './BoardCard';
-import { EditBoardForm } from './EditBoardForm';
+import { EditBoardForm } from './boardForms/EditBoardForm';
+import { WrapperWaiting } from 'components/utils/WrapperWaiting';
 
 export default function Boards() {
   const [popupFormAddBoard, setPopupFormAddBoard] = useState(false);
   const [editFormBoardId, setEditFormBoard] = useState('');
   const dispatch = useAppDispatch();
   const allBoardsList = useAppSelector((state) => state.board.allBoardsList);
+  const boardMainFetching = useAppSelector((state) => state.board.isBoardMainFetching);
   const addBoardText = useTranslate('buttons.neweBoard');
 
   const handleClick = () => {
@@ -22,7 +24,7 @@ export default function Boards() {
 
   useEffect(() => {
     dispatch(getAllUBoardsList());
-  }, []);
+  }, [editFormBoardId, boardMainFetching]);
 
   return (
     <div style={{ minHeight: 'inherit', backgroundColor: '#f6f6f6' }}>

@@ -1,5 +1,13 @@
 export const text = {
   alerts: {
+    successCreateColumn: {
+      en: 'Create column in successfully',
+      ru: 'Вы успешно создали колонку',
+    },
+    errorCreateColumn: {
+      en: 'Failed to create column',
+      ru: 'Не удалось создать колонку',
+    },
     successCreateBoard: {
       en: 'Create board in successfully',
       ru: 'Вы успешно создали доску',
@@ -7,6 +15,14 @@ export const text = {
     errorCreateBoard: {
       en: 'Failed to create board',
       ru: 'Не удалось создать доску',
+    },
+    successDeleteBoard: {
+      en: 'Delete board in successfully',
+      ru: 'Вы успешно удалили доску',
+    },
+    errorDeleteBoard: {
+      en: 'Failed to delete board',
+      ru: 'Не удалось удалить доску',
     },
     successEditBoard: {
       en: 'Edit board in successfully',

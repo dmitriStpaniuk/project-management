@@ -22,6 +22,7 @@ import { HeaderAvatar } from 'components/HeaderAvatar';
 import { PrivateWrapper } from 'routes/PrivateWrapper';
 import { useScrollTrigger } from '@mui/material';
 import { TfiAlignJustify } from 'react-icons/tfi';
+import { AddBoardForm } from 'components/pages/boards/boardForms/AddBoardForm';
 interface Props {
   window?: () => Window;
 }
@@ -31,7 +32,7 @@ const drawerWidth = 240;
 export default function Header(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [currentScroll, setCurrentScroll] = useState<number>(0);
+  const [addBoardState, setAddBoardState] = useState(false);
   const namingText = useTranslate('welcomeText.naming');
   const linkSignIn = useTranslate('links.signIn');
   const linkSignUp = useTranslate('links.signUp');
@@ -59,7 +60,9 @@ export default function Header(props: Props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
+  const handleClickAddBoard = () => {
+    setAddBoardState(true);
+  };
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography
@@ -89,6 +92,7 @@ export default function Header(props: Props) {
             </Link>
           ))}
         </PublicWrapper>
+
         <PrivateWrapper>
           <Link to={'boards'}>
             <Button
@@ -122,6 +126,7 @@ export default function Header(props: Props) {
 
   return (
     <Box sx={{ display: 'flex', top: '0', zIndex: '1' }} position="sticky">
+      {/* {addBoardState ? <AddBoardForm setPopupFormAddBoard={setAddBoardState} /> : null} */}
       <AppBar
         component="nav"
         position="sticky"
@@ -188,6 +193,7 @@ export default function Header(props: Props) {
                   padding: '6px 0',
                   textTransform: 'none',
                 }}
+                onClick={handleClickAddBoard}
               >
                 {addBoard}
               </Button>
