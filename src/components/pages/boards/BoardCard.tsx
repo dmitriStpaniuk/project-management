@@ -1,9 +1,10 @@
 import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
-import React from 'react';
+import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import { deleteBoardByIdThunk } from 'store/thunks/boardThunk';
+import { ConfirmBoardRemoval } from './boardForms/ConfirmBoardRemoval';
 type BoardCardProps = {
   title: string;
   description: string;
@@ -18,19 +19,20 @@ export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCar
   const deleteButton = useTranslate('buttons.deleteBoard');
   const successDeleteBoard = useTranslate('alerts.successDeleteBoard');
   const errorDeleteBoard = useTranslate('alerts.errorDeleteBoard');
-
+  const [confirmDelete, setConfirmDeleteBoard] = useState(false);
   const handleEdit = (e: React.MouseEvent) => {
     e.preventDefault();
     setEditFormBoard(id);
   };
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault();
-    try {
-      await dispatch(deleteBoardByIdThunk(id));
-      addAlert({ type: 'success', message: successDeleteBoard });
-    } catch {
-      addAlert({ type: 'error', message: errorDeleteBoard });
-    }
+    setConfirmDeleteBoard(true);
+    // try {
+    //   await dispatch(deleteBoardByIdThunk(id));
+    //   addAlert({ type: 'success', message: successDeleteBoard });
+    // } catch {
+    //   addAlert({ type: 'error', message: errorDeleteBoard });
+    // }
   };
   const card = (
     <>
@@ -54,6 +56,7 @@ export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCar
           {deleteButton}
         </Button>
       </CardActions>
+      {confirmDelete ? <ConfirmBoardRemoval setConfirmDeleteBoard={setConfirmDeleteBoard} /> : null}
     </>
   );
   return (
