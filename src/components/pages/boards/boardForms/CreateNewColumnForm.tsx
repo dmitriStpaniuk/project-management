@@ -19,10 +19,10 @@ const CreateNewColumnForm = ({ setNewColumn, id }: FormProps) => {
   const dispatch = useAppDispatch();
   const successEditBoard = useTranslate('alerts.successCreateColumn');
   const errorEditBoard = useTranslate('alerts.errorCreateColumn');
-  const nameBoard = useTranslate('form.boardName');
+  const columnName = useTranslate('form.columnName');
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
-  const titleBoardCreateForm = useTranslate('buttons.editBoard');
+  const titleColumnCreateForm = useTranslate('buttons.addColumn');
 
   const methods = useForm({
     defaultValues: { title: '' },
@@ -60,10 +60,10 @@ const CreateNewColumnForm = ({ setNewColumn, id }: FormProps) => {
       }}
     >
       <Typography variant="h4" component="h4">
-        {titleBoardCreateForm}
+        {titleColumnCreateForm}
       </Typography>
       <FormProvider {...methods}>
-        <FormBoardInputText name="title" label={nameBoard} type="text" />
+        <FormBoardInputText name="title" label={columnName} type="text" />
       </FormProvider>
 
       <Button

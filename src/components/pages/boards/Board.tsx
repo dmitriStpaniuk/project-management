@@ -20,12 +20,14 @@ const Board = () => {
   const [newColumn, setNewColumn] = useState(false);
   // const boardFetching = useAppSelector((state) => state.board);
   const board = useAppSelector((state) => state.board.boardData);
+  const columns = useAppSelector((state) => state.column);
+
   useEffect(() => {
     async function fetchData() {
       if (boardId) await dispatch(getBoardByIdThunk(boardId));
     }
     fetchData();
-  }, [boardId, newColumn]);
+  }, [boardId, newColumn, columns]);
 
   const newColumnText = useTranslate('buttons.newColumn');
 

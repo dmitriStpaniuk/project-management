@@ -28,6 +28,7 @@ export const getColumnByIdThunk =
 
 export const deleteColumnByIdThunk =
   (boardId: string, columnId: string) => async (dispatch: AppDispatch) => {
+    console.log(columnId);
     dispatch(columnSlice.actions.setIsColumnMainFetching(true));
     await columnService.deleteColumnById(boardId, columnId);
     dispatch(columnSlice.actions.setIsColumnMainFetching(false));
