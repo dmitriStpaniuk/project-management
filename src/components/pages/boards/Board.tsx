@@ -96,7 +96,7 @@ const Board = () => {
   };
   return (
     <div className={styles.board}>
-      <Container>
+      <Container sx={{ paddingRight: { sm: '0', md: '0', xs: '0' } }}>
         <div className={styles.boardHeader}>
           <h1 className={styles.title}>{board.title}</h1>
         </div>
@@ -111,13 +111,15 @@ const Board = () => {
                   <Column key={columnX.id} column={column} tasks={column.tasks} id={column.id} />
                 );
               })}
-              <button
-                className={styles.newColumn}
-                onClick={handleNewColumn}
-                data-title={newColumnText}
-              >
-                +
-              </button>
+              <div style={{ minWidth: '220px' }}>
+                <button
+                  className={styles.newColumn}
+                  onClick={handleNewColumn}
+                  data-title={newColumnText}
+                >
+                  +
+                </button>
+              </div>
               {newColumn ? <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} /> : null}
             </div>
           </div>

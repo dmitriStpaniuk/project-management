@@ -6,6 +6,8 @@ import { ColumnDataResponse } from 'services/columnServiceTypes';
 import { TaskDataResponse } from 'services/taskServiceTypes';
 import { height } from '@mui/system';
 import { useTranslate } from 'components/languageContext/languageContext';
+import { BsTrash } from 'react-icons/bs';
+import { TfiPencil } from 'react-icons/tfi';
 
 type ColumnProps = {
   column: ColumnDataResponse;
@@ -24,7 +26,13 @@ export default function Column({ column, tasks, id }: ColumnProps) {
             id={id}
           >
             <div className={styles.columnHeader}>
-              <h3 className={styles.title}>{column.title}</h3>
+              <div className={styles.columnHeaderContext}>
+                <h3 className={styles.title}>{column.title}</h3>
+                <div>
+                  <button className={styles.columnHeaderButton}>{<TfiPencil />}</button>
+                  <button className={styles.columnHeaderButton}>{<BsTrash />}</button>
+                </div>
+              </div>
               <hr className={styles.line}></hr>
             </div>
             <div className={styles.taskList} {...provided.droppableProps} ref={provided.innerRef}>

@@ -17,6 +17,7 @@ export default function Boards() {
   const allBoardsList = useAppSelector((state) => state.board.allBoardsList);
   const boardMainFetching = useAppSelector((state) => state.board.isBoardMainFetching);
   const addBoardText = useTranslate('buttons.neweBoard');
+  const boardsTitle = useTranslate('links.boardsTitle');
 
   const handleClick = () => {
     setPopupFormAddBoard(true);
@@ -41,7 +42,7 @@ export default function Boards() {
         }}
       >
         <Typography variant="h2" component="h3" sx={{ textAlign: 'center' }}>
-          Boards
+          {boardsTitle}
         </Typography>
         <Box
           display={'flex'}

@@ -142,6 +142,10 @@ export const text = {
       en: 'Profile, All users, Logout',
       ru: 'Профиль, Пользователи, Выход',
     },
+    boardsTitle: {
+      en: 'Boards',
+      ru: 'Доски',
+    },
   },
   form: {
     required: {
