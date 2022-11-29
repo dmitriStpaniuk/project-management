@@ -8,6 +8,7 @@ export default function WelcomePage() {
   const buttonNamingText = useTranslate('welcomeText.naming').toUpperCase();
   const team = useTranslate('welcomeText.team').split(',');
   const role = useTranslate('welcomeText.role');
+
   return (
     <div className={styles.welcome}>
       <div className="container" data-testid="welcome">

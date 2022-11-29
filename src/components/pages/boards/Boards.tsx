@@ -8,18 +8,18 @@ import { getAllUBoardsList } from 'store/thunks/boardThunk';
 import { AddBoardForm } from './boardForms/AddBoardForm';
 import { BoardCard } from './BoardCard';
 import { EditBoardForm } from './boardForms/EditBoardForm';
-import { WrapperWaiting } from 'components/utils/WrapperWaiting';
+import { addBoardFormOpenThunk } from 'store/thunks/formThunk';
 
 export default function Boards() {
-  const [popupFormAddBoard, setPopupFormAddBoard] = useState(false);
   const [editFormBoardId, setEditFormBoard] = useState('');
   const dispatch = useAppDispatch();
   const allBoardsList = useAppSelector((state) => state.board.allBoardsList);
   const boardMainFetching = useAppSelector((state) => state.board.isBoardMainFetching);
   const addBoardText = useTranslate('buttons.neweBoard');
+  const formAddBoard = useAppSelector((state) => state.form.formAddBoard);
 
   const handleClick = () => {
-    setPopupFormAddBoard(true);
+    dispatch(addBoardFormOpenThunk());
   };
 
   useEffect(() => {
@@ -61,10 +61,6 @@ export default function Boards() {
             </Link>
           ))}
         </Box>
-        {popupFormAddBoard ? <AddBoardForm setPopupFormAddBoard={setPopupFormAddBoard} /> : null}
-        {editFormBoardId ? (
-          <EditBoardForm setEditFormBoard={setEditFormBoard} id={editFormBoardId} />
-        ) : null}
         <Button
           sx={{ width: '30%', fontSize: 12 }}
           variant="contained"
@@ -73,6 +69,10 @@ export default function Boards() {
         >
           {addBoardText}
         </Button>
+        {formAddBoard ? <AddBoardForm /> : null}
+        {editFormBoardId ? (
+          <EditBoardForm setEditFormBoard={setEditFormBoard} id={editFormBoardId} />
+        ) : null}
       </Container>
     </div>
   );

@@ -4,11 +4,13 @@ import { combineReducers } from 'redux';
 import { userSlice } from './slices/userSlice';
 import { boardSlice } from './slices/boardSlice';
 import { columnSlice } from './slices/columnSlice';
+import { formSlice } from './slices/formSlice';
 
 const rootReducer = combineReducers({
   user: userSlice.reducer,
   board: boardSlice.reducer,
   column: columnSlice.reducer,
+  form: formSlice.reducer,
 });
 
 export const setupStore = () => {
