@@ -8,13 +8,14 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { CreateBoardData } from 'services/boardServiceTypes';
 import { useAppDispatch } from 'store/store';
 import { createNewBoardThunk } from 'store/thunks/boardThunk';
+import { addBoardFormCloseThunk } from 'store/thunks/formThunk';
 import styles from './../../login/Login.module.scss';
 
-type FormProps = {
-  setPopupFormAddBoard: (x: boolean) => void;
-};
+// type FormProps = {
+//   setPopupFormAddBoard: (x: boolean) => void;
+// };
 
-export const AddBoardForm = ({ setPopupFormAddBoard }: FormProps) => {
+export const AddBoardForm = () => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
   const successCreateBoard = useTranslate('alerts.successCreateBoard');
@@ -39,11 +40,15 @@ export const AddBoardForm = ({ setPopupFormAddBoard }: FormProps) => {
     try {
       await dispatch(createNewBoardThunk(data));
       addAlert({ type: 'success', message: successCreateBoard });
-      setPopupFormAddBoard(false);
+      // setPopupFormAddBoard(false);
+      dispatch(addBoardFormCloseThunk());
       // navigate('/boards');
     } catch {
       addAlert({ type: 'error', message: errorCreateBoard });
     }
+  };
+  const handleClose = () => {
+    dispatch(addBoardFormCloseThunk());
   };
 
   return (
@@ -80,9 +85,12 @@ export const AddBoardForm = ({ setPopupFormAddBoard }: FormProps) => {
         </Button>
         <Button
           className={styles.formButton}
-          onClick={() => {
-            setPopupFormAddBoard(false);
-          }}
+          onClick={
+            handleClose
+            //   () => {
+            //   setPopupFormAddBoard(false);
+            // }
+          }
           variant={'outlined'}
           color="error"
         >

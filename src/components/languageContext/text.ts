@@ -148,6 +148,10 @@ export const text = {
     },
   },
   form: {
+    confirmDelete: {
+      en: 'Are you sure you want to delete the board?',
+      ru: 'Вы точно хотите удалить доску?',
+    },
     required: {
       en: 'Required field',
       ru: 'Поле обязательно для заполнения',

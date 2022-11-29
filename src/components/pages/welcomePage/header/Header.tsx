@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -22,7 +22,8 @@ import { HeaderAvatar } from 'components/HeaderAvatar';
 import { PrivateWrapper } from 'routes/PrivateWrapper';
 import { useScrollTrigger } from '@mui/material';
 import { TfiAlignJustify } from 'react-icons/tfi';
-import { AddBoardForm } from 'components/pages/boards/boardForms/AddBoardForm';
+import { useAppDispatch } from 'store/store';
+import { addBoardFormOpenThunk } from 'store/thunks/formThunk';
 interface Props {
   window?: () => Window;
 }
@@ -32,7 +33,6 @@ const drawerWidth = 240;
 export default function Header(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [addBoardState, setAddBoardState] = useState(false);
   const namingText = useTranslate('welcomeText.naming');
   const linkSignIn = useTranslate('links.signIn');
   const linkSignUp = useTranslate('links.signUp');
@@ -40,7 +40,7 @@ export default function Header(props: Props) {
   const ru = useTranslate('links.ru');
   const boards = useTranslate('buttons.boards');
   const addBoard = useTranslate('buttons.addBoard');
-
+  const dispatch = useAppDispatch();
   const trigger = useScrollTrigger({
     threshold: 0,
     disableHysteresis: true,
@@ -61,7 +61,7 @@ export default function Header(props: Props) {
     setMobileOpen(!mobileOpen);
   };
   const handleClickAddBoard = () => {
-    setAddBoardState(true);
+    dispatch(addBoardFormOpenThunk());
   };
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -126,7 +126,6 @@ export default function Header(props: Props) {
 
   return (
     <Box sx={{ display: 'flex', top: '0', zIndex: '1' }} position="sticky">
-      {/* {addBoardState ? <AddBoardForm setPopupFormAddBoard={setAddBoardState} /> : null} */}
       <AppBar
         component="nav"
         position="sticky"
