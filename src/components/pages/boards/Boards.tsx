@@ -17,6 +17,7 @@ export default function Boards() {
   const boardMainFetching = useAppSelector((state) => state.board.isBoardMainFetching);
   const addBoardText = useTranslate('buttons.neweBoard');
   const formAddBoard = useAppSelector((state) => state.form.formAddBoard);
+  const boardsTitle = useTranslate('links.boardsTitle');
 
   const handleClick = () => {
     dispatch(addBoardFormOpenThunk());
@@ -41,7 +42,7 @@ export default function Boards() {
         }}
       >
         <Typography variant="h2" component="h3" sx={{ textAlign: 'center' }}>
-          Boards
+          {boardsTitle}
         </Typography>
         <Box
           display={'flex'}

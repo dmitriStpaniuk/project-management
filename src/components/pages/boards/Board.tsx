@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getBoardById } from 'services/boardService';
-import { BoardDataResponse } from 'services/boardServiceTypes';
 import { initialData } from './beautiful-dnd/initialData';
 import Column from './beautiful-dnd/Column';
 import styles from './Board.module.scss';
@@ -15,7 +14,7 @@ import { useAppSelector } from 'store/store';
 
 const Board = () => {
   const { boardId } = useParams();
-  // const [board, setBoard] = useState<BoardDataResponse | null>(null);
+  // const [board, setBoard] = useState<BoardDataResponse>();
   const [board, setBoard] = useState(initialData);
   const [newColumn, setNewColumn] = useState(false);
   const columnFetching = useAppSelector((state) => state.column.isColumnMainFetching);
@@ -97,7 +96,7 @@ const Board = () => {
   };
   return (
     <div className={styles.board}>
-      <Container>
+      <Container sx={{ paddingRight: { sm: '0', md: '0', xs: '0' } }}>
         <div className={styles.boardHeader}>
           <h1 className={styles.title}>{board.title}</h1>
         </div>
@@ -112,13 +111,15 @@ const Board = () => {
                   <Column key={columnX.id} column={column} tasks={column.tasks} id={column.id} />
                 );
               })}
-              <button
-                className={styles.newColumn}
-                onClick={handleNewColumn}
-                data-title={newColumnText}
-              >
-                +
-              </button>
+              <div style={{ minWidth: '220px' }}>
+                <button
+                  className={styles.newColumn}
+                  onClick={handleNewColumn}
+                  data-title={newColumnText}
+                >
+                  +
+                </button>
+              </div>
               {newColumn ? <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} /> : null}
             </div>
           </div>

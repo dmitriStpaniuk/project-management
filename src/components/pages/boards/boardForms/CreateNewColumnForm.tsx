@@ -54,7 +54,7 @@ const CreateNewColumnForm = ({ setNewColumn, id }: FormProps) => {
         justifyItems: 'center',
         position: 'absolute',
         zIndex: 5,
-        top: '50%',
+        top: '40%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
       }}
