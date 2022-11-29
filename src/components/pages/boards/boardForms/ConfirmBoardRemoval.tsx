@@ -6,25 +6,34 @@ import { useAlerts } from 'components/SnackbarPanel';
 import { FormProvider, useForm } from 'react-hook-form';
 import { CreateBoardData } from 'services/boardServiceTypes';
 import { useAppDispatch } from 'store/store';
-import { updateBoardThunk } from 'store/thunks/boardThunk';
+import { deleteBoardByIdThunk, updateBoardThunk } from 'store/thunks/boardThunk';
 import styles from './../../login/Login.module.scss';
 type ConfirmProps = {
   setConfirmDeleteBoard: (e: boolean) => void;
+  id: string;
 };
 
-export const ConfirmBoardRemoval = ({ setConfirmDeleteBoard }: ConfirmProps) => {
+export const ConfirmBoardRemoval = ({ setConfirmDeleteBoard, id }: ConfirmProps) => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
   const successEditBoard = useTranslate('alerts.successEditBoard');
   const errorEditBoard = useTranslate('alerts.errorEditBoard');
   const nameBoard = useTranslate('form.boardName');
   const descriptionBoard = useTranslate('form.boardDescriptoon');
+  const successDeleteBoard = useTranslate('alerts.successDeleteBoard');
+  const errorDeleteBoard = useTranslate('alerts.errorDeleteBoard');
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
   const titleDeleteForm = useTranslate('form.confirmDelete');
   const [confirmDelete, setConfirmDelete] = useState(false);
-  const handleSubmit = (e: React.MouseEvent) => {
+  const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
+    try {
+      await dispatch(deleteBoardByIdThunk(id));
+      addAlert({ type: 'success', message: successDeleteBoard });
+    } catch {
+      addAlert({ type: 'error', message: errorDeleteBoard });
+    }
   };
   const handleCancel = (e: React.MouseEvent) => {
     e.preventDefault();
