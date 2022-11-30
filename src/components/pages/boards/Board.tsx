@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getBoardById } from 'services/boardService';
 import Column from './beautiful-dnd/Column';
 import styles from './Board.module.scss';
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { TaskDataResponse } from 'services/taskServiceTypes';
 import { ColumnDataResponse } from 'services/columnServiceTypes';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { Container } from '@mui/system';
 import CreateNewColumnForm from './boardForms/CreateNewColumnForm';
 import { useAppDispatch, useAppSelector } from 'store/store';
-import { BoardDataResponse } from 'services/boardServiceTypes';
 import { getBoardByIdThunk, updateBoard } from 'store/thunks/boardThunk';
-import { useDispatch } from 'react-redux';
+import { EditColumnForm } from './boardForms/EditColumnForm';
 
 const Board = () => {
   const dispatch = useAppDispatch();
   const { boardId } = useParams();
   const [newColumn, setNewColumn] = useState(false);
+  const [editColumnName, setEditColumnName] = useState('');
+  const [columnId, setColumnId] = useState('');
   // const boardFetching = useAppSelector((state) => state.board);
   const board = useAppSelector((state) => state.board.boardData);
   const columns = useAppSelector((state) => state.column);
@@ -114,7 +114,14 @@ const Board = () => {
                   (col) => col.id === columnX.id
                 ) as ColumnDataResponse;
                 return (
-                  <Column key={columnX.id} column={column} tasks={column.tasks} id={column.id} />
+                  <Column
+                    key={columnX.id}
+                    column={column}
+                    tasks={column.tasks}
+                    id={column.id}
+                    setEditColumnName={setEditColumnName}
+                    setColumnId={setColumnId}
+                  />
                 );
               })}
               <div style={{ minWidth: '220px' }}>
@@ -127,6 +134,13 @@ const Board = () => {
                 </button>
               </div>
               {newColumn ? <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} /> : null}
+              {editColumnName ? (
+                <EditColumnForm
+                  setEditColumnName={setEditColumnName}
+                  boardId={boardId}
+                  columnId={columnId}
+                />
+              ) : null}
             </div>
           </div>
         </DragDropContext>

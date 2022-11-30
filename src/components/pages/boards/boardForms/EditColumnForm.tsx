@@ -10,12 +10,12 @@ import { updateColumnThunk } from 'store/thunks/columnThunk';
 import { CreateColumnData } from 'services/columnServiceTypes';
 
 type FormProps = {
-  setEditFormBoard: (x: string) => void;
-  boardId: string;
+  setEditColumnName: (x: string) => void;
+  boardId?: string;
   columnId: string;
 };
 
-export const EditColumnForm = ({ setEditFormBoard, boardId, columnId }: FormProps) => {
+export const EditColumnForm = ({ setEditColumnName, boardId, columnId }: FormProps) => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
   const successEditBoard = useTranslate('alerts.successEditBoard');
@@ -24,8 +24,9 @@ export const EditColumnForm = ({ setEditFormBoard, boardId, columnId }: FormProp
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
   const titleBoardCreateForm = useTranslate('buttons.editBoard');
-  const valueInputBoardCard = useAppSelector((state) => state.board.allBoardsList);
-  const value = valueInputBoardCard?.find((board) => board.id === boardId);
+  const valueInputBoardCard = useAppSelector((state) => state.board.boardData);
+  const value = valueInputBoardCard?.columns.find((column) => column.id === columnId);
+
   const methods = useForm({
     defaultValues: { title: value?.title || '' },
     mode: 'onChange',
@@ -36,11 +37,12 @@ export const EditColumnForm = ({ setEditFormBoard, boardId, columnId }: FormProp
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = async (data: CreateColumnData) => {
+  const onSubmit = async (columnData: CreateColumnData) => {
     try {
-      await dispatch(updateColumnThunk(boardId, columnId, data));
+      console.log(boardId, columnId, columnData);
+      if (boardId) await dispatch(updateColumnThunk(boardId, columnId, columnData));
       addAlert({ type: 'success', message: successEditBoard });
-      setEditFormBoard('');
+      setEditColumnName('');
     } catch {
       addAlert({ type: 'error', message: errorEditBoard });
     }
@@ -79,7 +81,7 @@ export const EditColumnForm = ({ setEditFormBoard, boardId, columnId }: FormProp
       <Button
         className={styles.formButton}
         onClick={() => {
-          setEditFormBoard('');
+          setEditColumnName('');
         }}
         variant={'outlined'}
         color="error"
