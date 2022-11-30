@@ -28,7 +28,7 @@ export default function Column({ column, tasks, id }: ColumnProps) {
     e.preventDefault();
     setConfirmDeleteColumn(true);
   };
-  console.log(boardId);
+
   const handleNewTask = () => {};
   return (
     <div className={styles.wrapper}>
