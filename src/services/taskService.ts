@@ -5,6 +5,7 @@ import {
   UpdateTaskData,
   CreateTaskData,
   CreateTaskResponse,
+  UpdateTaskResponse,
 } from './taskServiceTypes';
 
 const instanceTasksAxios = axios.create({
@@ -73,7 +74,7 @@ export const updateTask = async (
   columnId: string,
   taskId: string,
   taskData: UpdateTaskData
-): Promise<CreateTaskResponse> => {
+): Promise<UpdateTaskResponse> => {
   const result = await instanceTasksAxios.put(
     `/${boardId}/${EApiRoutes.columns}/${columnId}/${EApiRoutes.tasks}/${taskId}`,
     taskData

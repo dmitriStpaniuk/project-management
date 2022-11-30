@@ -4,31 +4,33 @@ import Task from './Task';
 import styles from './Column.module.scss';
 import { ColumnDataResponse } from 'services/columnServiceTypes';
 import { TaskDataResponse } from 'services/taskServiceTypes';
-import { height } from '@mui/system';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { BsTrash } from 'react-icons/bs';
 import { TfiPencil } from 'react-icons/tfi';
 import { useParams } from 'react-router-dom';
-import { deleteColumnByIdThunk } from 'store/thunks/columnThunk';
-import { deleteColumnById } from 'services/columnService';
-import { useAppDispatch } from 'store/store';
 import { ConfirmColumnRemoval } from '../boardForms/ConfirmColumnRemoval';
 
 type ColumnProps = {
   column: ColumnDataResponse;
   tasks: TaskDataResponse[];
   id: string;
+  setEditColumnName: (x: string) => void;
+  setColumnId: (x: string) => void;
 };
-export default function Column({ column, tasks, id }: ColumnProps) {
+export default function Column({ column, tasks, id, setEditColumnName, setColumnId }: ColumnProps) {
   const newTaskText = useTranslate('buttons.newTask');
-  const dispatch = useAppDispatch();
   const { boardId } = useParams();
   const [confirmDeleteColumn, setConfirmDeleteColumn] = useState(false);
-  const hendleDelateColumn = (e: React.MouseEvent) => {
+
+  const hendleDeleteColumn = (e: React.MouseEvent) => {
     e.preventDefault();
     setConfirmDeleteColumn(true);
   };
   const handleNewTask = () => {};
+  const handleEdit = () => {
+    setEditColumnName('start');
+    setColumnId(id);
+  };
   return (
     <div className={styles.wrapper}>
       <Droppable droppableId={id}>
@@ -41,8 +43,10 @@ export default function Column({ column, tasks, id }: ColumnProps) {
               <div className={styles.columnHeaderContext}>
                 <h3 className={styles.title}>{column.title}</h3>
                 <div>
-                  <button className={styles.columnHeaderButton}>{<TfiPencil />}</button>
-                  <button className={styles.columnHeaderButton} onClick={hendleDelateColumn}>
+                  <button className={styles.columnHeaderButton} onClick={handleEdit}>
+                    {<TfiPencil />}
+                  </button>
+                  <button className={styles.columnHeaderButton} onClick={hendleDeleteColumn}>
                     {<BsTrash />}
                   </button>
                   {confirmDeleteColumn ? (
