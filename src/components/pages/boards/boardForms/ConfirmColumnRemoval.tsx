@@ -1,38 +1,37 @@
 import React, { useState } from 'react';
 import { Button, Paper, Typography } from '@mui/material';
-import { FormBoardInputText } from 'components/FormBoardInputText';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
-import { FormProvider, useForm } from 'react-hook-form';
-import { CreateBoardData } from 'services/boardServiceTypes';
 import { useAppDispatch } from 'store/store';
-import { deleteBoardByIdThunk, updateBoardThunk } from 'store/thunks/boardThunk';
 import styles from './../../login/Login.module.scss';
+import { deleteColumnByIdThunk } from 'store/thunks/columnThunk';
 type ConfirmProps = {
-  setConfirmDeleteBoard: (e: boolean) => void;
+  setConfirmDeleteColumn: (e: boolean) => void;
+  boardId: string;
   id: string;
 };
 
-export const ConfirmBoardRemoval = ({ setConfirmDeleteBoard, id }: ConfirmProps) => {
+export const ConfirmColumnRemoval = ({ setConfirmDeleteColumn, boardId, id }: ConfirmProps) => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
-  const successDeleteBoard = useTranslate('alerts.successDeleteBoard');
-  const errorDeleteBoard = useTranslate('alerts.errorDeleteBoard');
+  const successDeleteColumn = useTranslate('alerts.successDelateColumn');
+  const errorDeleteColumn = useTranslate('alerts.errorDelateColumn');
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
-  const titleDeleteForm = useTranslate('form.confirmDeleteBoard');
+  const titleDeleteForm = useTranslate('form.confirmDeleteColumn');
+
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
     try {
-      await dispatch(deleteBoardByIdThunk(id));
-      addAlert({ type: 'success', message: successDeleteBoard });
+      await dispatch(deleteColumnByIdThunk(boardId, id));
+      addAlert({ type: 'success', message: successDeleteColumn });
     } catch {
-      addAlert({ type: 'error', message: errorDeleteBoard });
+      addAlert({ type: 'error', message: errorDeleteColumn });
     }
   };
   const handleCancel = (e: React.MouseEvent) => {
     e.preventDefault();
-    setConfirmDeleteBoard(false);
+    setConfirmDeleteColumn(false);
   };
   return (
     <Paper

@@ -8,6 +8,14 @@ export const text = {
       en: 'Failed to create column',
       ru: 'Не удалось создать колонку',
     },
+    successDelateColumn: {
+      en: 'You have successfully deleted a column',
+      ru: 'Вы успешно удалили колонку',
+    },
+    errorDelateColumn: {
+      en: 'Failed to delate column',
+      ru: 'Не удалось удалить колонку',
+    },
     successCreateBoard: {
       en: 'Create board in successfully',
       ru: 'Вы успешно создали доску',
@@ -77,6 +85,10 @@ export const text = {
     addBoard: {
       en: 'Add board',
       ru: 'Создать доску',
+    },
+    addColumn: {
+      en: 'Add column',
+      ru: 'Создать колонку',
     },
     editBoard: {
       en: 'Edit',
@@ -148,9 +160,13 @@ export const text = {
     },
   },
   form: {
-    confirmDelete: {
+    confirmDeleteBoard: {
       en: 'Are you sure you want to delete the board?',
       ru: 'Вы точно хотите удалить доску?',
+    },
+    confirmDeleteColumn: {
+      en: 'Are you sure you want to delete the column?',
+      ru: 'Вы точно хотите удалить колонку?',
     },
     required: {
       en: 'Required field',
@@ -179,6 +195,10 @@ export const text = {
     boardName: {
       en: 'Name board',
       ru: 'Имя доски',
+    },
+    columnName: {
+      en: 'Column name',
+      ru: 'Имя колонки',
     },
     boardDescriptoon: {
       en: 'Description',

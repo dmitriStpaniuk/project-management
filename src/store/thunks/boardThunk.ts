@@ -1,7 +1,7 @@
 import { boardSlice } from '../../store/slices/boardSlice';
 import { AppDispatch } from '../../store/store';
 import * as boardService from '../../services/boardService';
-import { CreateBoardData } from '../../services/boardServiceTypes';
+import { BoardDataResponse, CreateBoardData } from '../../services/boardServiceTypes';
 
 export const getAllUBoardsList = () => async (dispatch: AppDispatch) => {
   dispatch(boardSlice.actions.setIsAllBoardsFetching(true));
@@ -38,3 +38,8 @@ export const updateBoardThunk =
     dispatch(boardSlice.actions.setIsBoardMainFetching(false));
     dispatch(boardSlice.actions.setBoardMain(result));
   };
+export const updateBoard = (boardData: BoardDataResponse) => async (dispatch: AppDispatch) => {
+  dispatch(boardSlice.actions.setIsBoardMainFetching(true));
+  dispatch(boardSlice.actions.setIsBoardMainFetching(false));
+  dispatch(boardSlice.actions.setBoardData(boardData));
+};
