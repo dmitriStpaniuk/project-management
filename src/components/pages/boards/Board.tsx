@@ -21,7 +21,7 @@ const Board = () => {
   // const boardFetching = useAppSelector((state) => state.board);
   const board = useAppSelector((state) => state.board.boardData);
   const columns = useAppSelector((state) => state.column);
-
+  console.log(board?.columns);
   useEffect(() => {
     async function fetchData() {
       if (boardId) await dispatch(getBoardByIdThunk(boardId));
