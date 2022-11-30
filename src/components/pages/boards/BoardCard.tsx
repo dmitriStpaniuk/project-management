@@ -1,9 +1,8 @@
 import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import { useTranslate } from 'components/languageContext/languageContext';
-import { useAlerts } from 'components/SnackbarPanel';
 import React, { useState } from 'react';
-import { useAppDispatch, useAppSelector } from 'store/store';
 import { ConfirmBoardRemoval } from './boardForms/ConfirmBoardRemoval';
+
 type BoardCardProps = {
   title: string;
   description: string;
