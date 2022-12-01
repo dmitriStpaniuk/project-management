@@ -8,12 +8,19 @@ import { CreateBoardData } from 'services/boardServiceTypes';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import styles from './../../login/Login.module.scss';
 import { createNewTaskThunk } from 'store/thunks/taskThunk';
+import { CreateTaskData } from 'services/taskServiceTypes';
 
 type FormProps = {
   setNewTask: (x: string) => void;
   boardId?: string;
   columnId: string;
 };
+
+function isCreateTaskData(
+  val: CreateTaskData | (Omit<CreateTaskData, 'userId'> & { id?: string })
+): val is CreateTaskData {
+  return (val as CreateTaskData).userId !== undefined;
+}
 
 export const AddTaskForm = ({ setNewTask, boardId, columnId }: FormProps) => {
   const addAlert = useAlerts();
@@ -39,10 +46,11 @@ export const AddTaskForm = ({ setNewTask, boardId, columnId }: FormProps) => {
   } = methods;
 
   const onSubmit = async (data: CreateBoardData) => {
-    const userDataThunk = { ...data, userId: user?.id };
+    const userData = { ...data, userId: user?.id };
     try {
-      if (boardId && userDataThunk)
-        await dispatch(createNewTaskThunk(boardId, columnId, userDataThunk));
+      if (boardId && isCreateTaskData(userData)) {
+        await dispatch(createNewTaskThunk(boardId, columnId, userData));
+      }
       addAlert({ type: 'success', message: successEditBoard });
       setNewTask('');
     } catch {

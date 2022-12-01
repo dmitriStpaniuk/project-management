@@ -36,11 +36,21 @@ export const getAllUTasks = async (
   return result.data;
 };
 
+export type CreateNewTaskResponse = {
+  boardId: string;
+  columnId: string;
+  description: string;
+  id: string;
+  order: number;
+  title: string;
+  userId: string;
+};
+
 export const createNewTask = async (
   boardId: string,
   columnId: string,
   taskData: CreateTaskData
-): Promise<CreateTaskResponse> => {
+): Promise<CreateNewTaskResponse> => {
   const result = await instanceTasksAxios.post(
     `/${boardId}/${EApiRoutes.columns}/${columnId}/${EApiRoutes.tasks}`,
     taskData

@@ -2,6 +2,7 @@ import { taskSlice } from '../slices/taskSlice';
 import { AppDispatch } from '../store';
 import * as taskService from '../../services/taskService';
 import { CreateTaskData, UpdateTaskData } from '../../services/taskServiceTypes';
+import { boardSlice } from 'store/slices/boardSlice';
 
 export const getAllUTasksList =
   (boardId: string, columnId: string) => async (dispatch: AppDispatch) => {
@@ -17,7 +18,8 @@ export const createNewTaskThunk =
     dispatch(taskSlice.actions.setIsTaskMainFetching(true));
     const result = await taskService.createNewTask(boardId, columnId, taskData);
     dispatch(taskSlice.actions.setIsTaskMainFetching(false));
-    return dispatch(getTaskByIdThunk(boardId, columnId, result.id));
+    dispatch(boardSlice.actions.addNewTask(result));
+    // return dispatch(getTaskByIdThunk(boardId, columnId, result.id));
   };
 
 export const getTaskByIdThunk =

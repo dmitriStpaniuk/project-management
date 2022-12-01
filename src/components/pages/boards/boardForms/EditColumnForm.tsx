@@ -7,15 +7,16 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import styles from './../../login/Login.module.scss';
 import { updateColumnThunk } from 'store/thunks/columnThunk';
-import { CreateColumnData } from 'services/columnServiceTypes';
+import { ColumnDataResponse, CreateColumnData } from 'services/columnServiceTypes';
 
 type FormProps = {
   setEditColumnName: (x: string) => void;
   boardId?: string;
   columnId: string;
+  order?: number;
 };
 
-export const EditColumnForm = ({ setEditColumnName, boardId, columnId }: FormProps) => {
+export const EditColumnForm = ({ setEditColumnName, boardId, columnId, order }: FormProps) => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
   const successEditBoard = useTranslate('alerts.successEditBoard');
@@ -39,8 +40,8 @@ export const EditColumnForm = ({ setEditColumnName, boardId, columnId }: FormPro
 
   const onSubmit = async (columnData: CreateColumnData) => {
     try {
-      console.log(boardId, columnId, columnData);
-      if (boardId) await dispatch(updateColumnThunk(boardId, columnId, columnData));
+      if (boardId && order)
+        await dispatch(updateColumnThunk(boardId, columnId, { ...columnData, order }));
       addAlert({ type: 'success', message: successEditBoard });
       setEditColumnName('');
     } catch {
