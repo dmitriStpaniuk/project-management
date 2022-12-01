@@ -8,10 +8,12 @@ import { getAllUBoardsList } from 'store/thunks/boardThunk';
 import { AddBoardForm } from './boardForms/AddBoardForm';
 import { BoardCard } from './BoardCard';
 import { EditBoardForm } from './boardForms/EditBoardForm';
-import { addBoardFormOpenThunk, addFormBackgroundThunk } from 'store/thunks/formThunk';
+import { addBoardFormOpenThunk } from 'store/thunks/formThunk';
+import { ConfirmBoardRemoval } from './boardForms/ConfirmBoardRemoval';
 
 export default function Boards() {
   const [editFormBoardId, setEditFormBoard] = useState('');
+  const [confirmDeleteId, setConfirmDeleteBoard] = useState('');
   const dispatch = useAppDispatch();
   const allBoardsList = useAppSelector((state) => state.board.allBoardsList);
   const boardMainFetching = useAppSelector((state) => state.board.isBoardMainFetching);
@@ -59,6 +61,7 @@ export default function Boards() {
                 description={board.description}
                 id={board.id}
                 setEditFormBoard={setEditFormBoard}
+                setConfirmDeleteBoard={setConfirmDeleteBoard}
               />
             </Link>
           ))}
@@ -74,6 +77,9 @@ export default function Boards() {
         {formAddBoard ? <AddBoardForm /> : null}
         {editFormBoardId ? (
           <EditBoardForm setEditFormBoard={setEditFormBoard} id={editFormBoardId} />
+        ) : null}
+        {confirmDeleteId ? (
+          <ConfirmBoardRemoval setConfirmDeleteBoard={setConfirmDeleteBoard} id={confirmDeleteId} />
         ) : null}
       </Container>
     </div>

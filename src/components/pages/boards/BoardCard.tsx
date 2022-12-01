@@ -14,6 +14,7 @@ type BoardCardProps = {
   description: string;
   id: string;
   setEditFormBoard: (id: string) => void;
+  setConfirmDeleteBoard: (id: string) => void;
 };
 
 export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCardProps) => {
@@ -31,7 +32,7 @@ export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCar
   };
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault();
-    // setConfirmDeleteBoard(true);
+    // setConfirmDeleteBoard(id);
     dispatch(addConfirmDeleteBoardFormThunk());
     dispatch(addFormBackgroundThunk());
   };

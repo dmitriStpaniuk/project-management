@@ -19,6 +19,8 @@ const Board = () => {
   const [newColumn, setNewColumn] = useState(false);
   const board = useAppSelector((state) => state.board.boardData);
   const columns = useAppSelector((state) => state.column);
+  const currentEditableColumnOrder = board?.columns.find((col) => col.id === columnId)?.order;
+
   useEffect(() => {
     async function fetchData() {
       if (boardId) {
@@ -130,6 +132,14 @@ const Board = () => {
                 </button>
               </div>
               {newColumn ? <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} /> : null}
+              {editColumnName ? (
+                <EditColumnForm
+                  setEditColumnName={setEditColumnName}
+                  boardId={boardId}
+                  columnId={columnId}
+                  order={currentEditableColumnOrder}
+                />
+              ) : null}
             </div>
           </div>
         </DragDropContext>

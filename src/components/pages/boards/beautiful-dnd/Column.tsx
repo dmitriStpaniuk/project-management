@@ -9,6 +9,7 @@ import { BsTrash } from 'react-icons/bs';
 import { TfiPencil } from 'react-icons/tfi';
 import { useParams } from 'react-router-dom';
 import { ConfirmColumnRemoval } from '../boardForms/ConfirmColumnRemoval';
+import { AddTaskForm } from '../boardForms/AddTaskForm';
 import { EditColumnForm } from '../boardForms/EditColumnForm';
 
 type ColumnProps = {
@@ -20,6 +21,7 @@ export default function Column({ column, tasks, columnId }: ColumnProps) {
   const newTaskText = useTranslate('buttons.newTask');
   const { boardId } = useParams();
   const [confirmDeleteColumn, setConfirmDeleteColumn] = useState(false);
+  const [newTask, setNewTask] = useState('');
   const [editColumnName, setEditColumnName] = useState('');
   // const [columnId, setColumnId] = useState('');
 
@@ -27,7 +29,10 @@ export default function Column({ column, tasks, columnId }: ColumnProps) {
     e.preventDefault();
     setConfirmDeleteColumn(true);
   };
-  const handleNewTask = () => {};
+
+  const handleNewTask = () => {
+    setNewTask('start');
+  };
   const handleEdit = () => {
     setEditColumnName('start');
   };
@@ -69,12 +74,8 @@ export default function Column({ column, tasks, columnId }: ColumnProps) {
             <button className={styles.newTask} onClick={handleNewTask} data-title={newTaskText}>
               +
             </button>
-            {editColumnName ? (
-              <EditColumnForm
-                setEditColumnName={setEditColumnName}
-                boardId={boardId}
-                columnId={columnId}
-              />
+            {newTask ? (
+              <AddTaskForm setNewTask={setNewTask} boardId={boardId} columnId={id} />
             ) : null}
           </div>
         )}

@@ -4,32 +4,39 @@ import { FormBoardInputText } from 'components/FormBoardInputText';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
 import { FormProvider, useForm } from 'react-hook-form';
+import { CreateBoardData } from 'services/boardServiceTypes';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import styles from './../../login/Login.module.scss';
-import { updateColumnThunk } from 'store/thunks/columnThunk';
-import { ColumnDataResponse, CreateColumnData } from 'services/columnServiceTypes';
+import { createNewTaskThunk } from 'store/thunks/taskThunk';
+import { CreateTaskData } from 'services/taskServiceTypes';
 
 type FormProps = {
-  setEditColumnName: (x: string) => void;
+  setNewTask: (x: string) => void;
   boardId?: string;
   columnId: string;
-  order?: number;
 };
 
-export const EditColumnForm = ({ setEditColumnName, boardId, columnId, order }: FormProps) => {
+function isCreateTaskData(
+  val: CreateTaskData | (Omit<CreateTaskData, 'userId'> & { id?: string })
+): val is CreateTaskData {
+  return (val as CreateTaskData).userId !== undefined;
+}
+
+export const AddTaskForm = ({ setNewTask, boardId, columnId }: FormProps) => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
   const successEditBoard = useTranslate('alerts.successEditBoard');
   const errorEditBoard = useTranslate('alerts.errorEditBoard');
   const nameBoard = useTranslate('form.boardName');
+  const descriptionBoard = useTranslate('form.boardDescriptoon');
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
   const titleBoardCreateForm = useTranslate('buttons.editBoard');
-  const valueInputBoardCard = useAppSelector((state) => state.board.boardData);
-  const value = valueInputBoardCard?.columns.find((column) => column.id === columnId);
-
+  // const valueInputTaskCard = useAppSelector((state) => state.task.taskMain);
+  // const value = valueInputTaskCard?.find((task) => task.id === id);
+  const user = useAppSelector((state) => state.user.user);
   const methods = useForm({
-    defaultValues: { title: value?.title || '' },
+    defaultValues: { title: '', description: '' },
     mode: 'onChange',
   });
 
@@ -38,12 +45,14 @@ export const EditColumnForm = ({ setEditColumnName, boardId, columnId, order }: 
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = async (columnData: CreateColumnData) => {
+  const onSubmit = async (data: CreateBoardData) => {
+    const userData = { ...data, userId: user?.id };
     try {
-      if (boardId && order)
-        await dispatch(updateColumnThunk(boardId, columnId, { ...columnData, order }));
+      if (boardId && isCreateTaskData(userData)) {
+        await dispatch(createNewTaskThunk(boardId, columnId, userData));
+      }
       addAlert({ type: 'success', message: successEditBoard });
-      setEditColumnName('');
+      setNewTask('');
     } catch {
       addAlert({ type: 'error', message: errorEditBoard });
     }
@@ -68,6 +77,7 @@ export const EditColumnForm = ({ setEditColumnName, boardId, columnId, order }: 
       </Typography>
       <FormProvider {...methods}>
         <FormBoardInputText name="title" label={nameBoard} type="text" />
+        <FormBoardInputText name="description" label={descriptionBoard} type="multiline" />
       </FormProvider>
 
       <Button
@@ -82,7 +92,7 @@ export const EditColumnForm = ({ setEditColumnName, boardId, columnId, order }: 
       <Button
         className={styles.formButton}
         onClick={() => {
-          setEditColumnName('');
+          setNewTask('');
         }}
         variant={'outlined'}
         color="error"

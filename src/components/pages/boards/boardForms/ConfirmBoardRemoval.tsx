@@ -29,6 +29,7 @@ export const ConfirmBoardRemoval = ({ id }: ConfirmProps) => {
     try {
       await dispatch(deleteBoardByIdThunk(id));
       addAlert({ type: 'success', message: successDeleteBoard });
+      setConfirmDeleteBoard('');
     } catch {
       addAlert({ type: 'error', message: errorDeleteBoard });
     }
