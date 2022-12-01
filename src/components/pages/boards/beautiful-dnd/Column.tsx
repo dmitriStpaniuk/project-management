@@ -9,6 +9,7 @@ import { BsTrash } from 'react-icons/bs';
 import { TfiPencil } from 'react-icons/tfi';
 import { useParams } from 'react-router-dom';
 import { ConfirmColumnRemoval } from '../boardForms/ConfirmColumnRemoval';
+import { AddTaskForm } from '../boardForms/AddTaskForm';
 
 type ColumnProps = {
   column: ColumnDataResponse;
@@ -21,13 +22,16 @@ export default function Column({ column, tasks, id, setEditColumnName, setColumn
   const newTaskText = useTranslate('buttons.newTask');
   const { boardId } = useParams();
   const [confirmDeleteColumn, setConfirmDeleteColumn] = useState(false);
+  const [newTask, setNewTask] = useState('');
 
   const hendleDeleteColumn = (e: React.MouseEvent) => {
     e.preventDefault();
     setConfirmDeleteColumn(true);
   };
 
-  const handleNewTask = () => {};
+  const handleNewTask = () => {
+    setNewTask('start');
+  };
   const handleEdit = () => {
     setEditColumnName('start');
     setColumnId(id);
@@ -70,6 +74,9 @@ export default function Column({ column, tasks, id, setEditColumnName, setColumn
             <button className={styles.newTask} onClick={handleNewTask} data-title={newTaskText}>
               +
             </button>
+            {newTask ? (
+              <AddTaskForm setNewTask={setNewTask} boardId={boardId} columnId={id} />
+            ) : null}
           </div>
         )}
       </Droppable>
