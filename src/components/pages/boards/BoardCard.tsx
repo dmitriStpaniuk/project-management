@@ -8,19 +8,26 @@ type BoardCardProps = {
   description: string;
   id: string;
   setEditFormBoard: (id: string) => void;
+  setConfirmDeleteBoard: (id: string) => void;
 };
 
-export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCardProps) => {
+export const BoardCard = ({
+  title,
+  description,
+  id,
+  setEditFormBoard,
+  setConfirmDeleteBoard,
+}: BoardCardProps) => {
   const editButton = useTranslate('buttons.editBoard');
   const deleteButton = useTranslate('buttons.deleteBoard');
-  const [confirmDelete, setConfirmDeleteBoard] = useState(false);
+
   const handleEdit = (e: React.MouseEvent) => {
     e.preventDefault();
     setEditFormBoard(id);
   };
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault();
-    setConfirmDeleteBoard(true);
+    setConfirmDeleteBoard(id);
   };
   const card = (
     <>
@@ -44,9 +51,6 @@ export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCar
           {deleteButton}
         </Button>
       </CardActions>
-      {confirmDelete ? (
-        <ConfirmBoardRemoval setConfirmDeleteBoard={setConfirmDeleteBoard} id={id} />
-      ) : null}
     </>
   );
   return (

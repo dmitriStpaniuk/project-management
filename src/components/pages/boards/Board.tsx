@@ -21,6 +21,7 @@ const Board = () => {
   // const boardFetching = useAppSelector((state) => state.board);
   const board = useAppSelector((state) => state.board.boardData);
   const columns = useAppSelector((state) => state.column);
+  const currentEditableColumnOrder = board?.columns.find((col) => col.id === columnId)?.order;
 
   useEffect(() => {
     async function fetchData() {
@@ -139,6 +140,7 @@ const Board = () => {
                   setEditColumnName={setEditColumnName}
                   boardId={boardId}
                   columnId={columnId}
+                  order={currentEditableColumnOrder}
                 />
               ) : null}
             </div>

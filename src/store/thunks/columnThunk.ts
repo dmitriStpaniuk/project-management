@@ -35,7 +35,7 @@ export const deleteColumnByIdThunk =
   };
 
 export const updateColumnThunk =
-  (boardId: string, columnId: string, columnData: CreateColumnData) =>
+  (boardId: string, columnId: string, columnData: CreateColumnData & { order: number }) =>
   async (dispatch: AppDispatch) => {
     dispatch(columnSlice.actions.setIsColumnMainFetching(true));
     const result = await columnService.updateColumn(boardId, columnId, columnData);

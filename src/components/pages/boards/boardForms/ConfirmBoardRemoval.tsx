@@ -9,7 +9,7 @@ import { useAppDispatch } from 'store/store';
 import { deleteBoardByIdThunk, updateBoardThunk } from 'store/thunks/boardThunk';
 import styles from './../../login/Login.module.scss';
 type ConfirmProps = {
-  setConfirmDeleteBoard: (e: boolean) => void;
+  setConfirmDeleteBoard: (e: string) => void;
   id: string;
 };
 
@@ -26,13 +26,13 @@ export const ConfirmBoardRemoval = ({ setConfirmDeleteBoard, id }: ConfirmProps)
     try {
       await dispatch(deleteBoardByIdThunk(id));
       addAlert({ type: 'success', message: successDeleteBoard });
+      setConfirmDeleteBoard('');
     } catch {
       addAlert({ type: 'error', message: errorDeleteBoard });
     }
   };
   const handleCancel = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setConfirmDeleteBoard(false);
+    setConfirmDeleteBoard('');
   };
   return (
     <Paper

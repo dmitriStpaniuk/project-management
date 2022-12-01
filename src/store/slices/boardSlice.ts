@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CreateNewTaskResponse } from 'services/taskService';
 import { BoardMainResponse, BoardDataResponse } from '../../services/boardServiceTypes';
 
 type BoardInitialState = {
@@ -31,6 +32,12 @@ export const boardSlice = createSlice({
     },
     setBoardData: (state, action: PayloadAction<BoardDataResponse>) => {
       state.boardData = action.payload;
+    },
+    addNewTask: (state, action: PayloadAction<CreateNewTaskResponse>) => {
+      const columnForEdit = state.boardData?.columns.find(
+        (column) => column.id === action.payload.columnId
+      );
+      if (columnForEdit) columnForEdit.tasks = columnForEdit.tasks.concat(action.payload);
     },
     setIsBoardDataFetching: (state, action: PayloadAction<boolean>) => {
       state.isBoardDataFetching = action.payload;

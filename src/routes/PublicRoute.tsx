@@ -9,7 +9,7 @@ type PrivateRouteProps = {
 export const PublicRoute = ({ children }: PrivateRouteProps) => {
   const user = useAppSelector((state) => state.user.user);
   const isUserFetching = useAppSelector((state) => state.user.isUserFetching);
-  if (isUserFetching) {
+  if (!isUserFetching) {
     return (
       <div
         style={{

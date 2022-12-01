@@ -5,12 +5,14 @@ import { userSlice } from './slices/userSlice';
 import { boardSlice } from './slices/boardSlice';
 import { columnSlice } from './slices/columnSlice';
 import { formSlice } from './slices/formSlice';
+import { taskSlice } from './slices/taskSlice';
 
 const rootReducer = combineReducers({
   user: userSlice.reducer,
   board: boardSlice.reducer,
   column: columnSlice.reducer,
   form: formSlice.reducer,
+  task: taskSlice.reducer,
 });
 
 export const setupStore = () => {
