@@ -8,7 +8,7 @@ import { getAllUBoardsList } from 'store/thunks/boardThunk';
 import { AddBoardForm } from './boardForms/AddBoardForm';
 import { BoardCard } from './BoardCard';
 import { EditBoardForm } from './boardForms/EditBoardForm';
-import { addBoardFormOpenThunk } from 'store/thunks/formThunk';
+import { addBoardFormOpenThunk, addFormBackgroundThunk } from 'store/thunks/formThunk';
 import { ConfirmBoardRemoval } from './boardForms/ConfirmBoardRemoval';
 
 export default function Boards() {
@@ -78,9 +78,7 @@ export default function Boards() {
         {editFormBoardId ? (
           <EditBoardForm setEditFormBoard={setEditFormBoard} id={editFormBoardId} />
         ) : null}
-        {confirmDeleteId ? (
-          <ConfirmBoardRemoval setConfirmDeleteBoard={setConfirmDeleteBoard} id={confirmDeleteId} />
-        ) : null}
+        {confirmDeleteId ? <ConfirmBoardRemoval id={confirmDeleteId} /> : null}
       </Container>
     </div>
   );

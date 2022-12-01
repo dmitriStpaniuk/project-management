@@ -48,5 +48,8 @@ export const boardSlice = createSlice({
     setIsAllBoardsFetching: (state, action: PayloadAction<boolean>) => {
       state.isAllBoardsFetching = action.payload;
     },
+    // setUpdateBoardData: (state, action: PayloadAction<BoardDataResponse>) => {
+    //   state.boardData = action.payload;
+    // },
   },
 });

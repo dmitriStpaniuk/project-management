@@ -75,7 +75,7 @@ export default function Column({ column, tasks, columnId }: ColumnProps) {
               +
             </button>
             {newTask ? (
-              <AddTaskForm setNewTask={setNewTask} boardId={boardId} columnId={id} />
+              <AddTaskForm setNewTask={setNewTask} boardId={boardId} columnId={columnId} />
             ) : null}
           </div>
         )}

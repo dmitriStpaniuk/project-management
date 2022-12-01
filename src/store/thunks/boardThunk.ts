@@ -43,3 +43,10 @@ export const updateBoard = (boardData: BoardDataResponse) => async (dispatch: Ap
   dispatch(boardSlice.actions.setIsBoardMainFetching(false));
   dispatch(boardSlice.actions.setBoardData(boardData));
 };
+export const updateBoardInStateThank =
+  (boardId: string, boardData: BoardDataResponse) => async (dispatch: AppDispatch) => {
+    dispatch(boardSlice.actions.setIsBoardMainFetching(true));
+    const result = await boardService.updateBoard(boardId, boardData);
+    dispatch(boardSlice.actions.setIsBoardMainFetching(false));
+    dispatch(boardSlice.actions.setBoardData(boardData));
+  };
