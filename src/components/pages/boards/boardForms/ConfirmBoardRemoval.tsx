@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button, Paper, Typography } from '@mui/material';
 import { FormBoardInputText } from 'components/FormBoardInputText';
 import { useTranslate } from 'components/languageContext/languageContext';
@@ -8,10 +8,7 @@ import { CreateBoardData } from 'services/boardServiceTypes';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import { deleteBoardByIdThunk, updateBoardThunk } from 'store/thunks/boardThunk';
 import styles from './../../login/Login.module.scss';
-import {
-  addConfirmDeleteBoardFormCloseThunk,
-  addFormBackgroundThunk,
-} from 'store/thunks/formThunk';
+import { addConfirmDeleteBoardFormCloseThunk } from 'store/thunks/formThunk';
 type ConfirmProps = {
   // setConfirmDeleteBoard: (e: boolean) => void;
   id: string;
@@ -25,9 +22,6 @@ export const ConfirmBoardRemoval = ({ id }: ConfirmProps) => {
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
   const titleDeleteForm = useTranslate('form.confirmDeleteBoard');
-  useEffect(() => {
-    dispatch(addFormBackgroundThunk());
-  }, []);
 
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();

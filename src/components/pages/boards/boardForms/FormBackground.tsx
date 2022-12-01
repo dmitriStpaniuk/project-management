@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from 'store/store';
 import {
   addBoardFormCloseThunk,
   addConfirmDeleteBoardFormCloseThunk,
+  addConfirmEditBoardFormCloseThunk,
   addFormBackgroundCloseThunk,
   addFormBackgroundThunk,
 } from 'store/thunks/formThunk';
@@ -13,15 +14,18 @@ export default function FormBackground() {
   const formAddBoard = useAppSelector((state) => state.form.formAddBoard);
   const formAddColumn = useAppSelector((state) => state.form.formAddColumn);
   const confirmDeleteBoard = useAppSelector((state) => state.form.confirmDeleteBoard);
-  const closeAll = formAddBoard || formAddColumn || confirmDeleteBoard;
+  const confirmEditBoard = useAppSelector((state) => state.form.confirmEditBoard);
+
+  const closeAll = formAddBoard || formAddColumn || confirmDeleteBoard || confirmEditBoard;
   //   console.log(closeAll);
-  //   //   console.log(confirmDeleteBoard);
+  //   //   console.log(confirmEditBoard);
   useEffect(() => {
     !closeAll ? dispatch(addFormBackgroundCloseThunk()) : null;
   }, [closeAll]);
   const close = () => {
     formAddBoard ? dispatch(addBoardFormCloseThunk()) : null;
     confirmDeleteBoard ? dispatch(addConfirmDeleteBoardFormCloseThunk()) : null;
+    confirmEditBoard ? dispatch(addConfirmEditBoardFormCloseThunk()) : null;
     dispatch(addFormBackgroundCloseThunk());
   };
   return (

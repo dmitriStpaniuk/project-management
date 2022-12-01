@@ -8,7 +8,7 @@ import { getAllUBoardsList } from 'store/thunks/boardThunk';
 import { AddBoardForm } from './boardForms/AddBoardForm';
 import { BoardCard } from './BoardCard';
 import { EditBoardForm } from './boardForms/EditBoardForm';
-import { addBoardFormOpenThunk } from 'store/thunks/formThunk';
+import { addBoardFormOpenThunk, addFormBackgroundThunk } from 'store/thunks/formThunk';
 
 export default function Boards() {
   const [editFormBoardId, setEditFormBoard] = useState('');
@@ -21,6 +21,7 @@ export default function Boards() {
 
   const handleClick = () => {
     dispatch(addBoardFormOpenThunk());
+    dispatch(addFormBackgroundThunk());
   };
 
   useEffect(() => {

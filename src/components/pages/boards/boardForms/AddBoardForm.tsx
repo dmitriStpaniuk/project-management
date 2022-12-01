@@ -8,7 +8,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { CreateBoardData } from 'services/boardServiceTypes';
 import { useAppDispatch } from 'store/store';
 import { createNewBoardThunk } from 'store/thunks/boardThunk';
-import { addBoardFormCloseThunk, addFormBackgroundThunk } from 'store/thunks/formThunk';
+import { addBoardFormCloseThunk } from 'store/thunks/formThunk';
 import styles from './../../login/Login.module.scss';
 import FormBackground from './FormBackground';
 
@@ -26,9 +26,6 @@ export const AddBoardForm = () => {
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
   const titleBoardCreateForm = useTranslate('form.titleCreateBoard');
-  useEffect(() => {
-    dispatch(addFormBackgroundThunk());
-  }, []);
 
   const methods = useForm({
     defaultValues: { title: '', description: '' },

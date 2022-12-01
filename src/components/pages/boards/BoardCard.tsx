@@ -2,7 +2,11 @@ import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/ma
 import { useTranslate } from 'components/languageContext/languageContext';
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/store';
-import { addConfirmDeleteBoardFormThunk } from 'store/thunks/formThunk';
+import {
+  addConfirmDeleteBoardFormThunk,
+  addConfirmEditBoardFormThunk,
+  addFormBackgroundThunk,
+} from 'store/thunks/formThunk';
 import { ConfirmBoardRemoval } from './boardForms/ConfirmBoardRemoval';
 
 type BoardCardProps = {
@@ -22,11 +26,14 @@ export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCar
   const handleEdit = (e: React.MouseEvent) => {
     e.preventDefault();
     setEditFormBoard(id);
+    dispatch(addConfirmEditBoardFormThunk());
+    dispatch(addFormBackgroundThunk());
   };
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault();
     // setConfirmDeleteBoard(true);
     dispatch(addConfirmDeleteBoardFormThunk());
+    dispatch(addFormBackgroundThunk());
   };
   const card = (
     <>
@@ -50,7 +57,7 @@ export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCar
           {deleteButton}
         </Button>
       </CardActions>
-      {confirmDeleteBoard ? <ConfirmBoardRemoval id={id} /> : null}
+      {/* {confirmDeleteBoard ? <ConfirmBoardRemoval id={id} /> : null} */}
     </>
   );
   return (
@@ -58,6 +65,7 @@ export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCar
       <Box sx={{ minWidth: 275 }}>
         <Card variant="outlined">{card}</Card>
       </Box>
+      {confirmDeleteBoard ? <ConfirmBoardRemoval id={id} /> : null}
     </>
   );
 };
