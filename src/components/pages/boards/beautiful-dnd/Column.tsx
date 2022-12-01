@@ -9,18 +9,19 @@ import { BsTrash } from 'react-icons/bs';
 import { TfiPencil } from 'react-icons/tfi';
 import { useParams } from 'react-router-dom';
 import { ConfirmColumnRemoval } from '../boardForms/ConfirmColumnRemoval';
+import { EditColumnForm } from '../boardForms/EditColumnForm';
 
 type ColumnProps = {
   column: ColumnDataResponse;
   tasks: TaskDataResponse[];
-  id: string;
-  setEditColumnName: (x: string) => void;
-  setColumnId: (x: string) => void;
+  columnId: string;
 };
-export default function Column({ column, tasks, id, setEditColumnName, setColumnId }: ColumnProps) {
+export default function Column({ column, tasks, columnId }: ColumnProps) {
   const newTaskText = useTranslate('buttons.newTask');
   const { boardId } = useParams();
   const [confirmDeleteColumn, setConfirmDeleteColumn] = useState(false);
+  const [editColumnName, setEditColumnName] = useState('');
+  // const [columnId, setColumnId] = useState('');
 
   const hendleDeleteColumn = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -29,15 +30,14 @@ export default function Column({ column, tasks, id, setEditColumnName, setColumn
   const handleNewTask = () => {};
   const handleEdit = () => {
     setEditColumnName('start');
-    setColumnId(id);
   };
   return (
     <div className={styles.wrapper}>
-      <Droppable droppableId={id}>
+      <Droppable droppableId={columnId}>
         {(provided, snapshot) => (
           <div
             className={snapshot.isDraggingOver ? styles.dragactive : styles.nodragactive}
-            id={id}
+            id={columnId}
           >
             <div className={styles.columnHeader}>
               <div className={styles.columnHeaderContext}>
@@ -53,7 +53,7 @@ export default function Column({ column, tasks, id, setEditColumnName, setColumn
                     <ConfirmColumnRemoval
                       setConfirmDeleteColumn={setConfirmDeleteColumn}
                       boardId={boardId as string}
-                      id={id}
+                      id={columnId}
                     />
                   ) : null}
                 </div>
@@ -69,6 +69,13 @@ export default function Column({ column, tasks, id, setEditColumnName, setColumn
             <button className={styles.newTask} onClick={handleNewTask} data-title={newTaskText}>
               +
             </button>
+            {editColumnName ? (
+              <EditColumnForm
+                setEditColumnName={setEditColumnName}
+                boardId={boardId}
+                columnId={columnId}
+              />
+            ) : null}
           </div>
         )}
       </Droppable>

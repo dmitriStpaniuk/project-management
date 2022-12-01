@@ -11,24 +11,22 @@ import CreateNewColumnForm from './boardForms/CreateNewColumnForm';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import { getBoardByIdThunk, updateBoard } from 'store/thunks/boardThunk';
 import { EditColumnForm } from './boardForms/EditColumnForm';
+import { getAllUColumnsListThunk } from 'store/thunks/columnThunk';
 
 const Board = () => {
   const dispatch = useAppDispatch();
   const { boardId } = useParams();
   const [newColumn, setNewColumn] = useState(false);
-  const [editColumnName, setEditColumnName] = useState('');
-  const [columnId, setColumnId] = useState('');
-  // const boardFetching = useAppSelector((state) => state.board);
   const board = useAppSelector((state) => state.board.boardData);
   const columns = useAppSelector((state) => state.column);
-  console.log(board?.columns);
   useEffect(() => {
     async function fetchData() {
-      if (boardId) await dispatch(getBoardByIdThunk(boardId));
+      if (boardId) {
+        await dispatch(getBoardByIdThunk(boardId));
+      }
     }
     fetchData();
   }, [boardId, newColumn, columns]);
-
   const newColumnText = useTranslate('buttons.newColumn');
 
   const onDragEnd = (result: DropResult) => {
@@ -118,9 +116,7 @@ const Board = () => {
                     key={columnX.id}
                     column={column}
                     tasks={column.tasks}
-                    id={column.id}
-                    setEditColumnName={setEditColumnName}
-                    setColumnId={setColumnId}
+                    columnId={column.id}
                   />
                 );
               })}
@@ -134,13 +130,6 @@ const Board = () => {
                 </button>
               </div>
               {newColumn ? <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} /> : null}
-              {editColumnName ? (
-                <EditColumnForm
-                  setEditColumnName={setEditColumnName}
-                  boardId={boardId}
-                  columnId={columnId}
-                />
-              ) : null}
             </div>
           </div>
         </DragDropContext>

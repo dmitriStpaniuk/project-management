@@ -3,13 +3,14 @@ import { FormBoardInputText } from 'components/FormBoardInputText';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
 import { WrapperWaiting } from 'components/utils/WrapperWaiting';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { CreateBoardData } from 'services/boardServiceTypes';
 import { useAppDispatch } from 'store/store';
 import { createNewBoardThunk } from 'store/thunks/boardThunk';
-import { addBoardFormCloseThunk } from 'store/thunks/formThunk';
+import { addBoardFormCloseThunk, addFormBackgroundThunk } from 'store/thunks/formThunk';
 import styles from './../../login/Login.module.scss';
+import FormBackground from './FormBackground';
 
 // type FormProps = {
 //   setPopupFormAddBoard: (x: boolean) => void;
@@ -25,17 +26,18 @@ export const AddBoardForm = () => {
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
   const titleBoardCreateForm = useTranslate('form.titleCreateBoard');
+  useEffect(() => {
+    dispatch(addFormBackgroundThunk());
+  }, []);
 
   const methods = useForm({
     defaultValues: { title: '', description: '' },
     mode: 'onChange',
   });
-
   const {
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-
   const onSubmit = async (data: CreateBoardData) => {
     try {
       await dispatch(createNewBoardThunk(data));
@@ -64,6 +66,7 @@ export const AddBoardForm = () => {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
+          zIndex: 3,
         }}
       >
         <Typography variant="h4" component="h4">

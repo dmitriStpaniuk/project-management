@@ -1,6 +1,8 @@
 import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import { useTranslate } from 'components/languageContext/languageContext';
 import React, { useState } from 'react';
+import { useAppDispatch, useAppSelector } from 'store/store';
+import { addConfirmDeleteBoardFormThunk } from 'store/thunks/formThunk';
 import { ConfirmBoardRemoval } from './boardForms/ConfirmBoardRemoval';
 
 type BoardCardProps = {
@@ -11,16 +13,20 @@ type BoardCardProps = {
 };
 
 export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCardProps) => {
+  const dispatch = useAppDispatch();
+
   const editButton = useTranslate('buttons.editBoard');
   const deleteButton = useTranslate('buttons.deleteBoard');
-  const [confirmDelete, setConfirmDeleteBoard] = useState(false);
+  // const [confirmDelete, setConfirmDeleteBoard] = useState(false);
+  const confirmDeleteBoard = useAppSelector((state) => state.form.confirmDeleteBoard);
   const handleEdit = (e: React.MouseEvent) => {
     e.preventDefault();
     setEditFormBoard(id);
   };
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault();
-    setConfirmDeleteBoard(true);
+    // setConfirmDeleteBoard(true);
+    dispatch(addConfirmDeleteBoardFormThunk());
   };
   const card = (
     <>
@@ -44,9 +50,7 @@ export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCar
           {deleteButton}
         </Button>
       </CardActions>
-      {confirmDelete ? (
-        <ConfirmBoardRemoval setConfirmDeleteBoard={setConfirmDeleteBoard} id={id} />
-      ) : null}
+      {confirmDeleteBoard ? <ConfirmBoardRemoval id={id} /> : null}
     </>
   );
   return (

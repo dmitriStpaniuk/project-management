@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Paper, Typography } from '@mui/material';
 import { FormBoardInputText } from 'components/FormBoardInputText';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
 import { FormProvider, useForm } from 'react-hook-form';
 import { CreateBoardData } from 'services/boardServiceTypes';
-import { useAppDispatch } from 'store/store';
+import { useAppDispatch, useAppSelector } from 'store/store';
 import { deleteBoardByIdThunk, updateBoardThunk } from 'store/thunks/boardThunk';
 import styles from './../../login/Login.module.scss';
+import {
+  addConfirmDeleteBoardFormCloseThunk,
+  addFormBackgroundThunk,
+} from 'store/thunks/formThunk';
 type ConfirmProps = {
-  setConfirmDeleteBoard: (e: boolean) => void;
+  // setConfirmDeleteBoard: (e: boolean) => void;
   id: string;
 };
 
-export const ConfirmBoardRemoval = ({ setConfirmDeleteBoard, id }: ConfirmProps) => {
+export const ConfirmBoardRemoval = ({ id }: ConfirmProps) => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
   const successDeleteBoard = useTranslate('alerts.successDeleteBoard');
@@ -21,8 +25,13 @@ export const ConfirmBoardRemoval = ({ setConfirmDeleteBoard, id }: ConfirmProps)
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
   const titleDeleteForm = useTranslate('form.confirmDeleteBoard');
+  useEffect(() => {
+    dispatch(addFormBackgroundThunk());
+  }, []);
+
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
+    dispatch(addConfirmDeleteBoardFormCloseThunk());
     try {
       await dispatch(deleteBoardByIdThunk(id));
       addAlert({ type: 'success', message: successDeleteBoard });
@@ -31,8 +40,9 @@ export const ConfirmBoardRemoval = ({ setConfirmDeleteBoard, id }: ConfirmProps)
     }
   };
   const handleCancel = (e: React.MouseEvent) => {
+    dispatch(addConfirmDeleteBoardFormCloseThunk());
     e.preventDefault();
-    setConfirmDeleteBoard(false);
+    // setConfirmDeleteBoard(false);
   };
   return (
     <Paper
@@ -43,7 +53,7 @@ export const ConfirmBoardRemoval = ({ setConfirmDeleteBoard, id }: ConfirmProps)
         gridRowGap: '20px',
         justifyItems: 'center',
         position: 'absolute',
-        zIndex: 5,
+        zIndex: 3,
         left: '20%',
         top: '20%',
       }}
