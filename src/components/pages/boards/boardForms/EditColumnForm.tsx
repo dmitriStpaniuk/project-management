@@ -32,7 +32,7 @@ export const EditColumnForm = ({ setEditColumnName, boardId, columnId, order }: 
     defaultValues: { title: value?.title || '' },
     mode: 'onChange',
   });
-
+  console.log(order);
   const {
     handleSubmit,
     formState: { isSubmitting },
