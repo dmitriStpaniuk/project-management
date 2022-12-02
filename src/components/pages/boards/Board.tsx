@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import Column from './beautiful-dnd/Column';
 import styles from './Board.module.scss';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { TaskDataResponse } from 'services/taskServiceTypes';
+import { UpdateTaskData } from 'services/taskServiceTypes';
 import { ColumnDataResponse } from 'services/columnServiceTypes';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { Container } from '@mui/system';
@@ -12,12 +12,12 @@ import { useAppDispatch, useAppSelector } from 'store/store';
 import { getBoardByIdThunk, updateBoard, updateBoardThunk } from 'store/thunks/boardThunk';
 import { EditColumnForm } from './boardForms/EditColumnForm';
 import { getAllUColumnsListThunk, updateColumnThunk } from 'store/thunks/columnThunk';
+import { updateTaskThunk } from 'store/thunks/taskThunk';
 
 const Board = () => {
   const dispatch = useAppDispatch();
   const { boardId } = useParams();
   const [newColumn, setNewColumn] = useState(false);
-  // const [columnId, setColumnId] = useState('');
   const board = useAppSelector((state) => state.board.boardData);
   const columns = useAppSelector((state) => state.column);
   // const currentEditableColumnOrder = board?.columns.find((col) => col.id === columnId)?.order;
@@ -52,6 +52,15 @@ const Board = () => {
       newTasks.splice(source.index, 1);
       newTasks.splice(destination.index, 0, draggableTask);
 
+      const taskData = {
+        title: draggableTask.title,
+        order: destination.index,
+        description: draggableTask.description,
+        userId: draggableTask.userId,
+        boardId: boardId,
+        columnId: column.id,
+      } as UpdateTaskData;
+      if (boardId) dispatch(updateTaskThunk(boardId, column.id, draggableTask.id, taskData));
       const newColumn = {
         ...start,
         tasks: newTasks,
@@ -60,15 +69,14 @@ const Board = () => {
       newColumns.splice(
         columns.findIndex((col) => col.id === newColumn.id),
         1,
-        newColumn as ColumnDataResponse
+        newColumn
       );
-      // if (boardId) dispatch(updateColumnThunk(boardId, column.id, newColumn));
+
       const newState = {
         ...board!,
         columns: newColumns,
       };
       dispatch(updateBoard(newState));
-      // dispatch(updateBoardThunk(boardId!, newState));
       return;
     }
 
