@@ -83,9 +83,6 @@
   &:hover {
     background-color: #fff;
     color: black;
-    &::after {
-      content: attr(data-title);
-    }
   }
 }
 

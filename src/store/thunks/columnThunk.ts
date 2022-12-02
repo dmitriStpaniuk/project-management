@@ -3,7 +3,7 @@ import { AppDispatch } from '../../store/store';
 import * as columnService from '../../services/columnService';
 import { CreateColumnData } from '../../services/columnServiceTypes';
 
-export const getAllUColumnsList = (boardId: string) => async (dispatch: AppDispatch) => {
+export const getAllUColumnsListThunk = (boardId: string) => async (dispatch: AppDispatch) => {
   dispatch(columnSlice.actions.setIsAllColumnsFetching(true));
   const result = await columnService.getAllUColumns(boardId);
   dispatch(columnSlice.actions.setIsAllColumnsFetching(false));
@@ -28,7 +28,6 @@ export const getColumnByIdThunk =
 
 export const deleteColumnByIdThunk =
   (boardId: string, columnId: string) => async (dispatch: AppDispatch) => {
-    console.log(columnId);
     dispatch(columnSlice.actions.setIsColumnMainFetching(true));
     await columnService.deleteColumnById(boardId, columnId);
     dispatch(columnSlice.actions.setIsColumnMainFetching(false));

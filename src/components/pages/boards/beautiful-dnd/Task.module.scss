@@ -3,6 +3,8 @@
   border: solid 2px;
   border-radius: 3px;
   padding: 4px 8px;
+  display: flex;
+  justify-content: space-between;
 }
 .draggingOver {
   background-color: #fff;
@@ -10,4 +12,15 @@
   border-radius: 3px;
   padding: 4px 8px;
   z-index: 2;
+  display: flex;
+  justify-content: space-between;
+}
+.taskButton {
+  background: none;
+  border: none;
+  right: 5rem;
+  cursor: pointer;
+  &:hover {
+    color: red;
+  }
 }

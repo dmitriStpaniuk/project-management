@@ -9,27 +9,27 @@ import { useTranslate } from 'components/languageContext/languageContext';
 import { Container } from '@mui/system';
 import CreateNewColumnForm from './boardForms/CreateNewColumnForm';
 import { useAppDispatch, useAppSelector } from 'store/store';
-import { getBoardByIdThunk, updateBoard } from 'store/thunks/boardThunk';
+import { getBoardByIdThunk, updateBoard, updateBoardThunk } from 'store/thunks/boardThunk';
 import { EditColumnForm } from './boardForms/EditColumnForm';
+import { getAllUColumnsListThunk, updateColumnThunk } from 'store/thunks/columnThunk';
 
 const Board = () => {
   const dispatch = useAppDispatch();
   const { boardId } = useParams();
   const [newColumn, setNewColumn] = useState(false);
-  const [editColumnName, setEditColumnName] = useState('');
-  const [columnId, setColumnId] = useState('');
-  // const boardFetching = useAppSelector((state) => state.board);
+  // const [columnId, setColumnId] = useState('');
   const board = useAppSelector((state) => state.board.boardData);
   const columns = useAppSelector((state) => state.column);
-  const currentEditableColumnOrder = board?.columns.find((col) => col.id === columnId)?.order;
+  // const currentEditableColumnOrder = board?.columns.find((col) => col.id === columnId)?.order;
 
   useEffect(() => {
     async function fetchData() {
-      if (boardId) await dispatch(getBoardByIdThunk(boardId));
+      if (boardId) {
+        await dispatch(getBoardByIdThunk(boardId));
+      }
     }
     fetchData();
   }, [boardId, newColumn, columns]);
-
   const newColumnText = useTranslate('buttons.newColumn');
 
   const onDragEnd = (result: DropResult) => {
@@ -40,39 +40,39 @@ const Board = () => {
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
-    const start = board!.columns.find((col) => col.id === source.droppableId) as ColumnDataResponse;
-    const finish = board!.columns.find(
-      (col) => col.id === destination.droppableId
-    ) as ColumnDataResponse;
+    const columns = board!.columns;
+    const start = columns.find((col) => col.id === source.droppableId) as ColumnDataResponse;
+    const finish = columns.find((col) => col.id === destination.droppableId) as ColumnDataResponse;
     if (start === finish) {
-      const column = board!.columns.find(
+      const column = columns.find(
         (col) => col.id === destination.droppableId
       ) as ColumnDataResponse;
-      const draggableTask = column.tasks.find(
-        (task) => task.id === draggableId
-      ) as TaskDataResponse;
-      const newTasks = column.tasks;
+      const draggableTask = column.tasks[source.index];
+      const newTasks = Array.from(column.tasks);
       newTasks.splice(source.index, 1);
       newTasks.splice(destination.index, 0, draggableTask);
+
       const newColumn = {
         ...start,
         tasks: newTasks,
       };
-      const newColumns = board!.columns;
+      const newColumns = Array.from(columns);
       newColumns.splice(
-        board!.columns.findIndex((col) => col.id === newColumn.id),
+        columns.findIndex((col) => col.id === newColumn.id),
         1,
         newColumn as ColumnDataResponse
       );
+      // if (boardId) dispatch(updateColumnThunk(boardId, column.id, newColumn));
       const newState = {
         ...board!,
         columns: newColumns,
       };
       dispatch(updateBoard(newState));
+      // dispatch(updateBoardThunk(boardId!, newState));
       return;
     }
 
-    const startTasks = start.tasks;
+    const startTasks = Array.from(start.tasks);
     const draggableTask = startTasks[source.index];
     startTasks.splice(source.index, 1);
     const newStart = {
@@ -80,16 +80,16 @@ const Board = () => {
       tasks: startTasks,
     };
 
-    const finishTasks = finish.tasks;
+    const finishTasks = Array.from(finish.tasks);
     finishTasks.splice(destination.index, 0, draggableTask);
     const newFinish = {
       ...finish,
       tasks: finishTasks,
     };
 
-    const newColumns = board!.columns;
-    const startIndex = board!.columns.findIndex((col) => col.id === start.id);
-    const finishIndex = board!.columns.findIndex((col) => col.id === finish.id);
+    const newColumns = Array.from(columns);
+    const startIndex = columns.findIndex((col) => col.id === start.id);
+    const finishIndex = columns.findIndex((col) => col.id === finish.id);
     newColumns.splice(startIndex, 1, newStart);
     newColumns.splice(finishIndex, 1, newFinish);
     const newState = {
@@ -97,6 +97,7 @@ const Board = () => {
       columns: newColumns,
     };
     dispatch(updateBoard(newState));
+    // dispatch(updateBoardThunk(boardId!, newState));
   };
   const handleNewColumn = () => {
     setNewColumn(true);
@@ -119,13 +120,11 @@ const Board = () => {
                     key={columnX.id}
                     column={column}
                     tasks={column.tasks}
-                    id={column.id}
-                    setEditColumnName={setEditColumnName}
-                    setColumnId={setColumnId}
+                    columnId={column.id}
                   />
                 );
               })}
-              <div style={{ minWidth: '220px' }}>
+              <div style={{ minWidth: '120px' }}>
                 <button
                   className={styles.newColumn}
                   onClick={handleNewColumn}
@@ -135,14 +134,6 @@ const Board = () => {
                 </button>
               </div>
               {newColumn ? <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} /> : null}
-              {editColumnName ? (
-                <EditColumnForm
-                  setEditColumnName={setEditColumnName}
-                  boardId={boardId}
-                  columnId={columnId}
-                  order={currentEditableColumnOrder}
-                />
-              ) : null}
             </div>
           </div>
         </DragDropContext>

@@ -19,7 +19,6 @@ export const ConfirmColumnRemoval = ({ setConfirmDeleteColumn, boardId, id }: Co
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
   const titleDeleteForm = useTranslate('form.confirmDeleteColumn');
-
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
     try {

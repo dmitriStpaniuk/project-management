@@ -8,6 +8,7 @@ import { CreateBoardData } from 'services/boardServiceTypes';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import { updateBoardThunk } from 'store/thunks/boardThunk';
 import styles from './../../login/Login.module.scss';
+import { addConfirmEditBoardFormCloseThunk } from 'store/thunks/formThunk';
 
 type FormProps = {
   setEditFormBoard: (x: string) => void;
@@ -15,6 +16,8 @@ type FormProps = {
 };
 
 export const EditBoardForm = ({ setEditFormBoard, id }: FormProps) => {
+  const confirmEditBoard = useAppSelector((state) => state.form.confirmEditBoard);
+
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
   const successEditBoard = useTranslate('alerts.successEditBoard');
@@ -37,6 +40,7 @@ export const EditBoardForm = ({ setEditFormBoard, id }: FormProps) => {
   } = methods;
 
   const onSubmit = async (data: CreateBoardData) => {
+    dispatch(addConfirmEditBoardFormCloseThunk());
     try {
       await dispatch(updateBoardThunk(id, data));
       addAlert({ type: 'success', message: successEditBoard });
@@ -47,46 +51,50 @@ export const EditBoardForm = ({ setEditFormBoard, id }: FormProps) => {
   };
 
   return (
-    <Paper
-      style={{
-        width: '50%',
-        padding: '20px',
-        display: 'grid',
-        gridRowGap: '20px',
-        justifyItems: 'center',
-        position: 'absolute',
-        zIndex: 5,
-        left: '20%',
-        top: '20%',
-      }}
-    >
-      <Typography variant="h4" component="h4">
-        {titleBoardCreateForm}
-      </Typography>
-      <FormProvider {...methods}>
-        <FormBoardInputText name="title" label={nameBoard} type="text" />
-        <FormBoardInputText name="description" label={descriptionBoard} type="text" />
-      </FormProvider>
+    <>
+      {confirmEditBoard ? (
+        <Paper
+          style={{
+            width: '50%',
+            padding: '20px',
+            display: 'grid',
+            gridRowGap: '20px',
+            justifyItems: 'center',
+            position: 'absolute',
+            zIndex: 5,
+            left: '20%',
+            top: '20%',
+          }}
+        >
+          <Typography variant="h4" component="h4">
+            {titleBoardCreateForm}
+          </Typography>
+          <FormProvider {...methods}>
+            <FormBoardInputText name="title" label={nameBoard} type="text" />
+            <FormBoardInputText name="description" label={descriptionBoard} type="text" />
+          </FormProvider>
 
-      <Button
-        onClick={handleSubmit(onSubmit)}
-        className={styles.formButton}
-        color="info"
-        variant={'contained'}
-        disabled={isSubmitting}
-      >
-        {submitBoardRequest}
-      </Button>
-      <Button
-        className={styles.formButton}
-        onClick={() => {
-          setEditFormBoard('');
-        }}
-        variant={'outlined'}
-        color="error"
-      >
-        {closeBoardCreateForm}
-      </Button>
-    </Paper>
+          <Button
+            onClick={handleSubmit(onSubmit)}
+            className={styles.formButton}
+            color="info"
+            variant={'contained'}
+            disabled={isSubmitting}
+          >
+            {submitBoardRequest}
+          </Button>
+          <Button
+            className={styles.formButton}
+            onClick={() => {
+              setEditFormBoard(''), dispatch(addConfirmEditBoardFormCloseThunk());
+            }}
+            variant={'outlined'}
+            color="error"
+          >
+            {closeBoardCreateForm}
+          </Button>
+        </Paper>
+      ) : null}
+    </>
   );
 };
