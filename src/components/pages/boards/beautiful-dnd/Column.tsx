@@ -33,9 +33,11 @@ export default function Column({ column, tasks, columnId }: ColumnProps) {
   const handleNewTask = () => {
     setNewTask('start');
   };
+
   const handleEdit = () => {
     setEditColumnName('start');
   };
+
   return (
     <div className={styles.wrapper}>
       <Droppable droppableId={columnId}>
@@ -76,6 +78,14 @@ export default function Column({ column, tasks, columnId }: ColumnProps) {
             </button>
             {newTask ? (
               <AddTaskForm setNewTask={setNewTask} boardId={boardId} columnId={columnId} />
+            ) : null}
+            {editColumnName ? (
+              <EditColumnForm
+                setEditColumnName={setEditColumnName}
+                boardId={boardId}
+                columnId={columnId}
+                order={column.order}
+              />
             ) : null}
           </div>
         )}
