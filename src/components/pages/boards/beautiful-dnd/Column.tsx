@@ -69,7 +69,7 @@ export default function Column({ column, tasks, columnId }: ColumnProps) {
             </div>
             <div className={styles.taskList} {...provided.droppableProps} ref={provided.innerRef}>
               {tasks.map((task, index) => (
-                <Task task={task} index={index} key={task.id} id={task.id} />
+                <Task task={task} index={index} key={task.id} taskId={task.id} />
               ))}
               {provided.placeholder}
             </div>
