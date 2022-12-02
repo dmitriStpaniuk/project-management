@@ -20,12 +20,12 @@ export type CreateTaskData = {
 export type CreateTaskResponse = CreateTaskData & { id: string };
 
 export type UpdateTaskData = {
-  title: string;
-  order: number;
-  description: string;
-  userId: string;
-  boardId: string;
-  columnId: string;
+  title?: string;
+  order?: number;
+  description?: string;
+  userId?: string;
+  boardId?: string;
+  columnId?: string;
 };
 
 export type UpdateTaskResponse = UpdateTaskData & { id: string };

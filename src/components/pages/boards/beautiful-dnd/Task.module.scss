@@ -4,6 +4,7 @@
   border-radius: 3px;
   padding: 4px 8px;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 .draggingOver {
@@ -23,4 +24,12 @@
   &:hover {
     color: red;
   }
+}
+.button_wrapper{
+  display: flex;
+  justify-content: space-between;
+}
+.content_wrapper{
+  display: flex;
+  justify-content: space-between;
 }
