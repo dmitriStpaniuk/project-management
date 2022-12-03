@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Paper, Typography } from '@mui/material';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
 import { useAppDispatch } from 'store/store';
 import styles from './../../login/Login.module.scss';
 import { deleteColumnByIdThunk } from 'store/thunks/columnThunk';
+
 type ConfirmProps = {
   setConfirmDeleteColumn: (e: boolean) => void;
   boardId: string;

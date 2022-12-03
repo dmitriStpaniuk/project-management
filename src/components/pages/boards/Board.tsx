@@ -3,25 +3,21 @@ import { useParams } from 'react-router-dom';
 import Column from './beautiful-dnd/Column';
 import styles from './Board.module.scss';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { TaskDataResponse } from 'services/taskServiceTypes';
 import { ColumnDataResponse } from 'services/columnServiceTypes';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { Container } from '@mui/system';
 import CreateNewColumnForm from './boardForms/CreateNewColumnForm';
 import { useAppDispatch, useAppSelector } from 'store/store';
-import { getBoardByIdThunk, updateBoard, updateBoardThunk } from 'store/thunks/boardThunk';
-import { EditColumnForm } from './boardForms/EditColumnForm';
-import { getAllUColumnsListThunk, updateColumnThunk } from 'store/thunks/columnThunk';
+import { getBoardByIdThunk, updateBoard } from 'store/thunks/boardThunk';
 import { boardSlice } from 'store/slices/boardSlice';
 
 const Board = () => {
   const dispatch = useAppDispatch();
   const { boardId } = useParams();
   const [newColumn, setNewColumn] = useState(false);
-  // const [columnId, setColumnId] = useState('');
+
   const board = useAppSelector((state) => state.board.boardData);
   const columns = useAppSelector((state) => state.column);
-  // const currentEditableColumnOrder = board?.columns.find((col) => col.id === columnId)?.order;
 
   useEffect(() => {
     async function fetchData() {
@@ -40,7 +36,7 @@ const Board = () => {
   }, []);
 
   const onDragEnd = (result: DropResult) => {
-    const { destination, source, draggableId } = result;
+    const { destination, source } = result;
     if (!destination) {
       return;
     }
@@ -73,13 +69,12 @@ const Board = () => {
         1,
         newColumn as ColumnDataResponse
       );
-      // if (boardId) dispatch(updateColumnThunk(boardId, column.id, newColumn));
+
       const newState = {
         ...board!,
         columns: newColumns,
       };
       dispatch(updateBoard(newState));
-      // dispatch(updateBoardThunk(boardId!, newState));
       return;
     }
 
@@ -108,12 +103,11 @@ const Board = () => {
       columns: newColumns,
     };
     dispatch(updateBoard(newState));
-    // dispatch(updateBoardThunk(boardId!, newState));
   };
   const handleNewColumn = () => {
     setNewColumn(true);
   };
-  console.log('COLUMNS', board?.columns);
+
   return (
     <div className={styles.board}>
       <Container sx={{ paddingRight: { sm: '0', md: '0', xs: '0' } }}>

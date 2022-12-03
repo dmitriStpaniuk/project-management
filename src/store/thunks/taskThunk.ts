@@ -19,7 +19,6 @@ export const createNewTaskThunk =
     const result = await taskService.createNewTask(boardId, columnId, taskData);
     dispatch(taskSlice.actions.setIsTaskMainFetching(false));
     dispatch(boardSlice.actions.addNewTask(result));
-    // return dispatch(getTaskByIdThunk(boardId, columnId, result.id));
   };
 
 export const getTaskByIdThunk =
@@ -52,5 +51,4 @@ export const updateTaskThunk =
         newData: taskData,
       })
     );
-    // dispatch(taskSlice.actions.setTaskMain(result));
   };

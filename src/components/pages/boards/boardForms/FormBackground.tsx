@@ -6,7 +6,6 @@ import {
   addConfirmDeleteBoardFormCloseThunk,
   addConfirmEditBoardFormCloseThunk,
   addFormBackgroundCloseThunk,
-  addFormBackgroundThunk,
 } from 'store/thunks/formThunk';
 
 export default function FormBackground() {
@@ -17,8 +16,7 @@ export default function FormBackground() {
   const confirmEditBoard = useAppSelector((state) => state.form.confirmEditBoard);
 
   const closeAll = formAddBoard || formAddColumn || confirmDeleteBoard || confirmEditBoard;
-  //   console.log(closeAll);
-  //   //   console.log(confirmEditBoard);
+
   useEffect(() => {
     !closeAll ? dispatch(addFormBackgroundCloseThunk()) : null;
   }, [closeAll]);

@@ -32,8 +32,7 @@ export const AddTaskForm = ({ setNewTask, boardId, columnId }: FormProps) => {
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
   const titleBoardCreateForm = useTranslate('buttons.editBoard');
-  // const valueInputTaskCard = useAppSelector((state) => state.task.taskMain);
-  // const value = valueInputTaskCard?.find((task) => task.id === id);
+
   const user = useAppSelector((state) => state.user.user);
 
   const methods = useForm({

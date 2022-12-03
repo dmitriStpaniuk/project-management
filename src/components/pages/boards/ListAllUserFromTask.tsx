@@ -11,11 +11,9 @@ import { BiDotsVertical } from 'react-icons/bi';
 import styles from './beautiful-dnd/Task.module.scss';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import { getAllUsersList } from 'store/thunks/userThunk';
-import { User } from 'services/userServiceTypes';
 
 export interface SimpleDialogProps {
   open: boolean;
-  // selectedValue: string;
   onSelectUser: (newAsigneeId: string) => void;
   onClose: () => void;
 }
@@ -55,7 +53,6 @@ function SimpleDialog(props: SimpleDialogProps) {
 
 export default function ListAllUserFromTask({ setSelectedAsigneeId }: ListUserProps) {
   const [open, setOpen] = React.useState(false);
-  // const [selectedValue, setSelectedValue] = React.useState('');
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -64,7 +61,6 @@ export default function ListAllUserFromTask({ setSelectedAsigneeId }: ListUserPr
   const handleSelectUser = (value: string) => {
     setSelectedAsigneeId(value);
     setOpen(false);
-    // setSelectedValue(value);
   };
 
   const handleClose = () => {
@@ -76,12 +72,7 @@ export default function ListAllUserFromTask({ setSelectedAsigneeId }: ListUserPr
       <button onClick={handleClickOpen} className={styles.taskButton}>
         <BiDotsVertical />
       </button>
-      <SimpleDialog
-        // selectedValue={selectedValue}
-        open={open}
-        onClose={handleClose}
-        onSelectUser={handleSelectUser}
-      />
+      <SimpleDialog open={open} onClose={handleClose} onSelectUser={handleSelectUser} />
     </div>
   );
 }
