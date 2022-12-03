@@ -60,7 +60,7 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
             ref={provided.innerRef}
           >
             <div className={styles.content_wrapper}>
-              {task.title}: {task.order}
+              {task.title}
               <div className={styles.button_wrapper}>
                 <button className={styles.taskButton} onClick={handleEdit}>
                   {<TfiPencil />}

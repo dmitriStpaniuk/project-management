@@ -50,5 +50,4 @@ export const updateTaskThunk =
         newData: taskData,
       })
     );
-    // dispatch(taskSlice.actions.setTaskMain(result));
   };

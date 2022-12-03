@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from 'store/store';
 import { getBoardByIdThunk } from 'store/thunks/boardThunk';
 import { updateTaskThunk } from 'store/thunks/taskThunk';
 import { boardSlice } from 'store/slices/boardSlice';
+import { updateColumnThunk } from 'store/thunks/columnThunk';
 
 const Board = () => {
   const dispatch = useAppDispatch();
@@ -38,7 +39,7 @@ const Board = () => {
   }, []);
 
   const onDragEnd = (result: DropResult) => {
-    const { destination, source, draggableId } = result;
+    const { destination, source, draggableId, type } = result;
     if (!destination) {
       return;
     }
@@ -46,29 +47,39 @@ const Board = () => {
       return;
     }
     const columns = board!.columns;
+    if (type === 'column') {
+      const draggableColumn = columns.find((col) => col.id === draggableId);
+      if (boardId && draggableColumn)
+        dispatch(
+          updateColumnThunk(boardId, draggableColumn.id, {
+            title: draggableColumn.title,
+            order: destination.index + 1,
+          })
+        );
+      return;
+    }
     const start = columns.find((col) => col.id === source.droppableId) as ColumnDataResponse;
     const finish = columns.find((col) => col.id === destination.droppableId) as ColumnDataResponse;
     if (start === finish) {
       const column = columns.find(
         (col) => col.id === destination.droppableId
       ) as ColumnDataResponse;
-      const draggableTask = column?.tasks.find(
+      const draggableTask = column.tasks.find(
         (task) => task.id === draggableId
       ) as TaskDataResponse;
-      if (draggableTask) {
-        const taskData = {
-          title: draggableTask.title,
-          order: destination.index + 1,
-          description: draggableTask.description,
-          userId: draggableTask.userId,
-          boardId: boardId,
-          columnId: column.id,
-        } as UpdateTaskData;
-        dispatch(updateTaskThunk(draggableTask.boardId, column.id, draggableTask.id, taskData));
+      const taskData = {
+        title: draggableTask.title,
+        order: destination.index + 1,
+        description: draggableTask.description,
+        userId: draggableTask.userId,
+        boardId: boardId,
+        columnId: column.id,
+      } as UpdateTaskData;
+      if (boardId) {
+        dispatch(updateTaskThunk(boardId, column.id, draggableTask.id, taskData));
       }
       return;
     }
-
     const startTasks = Array.from(start.tasks);
     const draggableTask = startTasks.find((task) => task.id === draggableId) as TaskDataResponse;
 
@@ -132,6 +143,7 @@ const Board = () => {
                     <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} />
                   ) : null}
                 </div>
+                {provided.placeholder}
               </div>
             )}
           </Droppable>

@@ -40,9 +40,17 @@ export default function Column({ column, tasks, columnId, index }: ColumnProps) 
 
   return (
     <Draggable draggableId={columnId} index={index}>
-      {(provided) => (
-        <div className={styles.wrapper} {...provided.draggableProps} ref={provided.innerRef}>
-          <div className={styles.columnHeader} {...provided.dragHandleProps}>
+      {(provided, snapshot) => (
+        <div
+          className={snapshot.draggingOver ? styles.columnDraggingOver : styles.wrapper}
+          {...provided.draggableProps}
+          ref={provided.innerRef}
+        >
+          <div
+            className={styles.columnHeader}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+          >
             <div className={styles.columnHeaderContext}>
               <h3 className={styles.title}>{column.title}</h3>
               <div>
