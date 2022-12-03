@@ -69,8 +69,9 @@ export const AddTaskForm = ({ setNewTask, boardId, columnId }: FormProps) => {
         justifyItems: 'center',
         position: 'absolute',
         zIndex: 5,
-        left: '20%',
-        top: '20%',
+        top: '40%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
       }}
     >
       <Typography variant="h4" component="h4">

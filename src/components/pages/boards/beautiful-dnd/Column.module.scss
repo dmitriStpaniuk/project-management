@@ -8,8 +8,6 @@
   justify-content: end;
   gap: 0.8rem;
   min-width: 250px;
-  // max-width: 250px;
-  max-height: 100%;
   margin-bottom: 1rem;
 }
 
@@ -17,11 +15,17 @@
   text-align: center;
   margin: 0;
 }
+.tasksWrapper {
+  // position: relative;
+  // max-height: 50vh;
+}
 .taskList {
   flex-direction: column;
   display: flex;
+  // position: absolute;
   gap: 0.8rem;
   min-height: 35px;
+  // max-height: 50vh;
 }
 .dragactive {
   background-color: rgb(247, 206, 220);

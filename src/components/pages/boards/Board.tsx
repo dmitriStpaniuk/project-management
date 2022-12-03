@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Column from './beautiful-dnd/Column';
 import styles from './Board.module.scss';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import { TaskDataResponse, UpdateTaskData } from 'services/taskServiceTypes';
 import { ColumnDataResponse } from 'services/columnServiceTypes';
 import { useTranslate } from 'components/languageContext/languageContext';
@@ -52,19 +52,20 @@ const Board = () => {
       const column = columns.find(
         (col) => col.id === destination.droppableId
       ) as ColumnDataResponse;
-      const draggableTask = column.tasks.find(
+      const draggableTask = column?.tasks.find(
         (task) => task.id === draggableId
       ) as TaskDataResponse;
-
-      const taskData = {
-        title: draggableTask.title,
-        order: destination.index + 1,
-        description: draggableTask.description,
-        userId: draggableTask.userId,
-        boardId: boardId,
-        columnId: column.id,
-      } as UpdateTaskData;
-      if (boardId) dispatch(updateTaskThunk(boardId, column.id, draggableTask.id, taskData));
+      if (draggableTask) {
+        const taskData = {
+          title: draggableTask.title,
+          order: destination.index + 1,
+          description: draggableTask.description,
+          userId: draggableTask.userId,
+          boardId: boardId,
+          columnId: column.id,
+        } as UpdateTaskData;
+        dispatch(updateTaskThunk(draggableTask.boardId, column.id, draggableTask.id, taskData));
+      }
       return;
     }
 
@@ -92,37 +93,48 @@ const Board = () => {
           <h1 className={styles.title}>{board?.title}</h1>
         </div>
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className={styles.relativeWrapper}>
-            <div className={styles.wrapper}>
-              {board?.columns
-                ? [...board.columns]
-                    .sort((a, b) => a.order - b.order)
-                    .map((columnX) => {
-                      const column = board?.columns.find(
-                        (col) => col.id === columnX.id
-                      ) as ColumnDataResponse;
-                      return (
-                        <Column
-                          key={columnX.id}
-                          column={column}
-                          tasks={column.tasks}
-                          columnId={column.id}
-                        />
-                      );
-                    })
-                : null}
-              <div style={{ minWidth: '120px' }}>
-                <button
-                  className={styles.newColumn}
-                  onClick={handleNewColumn}
-                  data-title={newColumnText}
-                >
-                  +
-                </button>
+          <Droppable droppableId={'all-columns'} direction="horizontal" type="column">
+            {(provided) => (
+              <div
+                className={styles.relativeWrapper}
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                <div className={styles.wrapper}>
+                  {board?.columns
+                    ? [...board.columns]
+                        .sort((a, b) => a.order - b.order)
+                        .map((columnX, index) => {
+                          const column = board?.columns.find(
+                            (col) => col.id === columnX.id
+                          ) as ColumnDataResponse;
+                          return (
+                            <Column
+                              key={columnX.id}
+                              column={column}
+                              tasks={column.tasks}
+                              columnId={column.id}
+                              index={index}
+                            />
+                          );
+                        })
+                    : null}
+                  <div style={{ minWidth: '120px' }}>
+                    <button
+                      className={styles.newColumn}
+                      onClick={handleNewColumn}
+                      data-title={newColumnText}
+                    >
+                      +
+                    </button>
+                  </div>
+                  {newColumn ? (
+                    <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} />
+                  ) : null}
+                </div>
               </div>
-              {newColumn ? <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} /> : null}
-            </div>
-          </div>
+            )}
+          </Droppable>
         </DragDropContext>
       </Container>
     </div>
