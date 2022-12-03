@@ -7,7 +7,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import styles from './../../login/Login.module.scss';
 import { updateColumnThunk } from 'store/thunks/columnThunk';
-import { ColumnDataResponse, CreateColumnData } from 'services/columnServiceTypes';
+import { CreateColumnData } from 'services/columnServiceTypes';
 
 type FormProps = {
   setEditColumnName: (x: string) => void;
@@ -32,7 +32,6 @@ export const EditColumnForm = ({ setEditColumnName, boardId, columnId, order }: 
     defaultValues: { title: value?.title || '' },
     mode: 'onChange',
   });
-  console.log(order);
   const {
     handleSubmit,
     formState: { isSubmitting },

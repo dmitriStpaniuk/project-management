@@ -34,7 +34,6 @@ export default function Registration() {
     reset,
     formState: { isSubmitting },
   } = methods;
-
   const onSubmit = async (data: SignupUserData) => {
     await dispatch(createNewUserThunk(data));
     addAlert({ type: 'success', message: RegistrationSuccessMessage });

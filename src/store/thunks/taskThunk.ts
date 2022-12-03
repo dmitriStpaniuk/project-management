@@ -32,7 +32,6 @@ export const getTaskByIdThunk =
 
 export const deleteTaskByIdThunk =
   (boardId: string, columnId: string, taskId: string) => async (dispatch: AppDispatch) => {
-    console.log(taskId);
     dispatch(taskSlice.actions.setIsTaskMainFetching(true));
     await taskService.deleteTaskById(boardId, columnId, taskId);
     dispatch(taskSlice.actions.setIsTaskMainFetching(false));
@@ -43,8 +42,15 @@ export const updateTaskThunk =
   async (dispatch: AppDispatch) => {
     dispatch(taskSlice.actions.setIsTaskMainFetching(true));
     const result = await taskService.updateTask(boardId, columnId, taskId, taskData);
-    console.log(result);
+    console.log(columnId);
+    console.log(result.columnId);
     dispatch(taskSlice.actions.setIsTaskMainFetching(false));
+    // dispatch(
+    //   boardSlice.actions.updateTask({
+    //     columnId: result.columnId,
+    //     taskId: result.id,
+    //     newData: taskData,
+    //   })
     dispatch(
       boardSlice.actions.updateTask({
         columnId: result.columnId,
