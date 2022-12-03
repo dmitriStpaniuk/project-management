@@ -9,9 +9,7 @@ import { useTranslate } from 'components/languageContext/languageContext';
 import { Container } from '@mui/system';
 import CreateNewColumnForm from './boardForms/CreateNewColumnForm';
 import { useAppDispatch, useAppSelector } from 'store/store';
-import { getBoardByIdThunk, updateBoard, updateBoardThunk } from 'store/thunks/boardThunk';
-import { EditColumnForm } from './boardForms/EditColumnForm';
-import { getAllUColumnsListThunk, updateColumnThunk } from 'store/thunks/columnThunk';
+import { getBoardByIdThunk, updateBoard } from 'store/thunks/boardThunk';
 import { updateTaskThunk } from 'store/thunks/taskThunk';
 
 const Board = () => {
@@ -20,6 +18,8 @@ const Board = () => {
   const [newColumn, setNewColumn] = useState(false);
   const board = useAppSelector((state) => state.board.boardData);
   const columns = useAppSelector((state) => state.column);
+  const columnsList = useAppSelector((state) => state.column.isColumnMainFetching);
+  // console.log(columnsList);
   // const currentEditableColumnOrder = board?.columns.find((col) => col.id === columnId)?.order;
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Board = () => {
       }
     }
     fetchData();
-  }, [boardId, newColumn, columns]);
+  }, [boardId, newColumn, columns, columnsList]);
   const newColumnText = useTranslate('buttons.newColumn');
 
   const onDragEnd = (result: DropResult) => {
@@ -95,21 +95,32 @@ const Board = () => {
       tasks: finishTasks,
     };
 
+    const taskData = {
+      title: draggableTask.title,
+      order: destination.index + 1,
+      description: draggableTask.description,
+      userId: draggableTask.userId,
+      boardId: boardId,
+      columnId: finish.id,
+    } as UpdateTaskData;
+    if (boardId) dispatch(updateTaskThunk(boardId, start.id, draggableTask.id, taskData));
+
     const newColumns = Array.from(columns);
     const startIndex = columns.findIndex((col) => col.id === start.id);
     const finishIndex = columns.findIndex((col) => col.id === finish.id);
     newColumns.splice(startIndex, 1, newStart);
     newColumns.splice(finishIndex, 1, newFinish);
+
     const newState = {
       ...board!,
       columns: newColumns,
     };
     dispatch(updateBoard(newState));
-    // dispatch(updateBoardThunk(boardId!, newState));
   };
   const handleNewColumn = () => {
     setNewColumn(true);
   };
+
   return (
     <div className={styles.board}>
       <Container sx={{ paddingRight: { sm: '0', md: '0', xs: '0' } }}>

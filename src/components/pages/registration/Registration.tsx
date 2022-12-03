@@ -17,6 +17,7 @@ export default function Registration() {
   const passwordLabel = useTranslate('form.password');
   const submitLabel = useTranslate('buttons.submit');
   const resetLabel = useTranslate('buttons.reset');
+  const inpetFile = useTranslate('buttons.file');
   const RegistrationSuccessMessage = useTranslate('alerts.successRegistration');
 
   const dispatch = useAppDispatch();
@@ -34,11 +35,15 @@ export default function Registration() {
     reset,
     formState: { isSubmitting },
   } = methods;
-
   const onSubmit = async (data: SignupUserData) => {
     await dispatch(createNewUserThunk(data));
     addAlert({ type: 'success', message: RegistrationSuccessMessage });
     navigate('/boards');
+  };
+  const handleFormFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const obj = e.target.files as FileList;
+    const url = URL.createObjectURL(obj[0]);
+    // setValue('inputFile', url, { shouldValidate: true });
   };
 
   return (
@@ -83,6 +88,21 @@ export default function Registration() {
                 pattern={passwordRegExp}
               />
             </FormProvider>
+            <Button
+              className={styles.formButton}
+              color="info"
+              // onClick={handleSubmit(onSubmit)}
+              variant={'contained'}
+              disabled={isSubmitting}
+            >
+              <input
+                type="file"
+                data-testid="image"
+                onChange={handleFormFile}
+                style={{ cursor: 'pointer' }}
+              />
+              {inpetFile}
+            </Button>
             <Button
               className={styles.formButton}
               color="info"

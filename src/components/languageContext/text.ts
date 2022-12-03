@@ -110,6 +110,10 @@ export const text = {
       en: 'Add task',
       ru: 'Добавить карточку',
     },
+    file: {
+      en: 'File',
+      ru: 'Файл',
+    },
   },
   welcomeText: {
     naming: {

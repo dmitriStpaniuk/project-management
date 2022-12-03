@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { getAllUsers } from 'services/userService';
-import { User } from 'services/userServiceTypes';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from 'store/store';
+import { getAllUsersList } from 'store/thunks/userThunk';
 import styles from './Users.module.scss';
 export default function Users() {
-  const [allUsers, setAllUsers] = useState<User[]>([]);
   const bgColor = ['#FAEA73', '#F7CEDC', '#CCEFF6'];
+  const dispatch = useAppDispatch();
+  const allUsers = useAppSelector((state) => state.user.allUsersList);
+
   useEffect(() => {
-    getAllUsers().then((users) => setAllUsers(users));
+    dispatch(getAllUsersList());
   }, []);
   return (
     <div className={styles.users}>
       <div className="container" data-testid="users">
         <div className={styles.wrapper}>
-          {allUsers.map((user, index) => (
+          {allUsers?.map((user, index) => (
             <div
               className={styles.userCard}
               key={user.id}
