@@ -3,13 +3,13 @@ import { useParams } from 'react-router-dom';
 import Column from './beautiful-dnd/Column';
 import styles from './Board.module.scss';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { UpdateTaskData } from 'services/taskServiceTypes';
+import { TaskDataResponse, UpdateTaskData } from 'services/taskServiceTypes';
 import { ColumnDataResponse } from 'services/columnServiceTypes';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { Container } from '@mui/system';
 import CreateNewColumnForm from './boardForms/CreateNewColumnForm';
 import { useAppDispatch, useAppSelector } from 'store/store';
-import { getBoardByIdThunk, updateBoard } from 'store/thunks/boardThunk';
+import { getBoardByIdThunk } from 'store/thunks/boardThunk';
 import { updateTaskThunk } from 'store/thunks/taskThunk';
 import { boardSlice } from 'store/slices/boardSlice';
 
@@ -19,9 +19,7 @@ const Board = () => {
   const [newColumn, setNewColumn] = useState(false);
   const board = useAppSelector((state) => state.board.boardData);
   const columns = useAppSelector((state) => state.column);
-  const columnsList = useAppSelector((state) => state.column.isColumnMainFetching);
-  // console.log(columnsList);
-  // const currentEditableColumnOrder = board?.columns.find((col) => col.id === columnId)?.order;
+  const tasks = useAppSelector((state) => state.task);
 
   useEffect(() => {
     async function fetchData() {
@@ -30,7 +28,7 @@ const Board = () => {
       }
     }
     fetchData();
-  }, [boardId, newColumn, columns, columnsList]);
+  }, [boardId, newColumn, columns, tasks]);
   const newColumnText = useTranslate('buttons.newColumn');
 
   useEffect(() => {
@@ -47,64 +45,31 @@ const Board = () => {
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
-
     const columns = board!.columns;
-
     const start = columns.find((col) => col.id === source.droppableId) as ColumnDataResponse;
-
     const finish = columns.find((col) => col.id === destination.droppableId) as ColumnDataResponse;
-
     if (start === finish) {
       const column = columns.find(
         (col) => col.id === destination.droppableId
       ) as ColumnDataResponse;
-      const draggableTask = column.tasks[source.index];
-      const newTasks = Array.from(column.tasks);
-      newTasks.splice(source.index, 1);
-      newTasks.splice(destination.index, 0, draggableTask);
+      const draggableTask = column.tasks.find(
+        (task) => task.id === draggableId
+      ) as TaskDataResponse;
 
       const taskData = {
         title: draggableTask.title,
-        order: destination.index,
+        order: destination.index + 1,
         description: draggableTask.description,
         userId: draggableTask.userId,
         boardId: boardId,
         columnId: column.id,
       } as UpdateTaskData;
       if (boardId) dispatch(updateTaskThunk(boardId, column.id, draggableTask.id, taskData));
-      const newColumn = {
-        ...start,
-        tasks: newTasks,
-      };
-      const newColumns = Array.from(columns);
-      newColumns.splice(
-        columns.findIndex((col) => col.id === newColumn.id),
-        1,
-        newColumn
-      );
-
-      const newState = {
-        ...board!,
-        columns: newColumns,
-      };
-      dispatch(updateBoard(newState));
       return;
     }
 
     const startTasks = Array.from(start.tasks);
-    const draggableTask = startTasks[source.index];
-    startTasks.splice(source.index, 1);
-    const newStart = {
-      ...start,
-      tasks: startTasks,
-    };
-
-    const finishTasks = Array.from(finish.tasks);
-    finishTasks.splice(destination.index, 0, draggableTask);
-    const newFinish = {
-      ...finish,
-      tasks: finishTasks,
-    };
+    const draggableTask = startTasks.find((task) => task.id === draggableId) as TaskDataResponse;
 
     const taskData = {
       title: draggableTask.title,
@@ -115,18 +80,6 @@ const Board = () => {
       columnId: finish.id,
     } as UpdateTaskData;
     if (boardId) dispatch(updateTaskThunk(boardId, start.id, draggableTask.id, taskData));
-
-    const newColumns = Array.from(columns);
-    const startIndex = columns.findIndex((col) => col.id === start.id);
-    const finishIndex = columns.findIndex((col) => col.id === finish.id);
-    newColumns.splice(startIndex, 1, newStart);
-    newColumns.splice(finishIndex, 1, newFinish);
-
-    const newState = {
-      ...board!,
-      columns: newColumns,
-    };
-    dispatch(updateBoard(newState));
   };
   const handleNewColumn = () => {
     setNewColumn(true);
