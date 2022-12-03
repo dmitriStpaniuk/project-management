@@ -68,9 +68,18 @@ export default function Column({ column, tasks, columnId }: ColumnProps) {
               <hr className={styles.line}></hr>
             </div>
             <div className={styles.taskList} {...provided.droppableProps} ref={provided.innerRef}>
-              {tasks.map((task, index) => (
-                <Task task={task} index={index} key={task.id} taskId={task.id} />
-              ))}
+              {[...tasks]
+                .sort((a, b) => a.order - b.order)
+                .map((task, index) => (
+                  <Task
+                    task={task}
+                    index={index}
+                    key={task.id}
+                    taskId={task.id}
+                    columnId={columnId}
+                    asigneeId={task.userId}
+                  />
+                ))}
               {provided.placeholder}
             </div>
             <button className={styles.newTask} onClick={handleNewTask} data-title={newTaskText}>

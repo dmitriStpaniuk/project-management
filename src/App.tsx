@@ -16,12 +16,16 @@ import Boards from 'components/pages/boards/Boards';
 import Users from 'components/pages/users/Users';
 import { PublicRoute } from 'routes/PublicRoute';
 import Board from 'components/pages/boards/Board';
+import { userSlice } from 'store/slices/userSlice';
 function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const token = getTokenLocalStorage();
-    if (!token) return;
+    if (!token) {
+      dispatch(userSlice.actions.setIsUserFetching(false));
+      return;
+    }
     const decodedToken = jwt_decode<DecodedToken>(token);
     if (decodedToken) dispatch(getCurrentUserByIdThunk(decodedToken.userId));
   }, [dispatch]);
@@ -64,7 +68,6 @@ function App() {
             }
           />
           <Route path="users" element={<Users />} />
-          <Route path="board/*" element={<Board />} />
           <Route path="page404" element={<Page404 />} />
           <Route path="*" element={<Navigate to={'/page404'} />} />
         </Route>

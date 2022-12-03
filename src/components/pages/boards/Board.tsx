@@ -11,6 +11,7 @@ import CreateNewColumnForm from './boardForms/CreateNewColumnForm';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import { getBoardByIdThunk, updateBoard } from 'store/thunks/boardThunk';
 import { updateTaskThunk } from 'store/thunks/taskThunk';
+import { boardSlice } from 'store/slices/boardSlice';
 
 const Board = () => {
   const dispatch = useAppDispatch();
@@ -32,6 +33,12 @@ const Board = () => {
   }, [boardId, newColumn, columns, columnsList]);
   const newColumnText = useTranslate('buttons.newColumn');
 
+  useEffect(() => {
+    return () => {
+      dispatch(boardSlice.actions.setBoardData(undefined));
+    };
+  }, []);
+
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
     if (!destination) {
@@ -40,9 +47,13 @@ const Board = () => {
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
+
     const columns = board!.columns;
+
     const start = columns.find((col) => col.id === source.droppableId) as ColumnDataResponse;
+
     const finish = columns.find((col) => col.id === destination.droppableId) as ColumnDataResponse;
+
     if (start === finish) {
       const column = columns.find(
         (col) => col.id === destination.droppableId
@@ -130,19 +141,23 @@ const Board = () => {
         <DragDropContext onDragEnd={onDragEnd}>
           <div className={styles.relativeWrapper}>
             <div className={styles.wrapper}>
-              {board?.columns.map((columnX) => {
-                const column = board?.columns.find(
-                  (col) => col.id === columnX.id
-                ) as ColumnDataResponse;
-                return (
-                  <Column
-                    key={columnX.id}
-                    column={column}
-                    tasks={column.tasks}
-                    columnId={column.id}
-                  />
-                );
-              })}
+              {board?.columns
+                ? [...board.columns]
+                    .sort((a, b) => a.order - b.order)
+                    .map((columnX) => {
+                      const column = board?.columns.find(
+                        (col) => col.id === columnX.id
+                      ) as ColumnDataResponse;
+                      return (
+                        <Column
+                          key={columnX.id}
+                          column={column}
+                          tasks={column.tasks}
+                          columnId={column.id}
+                        />
+                      );
+                    })
+                : null}
               <div style={{ minWidth: '120px' }}>
                 <button
                   className={styles.newColumn}
