@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, current } from '@reduxjs/toolkit';
 import { CreateNewTaskResponse } from 'services/taskService';
+import { TaskDataResponse } from 'services/taskServiceTypes';
 import { BoardMainResponse, BoardDataResponse } from '../../services/boardServiceTypes';
 
 type BoardInitialState = {
@@ -20,6 +21,12 @@ const initialState: BoardInitialState = {
   isAllBoardsFetching: false,
 };
 
+type UpdateTaskParams = {
+  columnId: string;
+  taskId: string;
+  newData: Partial<TaskDataResponse>;
+};
+
 export const boardSlice = createSlice({
   name: 'board',
   initialState,
@@ -30,8 +37,22 @@ export const boardSlice = createSlice({
     setIsBoardMainFetching: (state, action: PayloadAction<boolean>) => {
       state.isBoardMainFetching = action.payload;
     },
-    setBoardData: (state, action: PayloadAction<BoardDataResponse>) => {
+    setBoardData: (state, action: PayloadAction<BoardDataResponse | undefined>) => {
       state.boardData = action.payload;
+    },
+    updateTask: (state, action: PayloadAction<UpdateTaskParams>) => {
+      const columnForEdit = state.boardData?.columns.find(
+        (column) => column.id === action.payload.columnId
+      );
+      if (columnForEdit) {
+        const taskForEdit = columnForEdit.tasks.find((task) => task.id === action.payload.taskId);
+        if (taskForEdit) {
+          columnForEdit.tasks = columnForEdit.tasks
+            .filter((task) => task.id !== taskForEdit.id)
+            .concat({ ...taskForEdit, ...action.payload.newData });
+          console.log(taskForEdit);
+        }
+      }
     },
     addNewTask: (state, action: PayloadAction<CreateNewTaskResponse>) => {
       const columnForEdit = state.boardData?.columns.find(

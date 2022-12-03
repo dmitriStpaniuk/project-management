@@ -23,12 +23,17 @@ export const columnSlice = createSlice({
   name: 'column',
   initialState,
   reducers: {
+    // don't use this ))
     setColumnMain: (state, action: PayloadAction<ColumnMainResponse>) => {
       state.columnMain = action.payload;
     },
+    // updateTaskById: (columnId: string, taskId: string, newData) => {
+
+    // },
     setIsColumnMainFetching: (state, action: PayloadAction<boolean>) => {
       state.isColumnMainFetching = action.payload;
     },
+    // don't use this
     setColumnData: (state, action: PayloadAction<ColumnDataResponse>) => {
       state.columnData = action.payload;
     },
