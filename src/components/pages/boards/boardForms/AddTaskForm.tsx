@@ -35,6 +35,7 @@ export const AddTaskForm = ({ setNewTask, boardId, columnId }: FormProps) => {
   // const valueInputTaskCard = useAppSelector((state) => state.task.taskMain);
   // const value = valueInputTaskCard?.find((task) => task.id === id);
   const user = useAppSelector((state) => state.user.user);
+
   const methods = useForm({
     defaultValues: { title: '', description: '' },
     mode: 'onChange',

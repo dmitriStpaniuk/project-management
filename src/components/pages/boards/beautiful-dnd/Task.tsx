@@ -8,39 +8,46 @@ import ListAllUserFromTask from '../ListAllUserFromTask';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import { Typography } from '@mui/material';
 import { updateTaskThunk } from 'store/thunks/taskThunk';
+import { useParams } from 'react-router-dom';
+import { User } from 'services/userServiceTypes';
+import { getUserById } from 'services/userService';
 
 type TaskProps = {
   task: TaskDataResponse;
   index: number;
   taskId: string;
+  columnId: string;
+  asigneeId?: string;
 };
-export default function Task({ task, index, taskId }: TaskProps) {
+export default function Task({ task, index, taskId, columnId, asigneeId }: TaskProps) {
   const dispatch = useAppDispatch();
-  const handleEdit = () => {};
-  const hendleDeleteColumn = () => {};
-
-  const [nameUser, setNameUser] = useState('');
-
-  const allUsers = useAppSelector((state) => state.user.allUsersList);
-
-  const currentUser = allUsers?.find((user) => user.login === nameUser);
+  const { boardId } = useParams() as { boardId: string };
+  const [selectedAsigneeId, setSelectedAsigneeId] = useState('');
+  const [asignee, setAsignee] = useState<User | null>(null);
 
   const taskData = {
     title: task.title,
     order: task.order,
     description: task.description,
-    userId: currentUser?.id,
-    boardId: task.boardId,
-    columnId: task.columnId,
+    userId: selectedAsigneeId,
+    boardId: boardId,
+    columnId: columnId,
   };
 
-  const userNameForTask = useAppSelector((state) => state.task.taskMain?.userId);
-  console.log(taskData);
+  useEffect(() => {
+    if (boardId && columnId && selectedAsigneeId)
+      dispatch(updateTaskThunk(boardId, columnId, taskId, taskData));
+  }, [selectedAsigneeId]);
 
   useEffect(() => {
-    if (task.boardId && task.columnId)
-      dispatch(updateTaskThunk(task.boardId, task.columnId, taskId, taskData));
-  }, [currentUser]);
+    if (asigneeId) {
+      getUserById(asigneeId).then(setAsignee);
+    }
+  }, [asigneeId]);
+
+  const handleEdit = () => {};
+
+  const hendleDeleteColumn = () => {};
 
   return (
     <>
@@ -61,11 +68,11 @@ export default function Task({ task, index, taskId }: TaskProps) {
                 <button className={styles.taskButton} onClick={hendleDeleteColumn}>
                   {<BsTrash />}
                 </button>
-                <ListAllUserFromTask setNameUser={setNameUser} />
+                <ListAllUserFromTask setSelectedAsigneeId={setSelectedAsigneeId} />
               </div>
             </div>
             <div>
-              <Typography>{nameUser}</Typography>
+              <Typography>{asignee?.name}</Typography>
             </div>
           </div>
         )}
