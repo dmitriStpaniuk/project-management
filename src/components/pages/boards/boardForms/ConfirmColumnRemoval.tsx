@@ -42,8 +42,9 @@ export const ConfirmColumnRemoval = ({ setConfirmDeleteColumn, boardId, id }: Co
         justifyItems: 'center',
         position: 'absolute',
         zIndex: 5,
-        left: '20%',
-        top: '20%',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
       }}
     >
       <Typography variant="h5" component="h5" sx={{ textAlign: 'center' }}>

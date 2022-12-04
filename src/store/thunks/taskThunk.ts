@@ -42,8 +42,6 @@ export const updateTaskThunk =
   async (dispatch: AppDispatch) => {
     dispatch(taskSlice.actions.setIsTaskMainFetching(true));
     const result = await taskService.updateTask(boardId, columnId, taskId, taskData);
-    console.log(columnId);
-    console.log(result.columnId);
     dispatch(taskSlice.actions.setIsTaskMainFetching(false));
     dispatch(
       boardSlice.actions.updateTask({
