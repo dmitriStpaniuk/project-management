@@ -11,6 +11,8 @@ import { updateTaskThunk } from 'store/thunks/taskThunk';
 import { useParams } from 'react-router-dom';
 import { User } from 'services/userServiceTypes';
 import { getUserById } from 'services/userService';
+import { ConfirmTaskRemoval } from '../boardForms/ConfirmTaskRemoval';
+import { addConfirmDeleteTaskFormThunk } from 'store/thunks/formThunk';
 
 type TaskProps = {
   task: TaskDataResponse;
@@ -24,6 +26,7 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
   const { boardId } = useParams() as { boardId: string };
   const [selectedAsigneeId, setSelectedAsigneeId] = useState('');
   const [asignee, setAsignee] = useState<User | null>(null);
+  const closeFormDeleteTask = useAppSelector((state) => state.form.confirmDeleteTask);
 
   const taskData = {
     title: task.title,
@@ -47,7 +50,9 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
 
   const handleEdit = () => {};
 
-  const hendleDeleteColumn = () => {};
+  const hendleDeleteTask = () => {
+    dispatch(addConfirmDeleteTaskFormThunk());
+  };
 
   return (
     <>
@@ -65,12 +70,15 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
                 <button className={styles.taskButton} onClick={handleEdit}>
                   {<TfiPencil />}
                 </button>
-                <button className={styles.taskButton} onClick={hendleDeleteColumn}>
+                <button className={styles.taskButton} onClick={hendleDeleteTask}>
                   {<BsTrash />}
                 </button>
                 <ListAllUserFromTask setSelectedAsigneeId={setSelectedAsigneeId} />
               </div>
             </div>
+            {closeFormDeleteTask ? (
+              <ConfirmTaskRemoval boardId={boardId} columnId={columnId} taskId={taskId} />
+            ) : null}
             <div>
               <Typography>{asignee?.name}</Typography>
             </div>

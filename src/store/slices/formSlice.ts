@@ -6,6 +6,7 @@ type FormInitialState = {
   formAddTask: boolean;
   formBackground: boolean;
   confirmDeleteBoard: boolean;
+  confirmDeleteTask: boolean;
   confirmEditBoard: boolean;
 };
 const initialState: FormInitialState = {
@@ -14,6 +15,7 @@ const initialState: FormInitialState = {
   formAddTask: false,
   formBackground: false,
   confirmDeleteBoard: false,
+  confirmDeleteTask: false,
   confirmEditBoard: false,
 };
 export const formSlice = createSlice({
@@ -29,14 +31,11 @@ export const formSlice = createSlice({
     setConfirmDeleteBoard: (state, action: PayloadAction<boolean>) => {
       state.confirmDeleteBoard = action.payload;
     },
+    setConfirmDeleteTask: (state, action: PayloadAction<boolean>) => {
+      state.confirmDeleteTask = action.payload;
+    },
     setFormBackground: (state, action: PayloadAction<boolean>) => {
       state.formBackground = action.payload;
     },
-    // setAddColumn: (state, action: PayloadAction<boolean>) => {
-    //   state.formAddColumn = action.payload;
-    // },
-    // setAddTask: (state, action: PayloadAction<boolean>) => {
-    //   state.formAddTask = action.payload;
-    // },
   },
 });

@@ -19,6 +19,12 @@ export const addConfirmDeleteBoardFormThunk = () => (dispatch: AppDispatch) => {
 export const addConfirmDeleteBoardFormCloseThunk = () => (dispatch: AppDispatch) => {
   dispatch(formSlice.actions.setConfirmDeleteBoard(false));
 };
+export const addConfirmDeleteTaskFormThunk = () => (dispatch: AppDispatch) => {
+  dispatch(formSlice.actions.setConfirmDeleteTask(true));
+};
+export const addConfirmDeleteTaskFormCloseThunk = () => (dispatch: AppDispatch) => {
+  dispatch(formSlice.actions.setConfirmDeleteTask(false));
+};
 export const addConfirmEditBoardFormThunk = () => (dispatch: AppDispatch) => {
   dispatch(formSlice.actions.setConfirmEditBoard(true));
 };
