@@ -8,13 +8,13 @@ import { addConfirmDeleteTaskFormCloseThunk } from 'store/thunks/formThunk';
 import { deleteTaskByIdThunk } from 'store/thunks/taskThunk';
 
 type ConfirmProps = {
-  taskId: string;
+  deleteCardId: string;
   boardId: string;
   columnId: string;
 };
 
-export const ConfirmTaskRemoval = ({ boardId, columnId, taskId }: ConfirmProps) => {
-  console.log(taskId);
+export const ConfirmTaskRemoval = ({ boardId, columnId, deleteCardId }: ConfirmProps) => {
+  console.log(deleteCardId);
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
   const successDeleteBoard = useTranslate('alerts.successDeleteBoard');
@@ -25,9 +25,8 @@ export const ConfirmTaskRemoval = ({ boardId, columnId, taskId }: ConfirmProps) 
 
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log(e);
     try {
-      await dispatch(deleteTaskByIdThunk(boardId, columnId, taskId));
+      await dispatch(deleteTaskByIdThunk(boardId, columnId, deleteCardId));
       addAlert({ type: 'success', message: successDeleteBoard });
       dispatch(addConfirmDeleteTaskFormCloseThunk());
     } catch {

@@ -26,6 +26,7 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
   const { boardId } = useParams() as { boardId: string };
   const [selectedAsigneeId, setSelectedAsigneeId] = useState('');
   const [asignee, setAsignee] = useState<User | null>(null);
+  const [deleteCardId, setDeletedCard] = useState(taskId);
   const closeFormDeleteTask = useAppSelector((state) => state.form.confirmDeleteTask);
 
   const taskData = {
@@ -52,6 +53,8 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
 
   const hendleDeleteTask = () => {
     dispatch(addConfirmDeleteTaskFormThunk());
+    setDeletedCard(taskId);
+    console.log(deleteCardId);
   };
 
   return (
@@ -77,7 +80,11 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
               </div>
             </div>
             {closeFormDeleteTask ? (
-              <ConfirmTaskRemoval boardId={boardId} columnId={columnId} taskId={taskId} />
+              <ConfirmTaskRemoval
+                boardId={boardId}
+                columnId={columnId}
+                deleteCardId={deleteCardId}
+              />
             ) : null}
             <div>
               <Typography>{asignee?.name}</Typography>
