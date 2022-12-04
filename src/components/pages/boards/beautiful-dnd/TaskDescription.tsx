@@ -3,7 +3,7 @@ import { Box, Button, Paper, Typography } from '@mui/material';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
 import { useAppDispatch, useAppSelector } from 'store/store';
-import styles from './../../login/Login.module.scss';
+import styles from './Task.module.scss';
 import { deleteColumnByIdThunk } from 'store/thunks/columnThunk';
 import { TaskDataResponse } from 'services/taskServiceTypes';
 type TaskProps = {
@@ -19,10 +19,15 @@ export const TaskDescription = ({ task, asigneeId, setTaskDescription }: TaskPro
     setTaskDescription(false);
   };
   return (
-    <Paper
-      style={{
+    <Box
+      className={styles.taskDescWrapper}
+      sx={{
         width: '50%',
         padding: '40px 20px',
+        backgroundColor: '#fff',
+        borderRadius: '4px',
+        boxShadow:
+          '0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%)',
         display: 'grid',
         gridRowGap: '20px',
         justifyItems: 'center',
@@ -35,7 +40,7 @@ export const TaskDescription = ({ task, asigneeId, setTaskDescription }: TaskPro
     >
       <Box
         sx={{
-          width: '80%',
+          width: '100%',
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'space-around',
@@ -43,17 +48,17 @@ export const TaskDescription = ({ task, asigneeId, setTaskDescription }: TaskPro
       >
         <Box>
           <Typography component="p" sx={{ textAlign: 'left' }}>
-            Title: {task.title}
+            Title:
           </Typography>
 
           <Typography component="p" sx={{ textAlign: 'left' }}>
-            Description: {task.description}
+            Description:
           </Typography>
           <Typography component="p" sx={{ textAlign: 'left' }}>
-            {user?.name}
+            Name
           </Typography>
           <Typography component="p" sx={{ textAlign: 'left' }}>
-            {user?.login}
+            Login
           </Typography>
         </Box>
         <Box>
@@ -79,6 +84,6 @@ export const TaskDescription = ({ task, asigneeId, setTaskDescription }: TaskPro
       >
         Close
       </Button>
-    </Paper>
+    </Box>
   );
 };
