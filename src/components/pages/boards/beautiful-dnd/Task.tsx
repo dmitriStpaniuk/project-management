@@ -72,8 +72,8 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
             {...provided.dragHandleProps}
             ref={provided.innerRef}
           >
-            <div className={styles.content_wrapper} onClick={hendleTaskDescription}>
-              {task.title}
+            <div className={styles.content_wrapper}>
+              <span onClick={hendleTaskDescription}>{task.title}</span>
               <div className={styles.button_wrapper}>
                 <button className={styles.taskButton} onClick={handleEdit}>
                   {<TfiPencil />}
