@@ -17,12 +17,14 @@ const Layout = () => {
   const formAddTask = useAppSelector((state) => state.form.formAddTask);
   const confirmDeleteBoard = useAppSelector((state) => state.form.confirmDeleteBoard);
   const confirmEditBoard = useAppSelector((state) => state.form.confirmEditBoard);
-  console.log(formAddColumn);
-  // console.log(formAddColumn);
   const openAll =
-    formAddBoard || formAddColumn || confirmDeleteBoard || confirmEditBoard || formAddTask;
+    formAddBoard ||
+    formAddColumn ||
+    confirmDeleteBoard ||
+    confirmEditBoard ||
+    formAddTask ||
+    formModal;
 
-  console.log(openAll);
   useEffect(() => {
     openAll ? dispatch(addFormModalThunk()) : dispatch(addFormModalCloseThunk());
   }, [openAll]);

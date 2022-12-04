@@ -13,6 +13,7 @@ import { User } from 'services/userServiceTypes';
 import { getUserById } from 'services/userService';
 import { ConfirmTaskRemoval } from '../boardForms/ConfirmTaskRemoval';
 import { addConfirmDeleteTaskFormThunk } from 'store/thunks/formThunk';
+import { TaskDescription } from './TaskDescription';
 
 type TaskProps = {
   task: TaskDataResponse;
@@ -24,10 +25,11 @@ type TaskProps = {
 export default function Task({ task, index, taskId, columnId, asigneeId }: TaskProps) {
   const dispatch = useAppDispatch();
   const { boardId } = useParams() as { boardId: string };
+  const [taskDescription, setTaskDescription] = useState(false);
   const [selectedAsigneeId, setSelectedAsigneeId] = useState('');
   const [asignee, setAsignee] = useState<User | null>(null);
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
-
+  console.log(taskDescription);
   const taskData = {
     title: task.title,
     order: task.order,
@@ -53,7 +55,10 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
   const hendleDeleteModalOpen = () => {
     setIsDeleteModalOpened(true);
   };
-
+  const hendleTaskDescription = (e: React.MouseEvent) => {
+    // e.preventDefault();
+    setTaskDescription(true);
+  };
   return (
     <>
       <Draggable draggableId={taskId} index={index}>
@@ -64,7 +69,7 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
             {...provided.dragHandleProps}
             ref={provided.innerRef}
           >
-            <div className={styles.content_wrapper}>
+            <div className={styles.content_wrapper} onClick={hendleTaskDescription}>
               {task.title}
               <div className={styles.button_wrapper}>
                 <button className={styles.taskButton} onClick={handleEdit}>
@@ -82,6 +87,13 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
                 columnId={columnId}
                 deleteCardId={taskId}
                 setIsDeleteModalOpened={setIsDeleteModalOpened}
+              />
+            ) : null}
+            {taskDescription ? (
+              <TaskDescription
+                setTaskDescription={setTaskDescription}
+                task={task}
+                asigneeId={asigneeId}
               />
             ) : null}
             <div>

@@ -142,7 +142,7 @@ const Board = () => {
                       +
                     </button>
                   </div>
-                  {newColumn ? (
+                  {newColumn && formAddColumn ? (
                     <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} />
                   ) : null}
                 </div>
