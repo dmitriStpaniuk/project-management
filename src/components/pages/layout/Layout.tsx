@@ -1,22 +1,37 @@
 // import { usePageContext } from 'components/context/pageContext';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useAppSelector } from 'store/store';
+import { useAppDispatch, useAppSelector } from 'store/store';
+import { addFormModalCloseThunk, addFormModalThunk } from 'store/thunks/formThunk';
 import { AddBoardForm } from '../boards/boardForms/AddBoardForm';
-import FormBackground from '../boards/boardForms/FormBackground';
+import FormModal from '../boards/boardForms/FormModal';
 import Footer from '../welcomePage/footer/Footer';
 import Header from '../welcomePage/header/Header';
 import style from './Layout.module.css';
 
 const Layout = () => {
+  const dispatch = useAppDispatch();
   const formAddBoard = useAppSelector((state) => state.form.formAddBoard);
-  const formBackground = useAppSelector((state) => state.form.formBackground);
+  const formModal = useAppSelector((state) => state.form.formModal);
+  const formAddColumn = useAppSelector((state) => state.form.formAddColumn);
+  const formAddTask = useAppSelector((state) => state.form.formAddTask);
+  const confirmDeleteBoard = useAppSelector((state) => state.form.confirmDeleteBoard);
+  const confirmEditBoard = useAppSelector((state) => state.form.confirmEditBoard);
+  console.log(formAddColumn);
+  // console.log(formAddColumn);
+  const openAll =
+    formAddBoard || formAddColumn || confirmDeleteBoard || confirmEditBoard || formAddTask;
+
+  console.log(openAll);
+  useEffect(() => {
+    openAll ? dispatch(addFormModalThunk()) : dispatch(addFormModalCloseThunk());
+  }, [openAll]);
   return (
     <>
       <Header />
       <div className={style.outletWrapper}>
         {formAddBoard ? <AddBoardForm /> : null}
-        {formBackground ? <FormBackground /> : null}
+        {formModal ? <FormModal /> : null}
         <Outlet />
       </div>
       <Footer />

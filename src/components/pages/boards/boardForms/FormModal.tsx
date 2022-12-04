@@ -3,30 +3,34 @@ import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import {
   addBoardFormCloseThunk,
+  addColumnFormCloseThunk,
   addConfirmDeleteBoardFormCloseThunk,
   addConfirmEditBoardFormCloseThunk,
-  addFormBackgroundCloseThunk,
-  addFormBackgroundThunk,
+  addFormModalCloseThunk,
+  addFormModalThunk,
 } from 'store/thunks/formThunk';
 
-export default function FormBackground() {
+export default function FormModal() {
   const dispatch = useAppDispatch();
   const formAddBoard = useAppSelector((state) => state.form.formAddBoard);
   const formAddColumn = useAppSelector((state) => state.form.formAddColumn);
+  const formAddTask = useAppSelector((state) => state.form.formAddTask);
   const confirmDeleteBoard = useAppSelector((state) => state.form.confirmDeleteBoard);
   const confirmEditBoard = useAppSelector((state) => state.form.confirmEditBoard);
 
-  const closeAll = formAddBoard || formAddColumn || confirmDeleteBoard || confirmEditBoard;
+  const openAll =
+    formAddBoard || formAddColumn || confirmDeleteBoard || confirmEditBoard || formAddTask;
   //   console.log(closeAll);
   //   //   console.log(confirmEditBoard);
   useEffect(() => {
-    !closeAll ? dispatch(addFormBackgroundCloseThunk()) : null;
-  }, [closeAll]);
+    openAll ? dispatch(addFormModalThunk()) : dispatch(addFormModalCloseThunk());
+  }, [openAll]);
   const close = () => {
     formAddBoard ? dispatch(addBoardFormCloseThunk()) : null;
+    formAddColumn ? dispatch(addColumnFormCloseThunk()) : null;
     confirmDeleteBoard ? dispatch(addConfirmDeleteBoardFormCloseThunk()) : null;
     confirmEditBoard ? dispatch(addConfirmEditBoardFormCloseThunk()) : null;
-    dispatch(addFormBackgroundCloseThunk());
+    dispatch(addFormModalCloseThunk());
   };
   return (
     <Paper

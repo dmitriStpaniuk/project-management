@@ -8,7 +8,7 @@ import { getAllUBoardsList } from 'store/thunks/boardThunk';
 import { AddBoardForm } from './boardForms/AddBoardForm';
 import { BoardCard } from './BoardCard';
 import { EditBoardForm } from './boardForms/EditBoardForm';
-import { addBoardFormOpenThunk, addFormBackgroundThunk } from 'store/thunks/formThunk';
+import { addBoardFormOpenThunk } from 'store/thunks/formThunk';
 import { ConfirmBoardRemoval } from './boardForms/ConfirmBoardRemoval';
 
 export default function Boards() {
@@ -23,7 +23,6 @@ export default function Boards() {
 
   const handleClick = () => {
     dispatch(addBoardFormOpenThunk());
-    dispatch(addFormBackgroundThunk());
   };
 
   useEffect(() => {
