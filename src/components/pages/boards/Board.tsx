@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Column from './beautiful-dnd/Column';
 import styles from './Board.module.scss';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, DropResult, Droppable } from 'react-beautiful-dnd';
 import { TaskDataResponse, UpdateTaskData } from 'services/taskServiceTypes';
 import { ColumnDataResponse } from 'services/columnServiceTypes';
 import { useTranslate } from 'components/languageContext/languageContext';
@@ -12,6 +12,7 @@ import { useAppDispatch, useAppSelector } from 'store/store';
 import { getBoardByIdThunk } from 'store/thunks/boardThunk';
 import { updateTaskThunk } from 'store/thunks/taskThunk';
 import { boardSlice } from 'store/slices/boardSlice';
+import { updateColumnThunk } from 'store/thunks/columnThunk';
 
 const Board = () => {
   const dispatch = useAppDispatch();
@@ -38,7 +39,7 @@ const Board = () => {
   }, []);
 
   const onDragEnd = (result: DropResult) => {
-    const { destination, source, draggableId } = result;
+    const { destination, source, draggableId, type } = result;
     if (!destination) {
       return;
     }
@@ -46,6 +47,17 @@ const Board = () => {
       return;
     }
     const columns = board!.columns;
+    if (type === 'column') {
+      const draggableColumn = columns.find((col) => col.id === draggableId);
+      if (boardId && draggableColumn)
+        dispatch(
+          updateColumnThunk(boardId, draggableColumn.id, {
+            title: draggableColumn.title,
+            order: destination.index + 1,
+          })
+        );
+      return;
+    }
     const start = columns.find((col) => col.id === source.droppableId) as ColumnDataResponse;
     const finish = columns.find((col) => col.id === destination.droppableId) as ColumnDataResponse;
     if (start === finish) {
@@ -55,7 +67,6 @@ const Board = () => {
       const draggableTask = column.tasks.find(
         (task) => task.id === draggableId
       ) as TaskDataResponse;
-
       const taskData = {
         title: draggableTask.title,
         order: destination.index + 1,
@@ -64,10 +75,11 @@ const Board = () => {
         boardId: boardId,
         columnId: column.id,
       } as UpdateTaskData;
-      if (boardId) dispatch(updateTaskThunk(boardId, column.id, draggableTask.id, taskData));
+      if (boardId) {
+        dispatch(updateTaskThunk(boardId, column.id, draggableTask.id, taskData));
+      }
       return;
     }
-
     const startTasks = Array.from(start.tasks);
     const draggableTask = startTasks.find((task) => task.id === draggableId) as TaskDataResponse;
 
@@ -92,37 +104,49 @@ const Board = () => {
           <h1 className={styles.title}>{board?.title}</h1>
         </div>
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className={styles.relativeWrapper}>
-            <div className={styles.wrapper}>
-              {board?.columns
-                ? [...board.columns]
-                    .sort((a, b) => a.order - b.order)
-                    .map((columnX) => {
-                      const column = board?.columns.find(
-                        (col) => col.id === columnX.id
-                      ) as ColumnDataResponse;
-                      return (
-                        <Column
-                          key={columnX.id}
-                          column={column}
-                          tasks={column.tasks}
-                          columnId={column.id}
-                        />
-                      );
-                    })
-                : null}
-              <div style={{ minWidth: '120px' }}>
-                <button
-                  className={styles.newColumn}
-                  onClick={handleNewColumn}
-                  data-title={newColumnText}
-                >
-                  +
-                </button>
+          <Droppable droppableId={'all-columns'} direction="horizontal" type="column">
+            {(provided) => (
+              <div
+                className={styles.relativeWrapper}
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                <div className={styles.wrapper}>
+                  {board?.columns
+                    ? [...board.columns]
+                        .sort((a, b) => a.order - b.order)
+                        .map((columnX, index) => {
+                          const column = board?.columns.find(
+                            (col) => col.id === columnX.id
+                          ) as ColumnDataResponse;
+                          return (
+                            <Column
+                              key={columnX.id}
+                              column={column}
+                              tasks={column.tasks}
+                              columnId={column.id}
+                              index={index}
+                            />
+                          );
+                        })
+                    : null}
+                  <div style={{ minWidth: '120px' }}>
+                    <button
+                      className={styles.newColumn}
+                      onClick={handleNewColumn}
+                      data-title={newColumnText}
+                    >
+                      +
+                    </button>
+                  </div>
+                  {newColumn ? (
+                    <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} />
+                  ) : null}
+                </div>
+                {provided.placeholder}
               </div>
-              {newColumn ? <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} /> : null}
-            </div>
-          </div>
+            )}
+          </Droppable>
         </DragDropContext>
       </Container>
     </div>

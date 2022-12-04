@@ -42,15 +42,7 @@ export const updateTaskThunk =
   async (dispatch: AppDispatch) => {
     dispatch(taskSlice.actions.setIsTaskMainFetching(true));
     const result = await taskService.updateTask(boardId, columnId, taskId, taskData);
-    console.log(columnId);
-    console.log(result.columnId);
     dispatch(taskSlice.actions.setIsTaskMainFetching(false));
-    // dispatch(
-    //   boardSlice.actions.updateTask({
-    //     columnId: result.columnId,
-    //     taskId: result.id,
-    //     newData: taskData,
-    //   })
     dispatch(
       boardSlice.actions.updateTask({
         columnId: result.columnId,
@@ -58,5 +50,4 @@ export const updateTaskThunk =
         newData: taskData,
       })
     );
-    // dispatch(taskSlice.actions.setTaskMain(result));
   };
