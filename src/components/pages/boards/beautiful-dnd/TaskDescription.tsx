@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Button, Paper, Typography } from '@mui/material';
 import { useTranslate } from 'components/languageContext/languageContext';
-import { useAlerts } from 'components/SnackbarPanel';
-import { useAppDispatch, useAppSelector } from 'store/store';
 import styles from './Task.module.scss';
-import { deleteColumnByIdThunk } from 'store/thunks/columnThunk';
 import { TaskDataResponse } from 'services/taskServiceTypes';
+import { useAppSelector } from 'store/store';
 type TaskProps = {
   task: TaskDataResponse;
   asigneeId: string | undefined;
@@ -15,6 +13,11 @@ type TaskProps = {
 export const TaskDescription = ({ task, asigneeId, setTaskDescription }: TaskProps) => {
   const users = useAppSelector((state) => state.user.allUsersList);
   const user = users?.find((user) => user.id === asigneeId);
+  const userName = useTranslate('form.name');
+  const login = useTranslate('form.login');
+  const title = useTranslate('form.taskTitle');
+  const description = useTranslate('form.boardDescriptoon');
+  const close = useTranslate('buttons.close');
   const closeTaskDescription = () => {
     setTaskDescription(false);
   };
@@ -23,17 +26,16 @@ export const TaskDescription = ({ task, asigneeId, setTaskDescription }: TaskPro
       <Box className={styles.taskDescContent}>
         <Box>
           <Typography component="p" sx={{ textAlign: 'left' }}>
-            Title:
-          </Typography>
-
-          <Typography component="p" sx={{ textAlign: 'left' }}>
-            Description:
+            {title}
           </Typography>
           <Typography component="p" sx={{ textAlign: 'left' }}>
-            Name
+            {description}
           </Typography>
           <Typography component="p" sx={{ textAlign: 'left' }}>
-            Login
+            {userName}
+          </Typography>
+          <Typography component="p" sx={{ textAlign: 'left' }}>
+            {login}
           </Typography>
         </Box>
         <Box>
@@ -57,7 +59,7 @@ export const TaskDescription = ({ task, asigneeId, setTaskDescription }: TaskPro
         variant={'outlined'}
         color="error"
       >
-        Close
+        {close}
       </Button>
     </Box>
   );

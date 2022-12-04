@@ -23,11 +23,11 @@ export const ConfirmTaskRemoval = ({
   console.log(deleteCardId);
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
-  const successDeleteBoard = useTranslate('alerts.successDeleteBoard');
-  const errorDeleteBoard = useTranslate('alerts.errorDeleteBoard');
+  const successDeleteBoard = useTranslate('alerts.successDelateTask');
+  const errorDeleteBoard = useTranslate('alerts.errorDelateTask');
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
-  const titleDeleteForm = useTranslate('form.confirmDeleteBoard');
+  const titleDeleteForm = useTranslate('form.confirmDeleteTask');
 
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
