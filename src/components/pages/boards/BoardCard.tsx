@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from 'store/store';
 import {
   addConfirmDeleteBoardFormThunk,
   addConfirmEditBoardFormThunk,
-  addFormBackgroundThunk,
+  addFormModalThunk,
 } from 'store/thunks/formThunk';
 import { ConfirmBoardRemoval } from './boardForms/ConfirmBoardRemoval';
 
@@ -28,13 +28,13 @@ export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCar
     e.preventDefault();
     setEditFormBoard(id);
     dispatch(addConfirmEditBoardFormThunk());
-    dispatch(addFormBackgroundThunk());
+    // dispatch(addFormModalThunk());
   };
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault();
     // setConfirmDeleteBoard(id);
     dispatch(addConfirmDeleteBoardFormThunk());
-    dispatch(addFormBackgroundThunk());
+    // dispatch(addFormModalThunk());
   };
   const card = (
     <>

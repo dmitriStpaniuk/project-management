@@ -7,11 +7,17 @@ export const addBoardFormOpenThunk = () => (dispatch: AppDispatch) => {
 export const addBoardFormCloseThunk = () => (dispatch: AppDispatch) => {
   dispatch(formSlice.actions.setAddBoard(false));
 };
-export const addFormBackgroundThunk = () => (dispatch: AppDispatch) => {
-  dispatch(formSlice.actions.setFormBackground(true));
+export const addColumnFormOpenThunk = () => (dispatch: AppDispatch) => {
+  dispatch(formSlice.actions.setAddColumn(true));
 };
-export const addFormBackgroundCloseThunk = () => (dispatch: AppDispatch) => {
-  dispatch(formSlice.actions.setFormBackground(false));
+export const addColumnFormCloseThunk = () => (dispatch: AppDispatch) => {
+  dispatch(formSlice.actions.setAddColumn(false));
+};
+export const addFormModalThunk = () => (dispatch: AppDispatch) => {
+  dispatch(formSlice.actions.setFormModal(true));
+};
+export const addFormModalCloseThunk = () => (dispatch: AppDispatch) => {
+  dispatch(formSlice.actions.setFormModal(false));
 };
 export const addConfirmDeleteBoardFormThunk = () => (dispatch: AppDispatch) => {
   dispatch(formSlice.actions.setConfirmDeleteBoard(true));

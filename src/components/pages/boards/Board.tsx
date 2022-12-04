@@ -13,11 +13,13 @@ import { getBoardByIdThunk } from 'store/thunks/boardThunk';
 import { updateTaskThunk } from 'store/thunks/taskThunk';
 import { boardSlice } from 'store/slices/boardSlice';
 import { updateColumnThunk } from 'store/thunks/columnThunk';
+import { addColumnFormOpenThunk } from 'store/thunks/formThunk';
 
 const Board = () => {
   const dispatch = useAppDispatch();
   const { boardId } = useParams();
   const [newColumn, setNewColumn] = useState(false);
+  const formAddColumn = useAppSelector((state) => state.form.formAddColumn);
   const board = useAppSelector((state) => state.board.boardData);
   const columns = useAppSelector((state) => state.column);
   const tasks = useAppSelector((state) => state.task);
@@ -95,6 +97,7 @@ const Board = () => {
   };
   const handleNewColumn = () => {
     setNewColumn(true);
+    dispatch(addColumnFormOpenThunk());
   };
 
   return (
@@ -139,7 +142,7 @@ const Board = () => {
                       +
                     </button>
                   </div>
-                  {newColumn ? (
+                  {newColumn && formAddColumn ? (
                     <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} />
                   ) : null}
                 </div>

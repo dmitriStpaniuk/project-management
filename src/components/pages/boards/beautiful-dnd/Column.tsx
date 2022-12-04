@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Task from './Task';
 import styles from './Column.module.scss';
@@ -11,6 +11,8 @@ import { useParams } from 'react-router-dom';
 import { ConfirmColumnRemoval } from '../boardForms/ConfirmColumnRemoval';
 import { AddTaskForm } from '../boardForms/AddTaskForm';
 import { EditColumnForm } from '../boardForms/EditColumnForm';
+import { useAppDispatch } from 'store/store';
+import { addFormModalCloseThunk, addFormModalThunk } from 'store/thunks/formThunk';
 
 type ColumnProps = {
   column: ColumnDataResponse;
@@ -19,6 +21,7 @@ type ColumnProps = {
   index: number;
 };
 export default function Column({ column, tasks, columnId, index }: ColumnProps) {
+  const dispatch = useAppDispatch();
   const newTaskText = useTranslate('buttons.newTask');
   const { boardId } = useParams();
   const [confirmDeleteColumn, setConfirmDeleteColumn] = useState(false);

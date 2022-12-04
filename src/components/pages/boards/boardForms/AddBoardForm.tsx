@@ -3,14 +3,13 @@ import { FormBoardInputText } from 'components/FormBoardInputText';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
 import { WrapperWaiting } from 'components/utils/WrapperWaiting';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { CreateBoardData } from 'services/boardServiceTypes';
 import { useAppDispatch } from 'store/store';
 import { createNewBoardThunk } from 'store/thunks/boardThunk';
 import { addBoardFormCloseThunk } from 'store/thunks/formThunk';
 import styles from './../../login/Login.module.scss';
-import FormBackground from './FormBackground';
 
 // type FormProps = {
 //   setPopupFormAddBoard: (x: boolean) => void;

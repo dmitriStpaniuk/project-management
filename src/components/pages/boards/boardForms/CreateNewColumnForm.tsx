@@ -8,6 +8,7 @@ import { useAppDispatch } from 'store/store';
 import styles from './../../login/Login.module.scss';
 import { createNewColumnThunk } from 'store/thunks/columnThunk';
 import { CreateColumnData } from 'services/columnServiceTypes';
+import { addColumnFormCloseThunk } from 'store/thunks/formThunk';
 
 type FormProps = {
   setNewColumn: (x: boolean) => void;
@@ -42,6 +43,7 @@ const CreateNewColumnForm = ({ setNewColumn, id }: FormProps) => {
     } catch {
       addAlert({ type: 'error', message: errorEditBoard });
     }
+    dispatch(addColumnFormCloseThunk());
   };
 
   return (
@@ -78,7 +80,7 @@ const CreateNewColumnForm = ({ setNewColumn, id }: FormProps) => {
       <Button
         className={styles.formButton}
         onClick={() => {
-          setNewColumn(false);
+          setNewColumn(false), dispatch(addColumnFormCloseThunk());
         }}
         variant={'outlined'}
         color="error"
