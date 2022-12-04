@@ -27,8 +27,10 @@ export const EditBoardForm = ({ setEditFormBoard, id }: FormProps) => {
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
   const titleBoardCreateForm = useTranslate('buttons.editBoard');
+
   const valueInputBoardCard = useAppSelector((state) => state.board.allBoardsList);
   const value = valueInputBoardCard?.find((board) => board.id === id);
+
   const methods = useForm({
     defaultValues: { title: value?.title || '', description: value?.description || '' },
     mode: 'onChange',
