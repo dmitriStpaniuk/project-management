@@ -26,8 +26,7 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
   const { boardId } = useParams() as { boardId: string };
   const [selectedAsigneeId, setSelectedAsigneeId] = useState('');
   const [asignee, setAsignee] = useState<User | null>(null);
-  const [deleteCardId, setDeletedCard] = useState(taskId);
-  const closeFormDeleteTask = useAppSelector((state) => state.form.confirmDeleteTask);
+  const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
 
   const taskData = {
     title: task.title,
@@ -51,10 +50,8 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
 
   const handleEdit = () => {};
 
-  const hendleDeleteTask = () => {
-    dispatch(addConfirmDeleteTaskFormThunk());
-    setDeletedCard(taskId);
-    console.log(deleteCardId);
+  const hendleDeleteModalOpen = () => {
+    setIsDeleteModalOpened(true);
   };
 
   return (
@@ -73,17 +70,18 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
                 <button className={styles.taskButton} onClick={handleEdit}>
                   {<TfiPencil />}
                 </button>
-                <button className={styles.taskButton} onClick={hendleDeleteTask}>
+                <button className={styles.taskButton} onClick={hendleDeleteModalOpen}>
                   {<BsTrash />}
                 </button>
                 <ListAllUserFromTask setSelectedAsigneeId={setSelectedAsigneeId} />
               </div>
             </div>
-            {closeFormDeleteTask ? (
+            {isDeleteModalOpened ? (
               <ConfirmTaskRemoval
                 boardId={boardId}
                 columnId={columnId}
-                deleteCardId={deleteCardId}
+                deleteCardId={taskId}
+                setIsDeleteModalOpened={setIsDeleteModalOpened}
               />
             ) : null}
             <div>

@@ -11,9 +11,15 @@ type ConfirmProps = {
   deleteCardId: string;
   boardId: string;
   columnId: string;
+  setIsDeleteModalOpened: (x: boolean) => void;
 };
 
-export const ConfirmTaskRemoval = ({ boardId, columnId, deleteCardId }: ConfirmProps) => {
+export const ConfirmTaskRemoval = ({
+  boardId,
+  columnId,
+  deleteCardId,
+  setIsDeleteModalOpened,
+}: ConfirmProps) => {
   console.log(deleteCardId);
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
@@ -28,14 +34,14 @@ export const ConfirmTaskRemoval = ({ boardId, columnId, deleteCardId }: ConfirmP
     try {
       await dispatch(deleteTaskByIdThunk(boardId, columnId, deleteCardId));
       addAlert({ type: 'success', message: successDeleteBoard });
-      dispatch(addConfirmDeleteTaskFormCloseThunk());
+      setIsDeleteModalOpened(false);
     } catch {
       addAlert({ type: 'error', message: errorDeleteBoard });
     }
   };
   const handleCancel = (e: React.MouseEvent) => {
     e.preventDefault();
-    dispatch(addConfirmDeleteTaskFormCloseThunk());
+    setIsDeleteModalOpened(false);
   };
   return (
     <Paper
