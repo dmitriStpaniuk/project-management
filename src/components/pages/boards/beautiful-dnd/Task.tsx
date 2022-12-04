@@ -5,14 +5,14 @@ import { TaskDataResponse } from 'services/taskServiceTypes';
 import { BsTrash } from 'react-icons/bs';
 import { TfiPencil } from 'react-icons/tfi';
 import ListAllUserFromTask from '../ListAllUserFromTask';
-import { useAppDispatch, useAppSelector } from 'store/store';
+import { useAppDispatch } from 'store/store';
 import { Typography } from '@mui/material';
 import { updateTaskThunk } from 'store/thunks/taskThunk';
 import { useParams } from 'react-router-dom';
 import { User } from 'services/userServiceTypes';
 import { getUserById } from 'services/userService';
 import { ConfirmTaskRemoval } from '../boardForms/ConfirmTaskRemoval';
-import { addConfirmDeleteTaskFormThunk } from 'store/thunks/formThunk';
+import { EditTaskName } from '../boardForms/EditTaskName';
 
 type TaskProps = {
   task: TaskDataResponse;
@@ -27,6 +27,7 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
   const [selectedAsigneeId, setSelectedAsigneeId] = useState('');
   const [asignee, setAsignee] = useState<User | null>(null);
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
+  const [isEditModalOpened, setIsEditModalOpened] = useState(false);
 
   const taskData = {
     title: task.title,
@@ -36,7 +37,7 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
     boardId: boardId,
     columnId: columnId,
   };
-
+  console.log(selectedAsigneeId);
   useEffect(() => {
     if (boardId && columnId && selectedAsigneeId)
       dispatch(updateTaskThunk(boardId, columnId, taskId, taskData));
@@ -48,7 +49,9 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
     }
   }, [asigneeId]);
 
-  const handleEdit = () => {};
+  const handleEdit = () => {
+    setIsEditModalOpened(true);
+  };
 
   const hendleDeleteModalOpen = () => {
     setIsDeleteModalOpened(true);
@@ -76,6 +79,7 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
                 <ListAllUserFromTask setSelectedAsigneeId={setSelectedAsigneeId} />
               </div>
             </div>
+
             {isDeleteModalOpened ? (
               <ConfirmTaskRemoval
                 boardId={boardId}
@@ -87,6 +91,16 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
             <div>
               <Typography>{asignee?.name}</Typography>
             </div>
+            {isEditModalOpened ? (
+              <EditTaskName
+                setIsEditModalOpened={setIsEditModalOpened}
+                boardId={boardId}
+                columnId={columnId}
+                taskId={taskId}
+                taskData={taskData}
+                asigneeId={asigneeId}
+              />
+            ) : null}
           </div>
         )}
       </Draggable>
