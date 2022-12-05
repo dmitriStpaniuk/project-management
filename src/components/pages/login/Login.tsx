@@ -43,6 +43,7 @@ export default function Login() {
       navigate('/boards');
     } catch {
       addAlert({ type: 'error', message: UserNotFounted });
+      navigate('/');
     }
   };
 

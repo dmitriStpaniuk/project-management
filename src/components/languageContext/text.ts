@@ -80,6 +80,10 @@ export const text = {
       en: 'Registration in successfully',
       ru: 'Вы успншно зарегестрировались',
     },
+    errorRegistration: {
+      en: 'Registration in faild',
+      ru: 'Вы не смогли зарегестрироваться',
+    },
     errorLogin: {
       en: 'Login required',
       ru: 'Необходимо войти в систему',
