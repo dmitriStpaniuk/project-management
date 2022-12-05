@@ -1,4 +1,4 @@
-import { Button, Paper } from '@mui/material';
+import { Button, Paper, Typography } from '@mui/material';
 import { FormInputText } from 'components/FormInputText';
 import { useAlerts } from 'components/SnackbarPanel';
 import { loginRegExp, passwordRegExp } from 'components/utils/constants';
@@ -18,6 +18,7 @@ export default function Registration() {
   const submitLabel = useTranslate('buttons.submit');
   const resetLabel = useTranslate('buttons.reset');
   const RegistrationSuccessMessage = useTranslate('alerts.successRegistration');
+  const titleRegistration = useTranslate('registration.title');
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ export default function Registration() {
               justifyItems: 'center',
             }}
           >
+            <Typography>{titleRegistration}</Typography>
             <FormProvider {...methods}>
               <FormInputText
                 name="name"
