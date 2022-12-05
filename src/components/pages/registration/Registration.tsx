@@ -18,6 +18,7 @@ export default function Registration() {
   const submitLabel = useTranslate('buttons.submit');
   const resetLabel = useTranslate('buttons.reset');
   const RegistrationSuccessMessage = useTranslate('alerts.successRegistration');
+  const RegistrationErrorMessage = useTranslate('alerts.errorRegistration');
   const titleRegistration = useTranslate('registration.title');
 
   const dispatch = useAppDispatch();
@@ -36,9 +37,14 @@ export default function Registration() {
     formState: { isSubmitting },
   } = methods;
   const onSubmit = async (data: SignupUserData) => {
-    await dispatch(createNewUserThunk(data));
-    addAlert({ type: 'success', message: RegistrationSuccessMessage });
-    navigate('/boards');
+    try {
+      await dispatch(createNewUserThunk(data));
+      addAlert({ type: 'success', message: RegistrationSuccessMessage });
+      navigate('/boards');
+    } catch {
+      addAlert({ type: 'error', message: RegistrationErrorMessage });
+      navigate('/');
+    }
   };
 
   return (
