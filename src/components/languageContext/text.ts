@@ -271,6 +271,18 @@ export const text = {
       ru: 'Удалить аккаунт',
     },
   },
+  login: {
+    title: {
+      en: 'Login',
+      ru: 'Войти',
+    },
+  },
+  registration: {
+    title: {
+      en: 'Sign up',
+      ru: 'Зарегестрироваться',
+    },
+  },
 };
 
 export type Text = typeof text;

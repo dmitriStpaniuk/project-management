@@ -1,4 +1,4 @@
-import { Button, Paper } from '@mui/material';
+import { Button, Paper, Typography } from '@mui/material';
 import { FormInputText } from 'components/FormInputText';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
@@ -22,6 +22,7 @@ export default function Login() {
   const submitLabel = useTranslate('buttons.submit');
   const resetLabel = useTranslate('buttons.reset');
   const addAlert = useAlerts();
+  const login = useTranslate('login.title');
 
   const methods = useForm({
     defaultValues: { login: '', password: '' },
@@ -58,6 +59,7 @@ export default function Login() {
               justifyItems: 'center',
             }}
           >
+            <Typography>{login}</Typography>
             <FormProvider {...methods}>
               <FormInputText
                 name="login"

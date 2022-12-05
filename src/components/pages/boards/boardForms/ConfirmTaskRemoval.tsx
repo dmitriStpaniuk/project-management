@@ -4,7 +4,6 @@ import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
 import { useAppDispatch } from 'store/store';
 import styles from './../../login/Login.module.scss';
-import { addConfirmDeleteTaskFormCloseThunk } from 'store/thunks/formThunk';
 import { deleteTaskByIdThunk } from 'store/thunks/taskThunk';
 
 type ConfirmProps = {
