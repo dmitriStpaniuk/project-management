@@ -5,6 +5,7 @@ import { useAlerts } from 'components/SnackbarPanel';
 import { useAppDispatch } from 'store/store';
 import styles from './../../login/Login.module.scss';
 import { deleteTaskByIdThunk } from 'store/thunks/taskThunk';
+import { addConfirmDeleteTaskFormCloseThunk } from 'store/thunks/formThunk';
 
 type ConfirmProps = {
   deleteCardId: string;
