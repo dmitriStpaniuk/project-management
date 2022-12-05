@@ -20,7 +20,6 @@ export const ConfirmTaskRemoval = ({
   deleteCardId,
   setIsDeleteModalOpened,
 }: ConfirmProps) => {
-  console.log(deleteCardId);
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
   const successDeleteBoard = useTranslate('alerts.successDelateTask');

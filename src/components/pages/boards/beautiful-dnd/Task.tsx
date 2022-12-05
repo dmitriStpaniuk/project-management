@@ -39,7 +39,7 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
     boardId: boardId,
     columnId: columnId,
   };
-  console.log(selectedAsigneeId);
+
   useEffect(() => {
     if (boardId && columnId && selectedAsigneeId)
       dispatch(updateTaskThunk(boardId, columnId, taskId, taskData));
