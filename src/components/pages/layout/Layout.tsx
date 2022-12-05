@@ -19,6 +19,8 @@ const Layout = () => {
   const confirmEditColumn = useAppSelector((state) => state.form.confirmEditColumn);
   const formAddColumn = useAppSelector((state) => state.form.formAddColumn);
   const formAddTask = useAppSelector((state) => state.form.formAddTask);
+  const confirmDeleteTask = useAppSelector((state) => state.form.confirmDeleteTask);
+  const confirmEditTask = useAppSelector((state) => state.form.confirmEditTask);
   const openModal =
     formAddBoard ||
     formAddColumn ||
@@ -26,8 +28,9 @@ const Layout = () => {
     confirmEditBoard ||
     formAddTask ||
     confirmDeleteColumn ||
-    confirmEditColumn;
-  // formModal;
+    confirmEditColumn ||
+    confirmDeleteTask ||
+    confirmEditTask;
 
   console.log(openModal);
   useEffect(() => {

@@ -18,10 +18,10 @@ const initialState: FormInitialState = {
   formAddTask: false,
   formModal: false,
   confirmDeleteBoard: false,
-  confirmDeleteTask: false,
   confirmEditBoard: false,
   confirmDeleteColumn: false,
   confirmEditColumn: false,
+  confirmDeleteTask: false,
   confirmEditTask: false,
 };
 export const formSlice = createSlice({

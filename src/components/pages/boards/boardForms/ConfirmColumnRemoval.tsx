@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from 'store/store';
 import styles from './../../login/Login.module.scss';
 import { deleteColumnByIdThunk } from 'store/thunks/columnThunk';
 import {
+  addConfirmDeleteColumnFormCloseThunk,
   addConfirmEditColumnFormCloseThunk,
   addFormModalCloseThunk,
   addFormModalThunk,
@@ -32,12 +33,12 @@ export const ConfirmColumnRemoval = ({ setConfirmDeleteColumn, boardId, id }: Co
     } catch {
       addAlert({ type: 'error', message: errorDeleteColumn });
     }
-    // dispatch(addConfirmEditColumnFormCloseThunk());
+    dispatch(addConfirmDeleteColumnFormCloseThunk());
   };
   const handleCancel = (e: React.MouseEvent) => {
     e.preventDefault();
     setConfirmDeleteColumn(false);
-    // dispatch(addConfirmEditColumnFormCloseThunk());
+    dispatch(addConfirmDeleteColumnFormCloseThunk());
   };
   return (
     <Paper

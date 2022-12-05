@@ -6,10 +6,13 @@ import {
   addColumnFormCloseThunk,
   addConfirmDeleteBoardFormCloseThunk,
   addConfirmDeleteColumnFormCloseThunk,
+  addConfirmDeleteTaskFormCloseThunk,
   addConfirmEditBoardFormCloseThunk,
   addConfirmEditColumnFormCloseThunk,
+  addConfirmEditTaskFormCloseThunk,
   addFormModalCloseThunk,
   addFormModalThunk,
+  addTaskFormCloseThunk,
 } from 'store/thunks/formThunk';
 
 export default function FormModal() {
@@ -21,7 +24,8 @@ export default function FormModal() {
   const confirmEditColumn = useAppSelector((state) => state.form.confirmEditColumn);
   const formAddColumn = useAppSelector((state) => state.form.formAddColumn);
   const formAddTask = useAppSelector((state) => state.form.formAddTask);
-
+  const confirmDeleteTask = useAppSelector((state) => state.form.confirmDeleteTask);
+  const confirmEditTask = useAppSelector((state) => state.form.confirmEditTask);
   const openModal =
     formAddBoard ||
     formAddColumn ||
@@ -29,9 +33,10 @@ export default function FormModal() {
     confirmEditBoard ||
     formAddTask ||
     confirmDeleteColumn ||
-    confirmEditColumn;
-  // console.log(openModal);
-  //   //   console.log(confirmEditBoard);
+    confirmEditColumn ||
+    confirmDeleteTask ||
+    confirmEditTask;
+
   useEffect(() => {
     openModal ? dispatch(addFormModalThunk()) : dispatch(addFormModalCloseThunk());
   }, [openModal]);
@@ -42,7 +47,9 @@ export default function FormModal() {
     formAddColumn ? dispatch(addColumnFormCloseThunk()) : null;
     confirmDeleteColumn ? dispatch(addConfirmDeleteColumnFormCloseThunk()) : null;
     confirmEditColumn ? dispatch(addConfirmEditColumnFormCloseThunk()) : null;
-
+    confirmDeleteTask ? dispatch(addConfirmDeleteTaskFormCloseThunk()) : null;
+    confirmEditTask ? dispatch(addConfirmEditTaskFormCloseThunk()) : null;
+    formAddTask ? dispatch(addTaskFormCloseThunk()) : null;
     dispatch(addFormModalCloseThunk());
   };
   return (
