@@ -11,8 +11,14 @@ import { useParams } from 'react-router-dom';
 import { ConfirmColumnRemoval } from '../boardForms/ConfirmColumnRemoval';
 import { AddTaskForm } from '../boardForms/AddTaskForm';
 import { EditColumnForm } from '../boardForms/EditColumnForm';
-import { useAppDispatch } from 'store/store';
-import { addFormModalCloseThunk, addFormModalThunk } from 'store/thunks/formThunk';
+import { useAppDispatch, useAppSelector } from 'store/store';
+import {
+  addConfirmDeleteColumnFormThunk,
+  addConfirmEditColumnFormThunk,
+  addFormModalCloseThunk,
+  addFormModalThunk,
+  addTaskFormOpenThunk,
+} from 'store/thunks/formThunk';
 
 type ColumnProps = {
   column: ColumnDataResponse;
@@ -27,18 +33,23 @@ export default function Column({ column, tasks, columnId, index }: ColumnProps) 
   const [confirmDeleteColumn, setConfirmDeleteColumn] = useState(false);
   const [newTask, setNewTask] = useState('');
   const [editColumnName, setEditColumnName] = useState('');
-
+  const confirmDeleteCol = useAppSelector((state) => state.form.confirmDeleteColumn);
+  const confirmEdinCol = useAppSelector((state) => state.form.confirmEditColumn);
+  const formAddTask = useAppSelector((state) => state.form.formAddTask);
   const hendleDeleteColumn = (e: React.MouseEvent) => {
     e.preventDefault();
     setConfirmDeleteColumn(true);
+    dispatch(addConfirmDeleteColumnFormThunk());
   };
 
   const handleNewTask = () => {
     setNewTask('start');
+    dispatch(addTaskFormOpenThunk());
   };
 
   const handleEdit = () => {
     setEditColumnName('start');
+    dispatch(addConfirmEditColumnFormThunk());
   };
 
   return (
@@ -63,7 +74,7 @@ export default function Column({ column, tasks, columnId, index }: ColumnProps) 
                 <button className={styles.columnHeaderButton} onClick={hendleDeleteColumn}>
                   {<BsTrash />}
                 </button>
-                {confirmDeleteColumn ? (
+                {confirmDeleteColumn && confirmDeleteCol ? (
                   <ConfirmColumnRemoval
                     setConfirmDeleteColumn={setConfirmDeleteColumn}
                     boardId={boardId as string}
@@ -104,10 +115,10 @@ export default function Column({ column, tasks, columnId, index }: ColumnProps) 
                 <button className={styles.newTask} onClick={handleNewTask} data-title={newTaskText}>
                   +
                 </button>
-                {newTask ? (
+                {newTask && formAddTask ? (
                   <AddTaskForm setNewTask={setNewTask} boardId={boardId} columnId={columnId} />
                 ) : null}
-                {editColumnName ? (
+                {editColumnName && confirmEdinCol ? (
                   <EditColumnForm
                     setEditColumnName={setEditColumnName}
                     boardId={boardId}

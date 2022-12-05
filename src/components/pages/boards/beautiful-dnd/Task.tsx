@@ -5,7 +5,7 @@ import { TaskDataResponse } from 'services/taskServiceTypes';
 import { BsTrash } from 'react-icons/bs';
 import { TfiPencil } from 'react-icons/tfi';
 import ListAllUserFromTask from '../ListAllUserFromTask';
-import { useAppDispatch } from 'store/store';
+import { useAppDispatch, useAppSelector } from 'store/store';
 import { Typography } from '@mui/material';
 import { updateTaskThunk } from 'store/thunks/taskThunk';
 import { useParams } from 'react-router-dom';
@@ -14,6 +14,7 @@ import { getUserById } from 'services/userService';
 import { ConfirmTaskRemoval } from '../boardForms/ConfirmTaskRemoval';
 import { EditTaskName } from '../boardForms/EditTaskName';
 import { TaskDescription } from './TaskDescription';
+import { addConfirmDeleteTaskFormThunk, addConfirmEditTaskFormThunk } from 'store/thunks/formThunk';
 
 type TaskProps = {
   task: TaskDataResponse;
@@ -30,6 +31,8 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
   const [asignee, setAsignee] = useState<User | null>(null);
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
   const [isEditModalOpened, setIsEditModalOpened] = useState(false);
+  const confirmDeleteTask = useAppSelector((state) => state.form.confirmDeleteTask);
+  const confirmEditTask = useAppSelector((state) => state.form.confirmEditTask);
 
   const taskData = {
     title: task.title,
@@ -53,10 +56,12 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
 
   const handleEdit = () => {
     setIsEditModalOpened(true);
+    dispatch(addConfirmEditTaskFormThunk());
   };
 
   const hendleDeleteModalOpen = () => {
     setIsDeleteModalOpened(true);
+    dispatch(addConfirmDeleteTaskFormThunk());
   };
   const hendleTaskDescription = (e: React.MouseEvent) => {
     // e.preventDefault();
@@ -85,7 +90,7 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
               </div>
             </div>
 
-            {isDeleteModalOpened ? (
+            {isDeleteModalOpened && confirmDeleteTask ? (
               <ConfirmTaskRemoval
                 boardId={boardId}
                 columnId={columnId}
@@ -103,7 +108,7 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
             <div>
               <Typography>{asignee?.name}</Typography>
             </div>
-            {isEditModalOpened ? (
+            {isEditModalOpened && confirmEditTask ? (
               <EditTaskName
                 setIsEditModalOpened={setIsEditModalOpened}
                 boardId={boardId}

@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from 'store/store';
 import styles from './../../login/Login.module.scss';
 import { createNewTaskThunk } from 'store/thunks/taskThunk';
 import { CreateTaskData } from 'services/taskServiceTypes';
+import { addTaskFormCloseThunk } from 'store/thunks/formThunk';
 
 type FormProps = {
   setNewTask: (x: string) => void;
@@ -57,6 +58,7 @@ export const AddTaskForm = ({ setNewTask, boardId, columnId }: FormProps) => {
     } catch {
       addAlert({ type: 'error', message: errorEditBoard });
     }
+    dispatch(addTaskFormCloseThunk());
   };
 
   return (
@@ -94,7 +96,7 @@ export const AddTaskForm = ({ setNewTask, boardId, columnId }: FormProps) => {
       <Button
         className={styles.formButton}
         onClick={() => {
-          setNewTask('');
+          setNewTask(''), dispatch(addTaskFormCloseThunk());
         }}
         variant={'outlined'}
         color="error"

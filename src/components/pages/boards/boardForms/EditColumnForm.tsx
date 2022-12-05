@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from 'store/store';
 import styles from './../../login/Login.module.scss';
 import { updateColumnThunk } from 'store/thunks/columnThunk';
 import { CreateColumnData } from 'services/columnServiceTypes';
+import { addConfirmEditColumnFormCloseThunk } from 'store/thunks/formThunk';
 
 type FormProps = {
   setEditColumnName: (x: string) => void;
@@ -46,6 +47,7 @@ export const EditColumnForm = ({ setEditColumnName, boardId, columnId, order }: 
     } catch {
       addAlert({ type: 'error', message: errorEditBoard });
     }
+    dispatch(addConfirmEditColumnFormCloseThunk());
   };
 
   return (
@@ -81,7 +83,7 @@ export const EditColumnForm = ({ setEditColumnName, boardId, columnId, order }: 
       <Button
         className={styles.formButton}
         onClick={() => {
-          setEditColumnName('');
+          setEditColumnName(''), dispatch(addConfirmEditColumnFormCloseThunk());
         }}
         variant={'outlined'}
         color="error"

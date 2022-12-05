@@ -36,10 +36,12 @@ export const ConfirmTaskRemoval = ({
     } catch {
       addAlert({ type: 'error', message: errorDeleteBoard });
     }
+    dispatch(addConfirmDeleteTaskFormCloseThunk());
   };
   const handleCancel = (e: React.MouseEvent) => {
     e.preventDefault();
     setIsDeleteModalOpened(false);
+    dispatch(addConfirmDeleteTaskFormCloseThunk());
   };
   return (
     <Paper
