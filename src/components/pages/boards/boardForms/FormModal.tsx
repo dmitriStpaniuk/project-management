@@ -20,8 +20,7 @@ export default function FormModal() {
 
   const openAll =
     formAddBoard || formAddColumn || confirmDeleteBoard || confirmEditBoard || formAddTask;
-  //   console.log(closeAll);
-  //   //   console.log(confirmEditBoard);
+
   useEffect(() => {
     openAll ? dispatch(addFormModalThunk()) : dispatch(addFormModalCloseThunk());
   }, [openAll]);

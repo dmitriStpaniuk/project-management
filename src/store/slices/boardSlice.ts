@@ -50,7 +50,6 @@ export const boardSlice = createSlice({
           columnForEdit.tasks = columnForEdit.tasks
             .filter((task) => task.id !== taskForEdit.id)
             .concat({ ...taskForEdit, ...action.payload.newData });
-          // console.log(taskForEdit);
         }
       }
     },
