@@ -32,7 +32,6 @@ const Layout = () => {
     confirmDeleteTask ||
     confirmEditTask;
 
-  console.log(openModal);
   useEffect(() => {
     openModal ? dispatch(addFormModalThunk()) : dispatch(addFormModalCloseThunk());
   }, [openModal]);
