@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Button, Paper, Typography } from '@mui/material';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
-import { useAppDispatch } from 'store/store';
+import { useAppDispatch, useAppSelector } from 'store/store';
 import styles from './../../login/Login.module.scss';
 import { deleteColumnByIdThunk } from 'store/thunks/columnThunk';
+import {
+  addConfirmEditColumnFormCloseThunk,
+  addFormModalCloseThunk,
+  addFormModalThunk,
+} from 'store/thunks/formThunk';
 type ConfirmProps = {
   setConfirmDeleteColumn: (e: boolean) => void;
   boardId: string;
@@ -27,10 +32,12 @@ export const ConfirmColumnRemoval = ({ setConfirmDeleteColumn, boardId, id }: Co
     } catch {
       addAlert({ type: 'error', message: errorDeleteColumn });
     }
+    // dispatch(addConfirmEditColumnFormCloseThunk());
   };
   const handleCancel = (e: React.MouseEvent) => {
     e.preventDefault();
     setConfirmDeleteColumn(false);
+    // dispatch(addConfirmEditColumnFormCloseThunk());
   };
   return (
     <Paper

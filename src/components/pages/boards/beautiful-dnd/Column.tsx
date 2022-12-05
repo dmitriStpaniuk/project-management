@@ -12,7 +12,12 @@ import { ConfirmColumnRemoval } from '../boardForms/ConfirmColumnRemoval';
 import { AddTaskForm } from '../boardForms/AddTaskForm';
 import { EditColumnForm } from '../boardForms/EditColumnForm';
 import { useAppDispatch } from 'store/store';
-import { addFormModalCloseThunk, addFormModalThunk } from 'store/thunks/formThunk';
+import {
+  addConfirmDeleteColumnFormThunk,
+  addConfirmEditColumnFormThunk,
+  addFormModalCloseThunk,
+  addFormModalThunk,
+} from 'store/thunks/formThunk';
 
 type ColumnProps = {
   column: ColumnDataResponse;
@@ -31,6 +36,7 @@ export default function Column({ column, tasks, columnId, index }: ColumnProps) 
   const hendleDeleteColumn = (e: React.MouseEvent) => {
     e.preventDefault();
     setConfirmDeleteColumn(true);
+    dispatch(addConfirmDeleteColumnFormThunk());
   };
 
   const handleNewTask = () => {
@@ -39,6 +45,7 @@ export default function Column({ column, tasks, columnId, index }: ColumnProps) 
 
   const handleEdit = () => {
     setEditColumnName('start');
+    dispatch(addConfirmEditColumnFormThunk());
   };
 
   return (

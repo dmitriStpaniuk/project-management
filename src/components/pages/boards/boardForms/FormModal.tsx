@@ -5,7 +5,9 @@ import {
   addBoardFormCloseThunk,
   addColumnFormCloseThunk,
   addConfirmDeleteBoardFormCloseThunk,
+  addConfirmDeleteColumnFormCloseThunk,
   addConfirmEditBoardFormCloseThunk,
+  addConfirmEditColumnFormCloseThunk,
   addFormModalCloseThunk,
   addFormModalThunk,
 } from 'store/thunks/formThunk';
@@ -13,23 +15,34 @@ import {
 export default function FormModal() {
   const dispatch = useAppDispatch();
   const formAddBoard = useAppSelector((state) => state.form.formAddBoard);
-  const formAddColumn = useAppSelector((state) => state.form.formAddColumn);
-  const formAddTask = useAppSelector((state) => state.form.formAddTask);
   const confirmDeleteBoard = useAppSelector((state) => state.form.confirmDeleteBoard);
   const confirmEditBoard = useAppSelector((state) => state.form.confirmEditBoard);
+  const confirmDeleteColumn = useAppSelector((state) => state.form.confirmDeleteColumn);
+  const confirmEditColumn = useAppSelector((state) => state.form.confirmEditColumn);
+  const formAddColumn = useAppSelector((state) => state.form.formAddColumn);
+  const formAddTask = useAppSelector((state) => state.form.formAddTask);
 
-  const openAll =
-    formAddBoard || formAddColumn || confirmDeleteBoard || confirmEditBoard || formAddTask;
-  //   console.log(closeAll);
+  const openModal =
+    formAddBoard ||
+    formAddColumn ||
+    confirmDeleteBoard ||
+    confirmEditBoard ||
+    formAddTask ||
+    confirmDeleteColumn ||
+    confirmEditColumn;
+  // console.log(openModal);
   //   //   console.log(confirmEditBoard);
   useEffect(() => {
-    openAll ? dispatch(addFormModalThunk()) : dispatch(addFormModalCloseThunk());
-  }, [openAll]);
+    openModal ? dispatch(addFormModalThunk()) : dispatch(addFormModalCloseThunk());
+  }, [openModal]);
   const close = () => {
     formAddBoard ? dispatch(addBoardFormCloseThunk()) : null;
-    formAddColumn ? dispatch(addColumnFormCloseThunk()) : null;
     confirmDeleteBoard ? dispatch(addConfirmDeleteBoardFormCloseThunk()) : null;
     confirmEditBoard ? dispatch(addConfirmEditBoardFormCloseThunk()) : null;
+    formAddColumn ? dispatch(addColumnFormCloseThunk()) : null;
+    confirmDeleteColumn ? dispatch(addConfirmDeleteColumnFormCloseThunk()) : null;
+    confirmEditColumn ? dispatch(addConfirmEditColumnFormCloseThunk()) : null;
+
     dispatch(addFormModalCloseThunk());
   };
   return (

@@ -29,7 +29,7 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
   const [selectedAsigneeId, setSelectedAsigneeId] = useState('');
   const [asignee, setAsignee] = useState<User | null>(null);
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
-  console.log(taskDescription);
+  // console.log(taskDescription);
   const taskData = {
     title: task.title,
     order: task.order,
