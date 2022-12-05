@@ -16,6 +16,38 @@ export const text = {
       en: 'Failed to delate column',
       ru: 'Не удалось удалить колонку',
     },
+    successEditColumn: {
+      en: 'Edit column in successfully',
+      ru: 'Вы успешно изменили колонку',
+    },
+    errorEditColumn: {
+      en: 'Failed to edit column',
+      ru: 'Не удалось изменить колонку',
+    },
+    successCreateTask: {
+      en: 'Create task in successfully',
+      ru: 'Вы успешно создали задачу',
+    },
+    errorCreateTask: {
+      en: 'Failed to create task',
+      ru: 'Не удалось создать задачу',
+    },
+    successDelateTask: {
+      en: 'You have successfully deleted a task',
+      ru: 'Вы успешно удалили задачу',
+    },
+    errorDelateTask: {
+      en: 'Failed to delate task',
+      ru: 'Не удалось удалить задачу',
+    },
+    successEditTask: {
+      en: 'Edit task in successfully',
+      ru: 'Вы успешно изменили задачу',
+    },
+    errorEditTask: {
+      en: 'Failed to edit task',
+      ru: 'Не удалось изменить задачу',
+    },
     successCreateBoard: {
       en: 'Create board in successfully',
       ru: 'Вы успешно создали доску',
@@ -108,7 +140,7 @@ export const text = {
     },
     newTask: {
       en: 'Add task',
-      ru: 'Добавить карточку',
+      ru: 'Добавить задачу',
     },
     file: {
       en: 'File',
@@ -172,6 +204,10 @@ export const text = {
       en: 'Are you sure you want to delete the column?',
       ru: 'Вы точно хотите удалить колонку?',
     },
+    confirmDeleteTask: {
+      en: 'Are you sure you want to delete the task?',
+      ru: 'Вы точно хотите удалить задачу?',
+    },
     required: {
       en: 'Required field',
       ru: 'Поле обязательно для заполнения',
@@ -204,9 +240,17 @@ export const text = {
       en: 'Column name',
       ru: 'Имя колонки',
     },
+    taskName: {
+      en: 'Task name',
+      ru: 'Название задачи',
+    },
     boardDescriptoon: {
       en: 'Description',
       ru: 'Описание',
+    },
+    taskTitle: {
+      en: 'Title',
+      ru: 'Заголовок',
     },
     password: {
       en: 'Password',

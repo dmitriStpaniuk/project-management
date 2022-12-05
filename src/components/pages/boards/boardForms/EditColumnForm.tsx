@@ -19,9 +19,9 @@ type FormProps = {
 export const EditColumnForm = ({ setEditColumnName, boardId, columnId, order }: FormProps) => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
-  const successEditBoard = useTranslate('alerts.successEditBoard');
-  const errorEditBoard = useTranslate('alerts.errorEditBoard');
-  const nameBoard = useTranslate('form.boardName');
+  const successEditBoard = useTranslate('alerts.successEditColumn');
+  const errorEditBoard = useTranslate('alerts.errorEditColumn');
+  const nameBoard = useTranslate('form.columnName');
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
   const titleBoardCreateForm = useTranslate('buttons.editBoard');

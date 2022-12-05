@@ -25,13 +25,13 @@ function isCreateTaskData(
 export const AddTaskForm = ({ setNewTask, boardId, columnId }: FormProps) => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
-  const successEditBoard = useTranslate('alerts.successEditBoard');
-  const errorEditBoard = useTranslate('alerts.errorEditBoard');
-  const nameBoard = useTranslate('form.boardName');
+  const successEditBoard = useTranslate('alerts.successCreateTask');
+  const errorEditBoard = useTranslate('alerts.errorCreateTask');
+  const nameBoard = useTranslate('form.taskName');
   const descriptionBoard = useTranslate('form.boardDescriptoon');
   const submitBoardRequest = useTranslate('buttons.submit');
   const closeBoardCreateForm = useTranslate('buttons.close');
-  const titleBoardCreateForm = useTranslate('buttons.editBoard');
+  const titleBoardCreateForm = useTranslate('buttons.newTask');
   // const valueInputTaskCard = useAppSelector((state) => state.task.taskMain);
   // const value = valueInputTaskCard?.find((task) => task.id === id);
   const user = useAppSelector((state) => state.user.user);

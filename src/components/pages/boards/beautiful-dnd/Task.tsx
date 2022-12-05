@@ -5,14 +5,14 @@ import { TaskDataResponse } from 'services/taskServiceTypes';
 import { BsTrash } from 'react-icons/bs';
 import { TfiPencil } from 'react-icons/tfi';
 import ListAllUserFromTask from '../ListAllUserFromTask';
-import { useAppDispatch, useAppSelector } from 'store/store';
+import { useAppDispatch } from 'store/store';
 import { Typography } from '@mui/material';
 import { updateTaskThunk } from 'store/thunks/taskThunk';
 import { useParams } from 'react-router-dom';
 import { User } from 'services/userServiceTypes';
 import { getUserById } from 'services/userService';
 import { ConfirmTaskRemoval } from '../boardForms/ConfirmTaskRemoval';
-import { addConfirmDeleteTaskFormThunk } from 'store/thunks/formThunk';
+import { EditTaskName } from '../boardForms/EditTaskName';
 import { TaskDescription } from './TaskDescription';
 
 type TaskProps = {
@@ -29,7 +29,8 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
   const [selectedAsigneeId, setSelectedAsigneeId] = useState('');
   const [asignee, setAsignee] = useState<User | null>(null);
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
-  // console.log(taskDescription);
+  const [isEditModalOpened, setIsEditModalOpened] = useState(false);
+
   const taskData = {
     title: task.title,
     order: task.order,
@@ -50,7 +51,9 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
     }
   }, [asigneeId]);
 
-  const handleEdit = () => {};
+  const handleEdit = () => {
+    setIsEditModalOpened(true);
+  };
 
   const hendleDeleteModalOpen = () => {
     setIsDeleteModalOpened(true);
@@ -69,8 +72,8 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
             {...provided.dragHandleProps}
             ref={provided.innerRef}
           >
-            <div className={styles.content_wrapper} onClick={hendleTaskDescription}>
-              {task.title}
+            <div className={styles.content_wrapper}>
+              <span onClick={hendleTaskDescription}>{task.title}</span>
               <div className={styles.button_wrapper}>
                 <button className={styles.taskButton} onClick={handleEdit}>
                   {<TfiPencil />}
@@ -81,6 +84,7 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
                 <ListAllUserFromTask setSelectedAsigneeId={setSelectedAsigneeId} />
               </div>
             </div>
+
             {isDeleteModalOpened ? (
               <ConfirmTaskRemoval
                 boardId={boardId}
@@ -99,6 +103,16 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
             <div>
               <Typography>{asignee?.name}</Typography>
             </div>
+            {isEditModalOpened ? (
+              <EditTaskName
+                setIsEditModalOpened={setIsEditModalOpened}
+                boardId={boardId}
+                columnId={columnId}
+                taskId={taskId}
+                taskData={taskData}
+                asigneeId={asigneeId}
+              />
+            ) : null}
           </div>
         )}
       </Draggable>

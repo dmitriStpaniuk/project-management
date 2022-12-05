@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Button, Paper, Typography } from '@mui/material';
 import { useTranslate } from 'components/languageContext/languageContext';
-import { useAlerts } from 'components/SnackbarPanel';
-import { useAppDispatch, useAppSelector } from 'store/store';
-import styles from './../../login/Login.module.scss';
-import { deleteColumnByIdThunk } from 'store/thunks/columnThunk';
+import styles from './Task.module.scss';
 import { TaskDataResponse } from 'services/taskServiceTypes';
+import { useAppSelector } from 'store/store';
 type TaskProps = {
   task: TaskDataResponse;
   asigneeId: string | undefined;
@@ -15,45 +13,29 @@ type TaskProps = {
 export const TaskDescription = ({ task, asigneeId, setTaskDescription }: TaskProps) => {
   const users = useAppSelector((state) => state.user.allUsersList);
   const user = users?.find((user) => user.id === asigneeId);
+  const userName = useTranslate('form.name');
+  const login = useTranslate('form.login');
+  const title = useTranslate('form.taskTitle');
+  const description = useTranslate('form.boardDescriptoon');
+  const close = useTranslate('buttons.close');
   const closeTaskDescription = () => {
     setTaskDescription(false);
   };
   return (
-    <Paper
-      style={{
-        width: '50%',
-        padding: '40px 20px',
-        display: 'grid',
-        gridRowGap: '20px',
-        justifyItems: 'center',
-        position: 'absolute',
-        zIndex: 5,
-        top: '40%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-      }}
-    >
-      <Box
-        sx={{
-          width: '80%',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-        }}
-      >
+    <Box className={styles.taskDescWrapper}>
+      <Box className={styles.taskDescContent}>
         <Box>
           <Typography component="p" sx={{ textAlign: 'left' }}>
-            Title: {task.title}
-          </Typography>
-
-          <Typography component="p" sx={{ textAlign: 'left' }}>
-            Description: {task.description}
+            {title}
           </Typography>
           <Typography component="p" sx={{ textAlign: 'left' }}>
-            {user?.name}
+            {description}
           </Typography>
           <Typography component="p" sx={{ textAlign: 'left' }}>
-            {user?.login}
+            {userName}
+          </Typography>
+          <Typography component="p" sx={{ textAlign: 'left' }}>
+            {login}
           </Typography>
         </Box>
         <Box>
@@ -77,8 +59,8 @@ export const TaskDescription = ({ task, asigneeId, setTaskDescription }: TaskPro
         variant={'outlined'}
         color="error"
       >
-        Close
+        {close}
       </Button>
-    </Paper>
+    </Box>
   );
 };
