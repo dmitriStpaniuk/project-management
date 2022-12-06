@@ -50,7 +50,7 @@ export default function FormModal() {
     confirmDeleteTask ? dispatch(addConfirmDeleteTaskFormCloseThunk()) : null;
     confirmEditTask ? dispatch(addConfirmEditTaskFormCloseThunk()) : null;
     formAddTask ? dispatch(addTaskFormCloseThunk()) : null;
-    dispatch(addFormModalCloseThunk());
+    // dispatch(addFormModalCloseThunk());
   };
   return (
     <Paper

@@ -1,23 +1,21 @@
-import React, { useEffect, useCallback } from 'react';
+import React from 'react';
 import { Button, Paper, Typography } from '@mui/material';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
-import { useAppDispatch, useAppSelector } from 'store/store';
+import { useAppDispatch } from 'store/store';
 import styles from './../../login/Login.module.scss';
 import { deleteColumnByIdThunk } from 'store/thunks/columnThunk';
-import {
-  addConfirmDeleteColumnFormCloseThunk,
-  addConfirmEditColumnFormCloseThunk,
-  addFormModalCloseThunk,
-  addFormModalThunk,
-} from 'store/thunks/formThunk';
 type ConfirmProps = {
   setConfirmDeleteColumn: (e: boolean) => void;
   boardId: string;
-  id: string;
+  columnId: string;
 };
 
-export const ConfirmColumnRemoval = ({ setConfirmDeleteColumn, boardId, id }: ConfirmProps) => {
+export const ConfirmColumnRemoval = ({
+  setConfirmDeleteColumn,
+  boardId,
+  columnId,
+}: ConfirmProps) => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
   const successDeleteColumn = useTranslate('alerts.successDelateColumn');
@@ -28,17 +26,16 @@ export const ConfirmColumnRemoval = ({ setConfirmDeleteColumn, boardId, id }: Co
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
     try {
-      await dispatch(deleteColumnByIdThunk(boardId, id));
+      await dispatch(deleteColumnByIdThunk(boardId, columnId));
       addAlert({ type: 'success', message: successDeleteColumn });
     } catch {
       addAlert({ type: 'error', message: errorDeleteColumn });
     }
-    dispatch(addConfirmDeleteColumnFormCloseThunk());
+    setConfirmDeleteColumn(false);
   };
   const handleCancel = (e: React.MouseEvent) => {
     e.preventDefault();
     setConfirmDeleteColumn(false);
-    dispatch(addConfirmDeleteColumnFormCloseThunk());
   };
   return (
     <Paper
@@ -58,7 +55,6 @@ export const ConfirmColumnRemoval = ({ setConfirmDeleteColumn, boardId, id }: Co
       <Typography variant="h5" component="h5" sx={{ textAlign: 'center' }}>
         {titleDeleteForm}
       </Typography>
-
       <Button
         onClick={handleSubmit}
         className={styles.formButton}

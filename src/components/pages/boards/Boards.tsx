@@ -13,7 +13,8 @@ import { ConfirmBoardRemoval } from './boardForms/ConfirmBoardRemoval';
 
 export default function Boards() {
   const [editFormBoardId, setEditFormBoard] = useState('');
-  const [confirmDeleteId, setConfirmDeleteBoard] = useState('');
+  const [confirmDeleteId, setConfirmDeleteBoardId] = useState('');
+  const [confirmDeleteBoard, setConfirmDeleteBoard] = useState(false);
   const dispatch = useAppDispatch();
   const allBoardsList = useAppSelector((state) => state.board.allBoardsList);
   const boardMainFetching = useAppSelector((state) => state.board.isBoardMainFetching);
@@ -60,7 +61,7 @@ export default function Boards() {
                 description={board.description}
                 id={board.id}
                 setEditFormBoard={setEditFormBoard}
-                setConfirmDeleteBoard={setConfirmDeleteBoard}
+                setConfirmDeleteBoard={setConfirmDeleteBoardId}
               />
             </Link>
           ))}
@@ -77,7 +78,9 @@ export default function Boards() {
         {editFormBoardId ? (
           <EditBoardForm setEditFormBoard={setEditFormBoard} id={editFormBoardId} />
         ) : null}
-        {confirmDeleteId ? <ConfirmBoardRemoval id={confirmDeleteId} /> : null}
+        {confirmDeleteId ? (
+          <ConfirmBoardRemoval setConfirmDeleteBoard={setConfirmDeleteBoard} id={confirmDeleteId} />
+        ) : null}
       </Container>
     </div>
   );
