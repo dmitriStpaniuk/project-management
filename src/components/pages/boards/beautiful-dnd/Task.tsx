@@ -64,7 +64,6 @@ export default function Task({ task, index, taskId, columnId, asigneeId }: TaskP
     dispatch(addConfirmDeleteTaskFormThunk());
   };
   const hendleTaskDescription = (e: React.MouseEvent) => {
-    // e.preventDefault();
     setTaskDescription(true);
   };
   return (

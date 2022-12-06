@@ -11,10 +11,6 @@ import { createNewBoardThunk } from 'store/thunks/boardThunk';
 import { addBoardFormCloseThunk } from 'store/thunks/formThunk';
 import styles from './../../login/Login.module.scss';
 
-// type FormProps = {
-//   setPopupFormAddBoard: (x: boolean) => void;
-// };
-
 export const AddBoardForm = () => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
@@ -38,9 +34,7 @@ export const AddBoardForm = () => {
     try {
       await dispatch(createNewBoardThunk(data));
       addAlert({ type: 'success', message: successCreateBoard });
-      // setPopupFormAddBoard(false);
       dispatch(addBoardFormCloseThunk());
-      // navigate('/boards');
     } catch {
       addAlert({ type: 'error', message: errorCreateBoard });
     }
