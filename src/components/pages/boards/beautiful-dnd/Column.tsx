@@ -13,10 +13,10 @@ import { AddTaskForm } from '../boardForms/AddTaskForm';
 import { EditColumnForm } from '../boardForms/EditColumnForm';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import {
+  addConfirmDeleteColumnFormCloseThunk,
   addConfirmDeleteColumnFormThunk,
+  addConfirmEditColumnFormCloseThunk,
   addConfirmEditColumnFormThunk,
-  addFormModalCloseThunk,
-  addFormModalThunk,
   addTaskFormOpenThunk,
 } from 'store/thunks/formThunk';
 
@@ -30,16 +30,33 @@ export default function Column({ column, tasks, columnId, index }: ColumnProps) 
   const dispatch = useAppDispatch();
   const newTaskText = useTranslate('buttons.newTask');
   const { boardId } = useParams();
-  const [confirmDeleteColumn, setConfirmDeleteColumn] = useState(false);
   const [newTask, setNewTask] = useState('');
   const [editColumnName, setEditColumnName] = useState('');
-  const confirmDeleteCol = useAppSelector((state) => state.form.confirmDeleteColumn);
-  const confirmEdinCol = useAppSelector((state) => state.form.confirmEditColumn);
+  const [confirmEditColumn, setConfirmEditColumn] = useState(false);
+  const [confirmDeleteColumn, setConfirmDeleteColumn] = useState(false);
+  const confirmDeleteColumnInState = useAppSelector((state) => state.form.confirmDeleteColumn);
+  const confirmEditColumnInState = useAppSelector((state) => state.form.confirmEditColumn);
+  useEffect(() => {
+    confirmDeleteColumn
+      ? dispatch(addConfirmDeleteColumnFormThunk())
+      : dispatch(addConfirmDeleteColumnFormCloseThunk());
+  }, [confirmDeleteColumn]);
+  useEffect(() => {
+    !confirmDeleteColumnInState ? setConfirmDeleteColumn(false) : null;
+  }, [confirmDeleteColumnInState]);
+  useEffect(() => {
+    confirmEditColumn
+      ? dispatch(addConfirmEditColumnFormThunk())
+      : dispatch(addConfirmEditColumnFormCloseThunk());
+  }, [confirmEditColumn]);
+  useEffect(() => {
+    !confirmEditColumnInState ? setConfirmEditColumn(false) : null;
+  }, [confirmEditColumnInState]);
   const formAddTask = useAppSelector((state) => state.form.formAddTask);
   const hendleDeleteColumn = (e: React.MouseEvent) => {
     e.preventDefault();
+    e.stopPropagation();
     setConfirmDeleteColumn(true);
-    dispatch(addConfirmDeleteColumnFormThunk());
   };
 
   const handleNewTask = () => {
@@ -49,7 +66,7 @@ export default function Column({ column, tasks, columnId, index }: ColumnProps) 
 
   const handleEdit = () => {
     setEditColumnName('start');
-    dispatch(addConfirmEditColumnFormThunk());
+    setConfirmEditColumn(true);
   };
 
   return (
@@ -74,11 +91,11 @@ export default function Column({ column, tasks, columnId, index }: ColumnProps) 
                 <button className={styles.columnHeaderButton} onClick={hendleDeleteColumn}>
                   {<BsTrash />}
                 </button>
-                {confirmDeleteColumn && confirmDeleteCol ? (
+                {confirmDeleteColumn ? (
                   <ConfirmColumnRemoval
-                    setConfirmDeleteColumn={setConfirmDeleteColumn}
                     boardId={boardId as string}
-                    id={columnId}
+                    setConfirmDeleteColumn={setConfirmDeleteColumn}
+                    columnId={column.id}
                   />
                 ) : null}
               </div>
@@ -118,9 +135,10 @@ export default function Column({ column, tasks, columnId, index }: ColumnProps) 
                 {newTask && formAddTask ? (
                   <AddTaskForm setNewTask={setNewTask} boardId={boardId} columnId={columnId} />
                 ) : null}
-                {editColumnName && confirmEdinCol ? (
+                {confirmEditColumn ? (
                   <EditColumnForm
                     setEditColumnName={setEditColumnName}
+                    setConfirmEditColumn={setConfirmEditColumn}
                     boardId={boardId}
                     columnId={columnId}
                     order={column.order}

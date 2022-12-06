@@ -11,13 +11,20 @@ import { CreateColumnData } from 'services/columnServiceTypes';
 import { addConfirmEditColumnFormCloseThunk } from 'store/thunks/formThunk';
 
 type FormProps = {
+  setConfirmEditColumn: (e: boolean) => void;
   setEditColumnName: (x: string) => void;
   boardId?: string;
   columnId: string;
   order?: number;
 };
 
-export const EditColumnForm = ({ setEditColumnName, boardId, columnId, order }: FormProps) => {
+export const EditColumnForm = ({
+  setConfirmEditColumn,
+  setEditColumnName,
+  boardId,
+  columnId,
+  order,
+}: FormProps) => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
   const successEditBoard = useTranslate('alerts.successEditColumn');
@@ -47,7 +54,7 @@ export const EditColumnForm = ({ setEditColumnName, boardId, columnId, order }: 
     } catch {
       addAlert({ type: 'error', message: errorEditBoard });
     }
-    dispatch(addConfirmEditColumnFormCloseThunk());
+    setConfirmEditColumn(false);
   };
 
   return (
@@ -83,7 +90,7 @@ export const EditColumnForm = ({ setEditColumnName, boardId, columnId, order }: 
       <Button
         className={styles.formButton}
         onClick={() => {
-          setEditColumnName(''), dispatch(addConfirmEditColumnFormCloseThunk());
+          setEditColumnName(''), setConfirmEditColumn(false);
         }}
         variant={'outlined'}
         color="error"

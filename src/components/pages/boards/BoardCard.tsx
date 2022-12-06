@@ -1,8 +1,9 @@
 import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import { useTranslate } from 'components/languageContext/languageContext';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/store';
 import {
+  addConfirmDeleteBoardFormCloseThunk,
   addConfirmDeleteBoardFormThunk,
   addConfirmEditBoardFormThunk,
   addFormModalThunk,
@@ -19,22 +20,26 @@ type BoardCardProps = {
 
 export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCardProps) => {
   const dispatch = useAppDispatch();
-
   const editButton = useTranslate('buttons.editBoard');
   const deleteButton = useTranslate('buttons.deleteBoard');
-  // const [confirmDelete, setConfirmDeleteBoard] = useState(false);
-  const confirmDeleteBoard = useAppSelector((state) => state.form.confirmDeleteBoard);
+  const [confirmDeleteBoard, setConfirmDeleteBoard] = useState(false);
+  const confirmDeleteBoardInState = useAppSelector((state) => state.form.confirmDeleteBoard);
+  useEffect(() => {
+    confirmDeleteBoard
+      ? dispatch(addConfirmDeleteBoardFormThunk())
+      : dispatch(addConfirmDeleteBoardFormCloseThunk());
+  }, [confirmDeleteBoard]);
+  useEffect(() => {
+    !confirmDeleteBoardInState ? setConfirmDeleteBoard(false) : null;
+  }, [confirmDeleteBoardInState]);
   const handleEdit = (e: React.MouseEvent) => {
     e.preventDefault();
     setEditFormBoard(id);
     dispatch(addConfirmEditBoardFormThunk());
-    // dispatch(addFormModalThunk());
   };
   const handleDelete = async (e: React.MouseEvent) => {
     e.preventDefault();
-    // setConfirmDeleteBoard(id);
-    dispatch(addConfirmDeleteBoardFormThunk());
-    // dispatch(addFormModalThunk());
+    setConfirmDeleteBoard(true);
   };
   const card = (
     <>
@@ -58,7 +63,6 @@ export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCar
           {deleteButton}
         </Button>
       </CardActions>
-      {/* {confirmDeleteBoard ? <ConfirmBoardRemoval id={id} /> : null} */}
     </>
   );
   return (
@@ -66,7 +70,9 @@ export const BoardCard = ({ title, description, id, setEditFormBoard }: BoardCar
       <Box sx={{ minWidth: 275 }}>
         <Card variant="outlined">{card}</Card>
       </Box>
-      {confirmDeleteBoard ? <ConfirmBoardRemoval id={id} /> : null}
+      {confirmDeleteBoard ? (
+        <ConfirmBoardRemoval setConfirmDeleteBoard={setConfirmDeleteBoard} id={id} />
+      ) : null}
     </>
   );
 };
