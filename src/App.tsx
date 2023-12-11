@@ -13,7 +13,7 @@ import { DecodedToken } from 'services/userServiceTypes';
 import { PrivateRoute } from './routes/PrivateRoute';
 import { getCurrentUserByIdThunk } from 'store/thunks/userThunk';
 import Boards from 'components/pages/boards/Boards';
-import Users from 'components/pages/users/Users';
+import Users from 'components/pages/users/users';
 import { PublicRoute } from 'routes/PublicRoute';
 import Board from 'components/pages/boards/Board';
 import { userSlice } from 'store/slices/userSlice';
