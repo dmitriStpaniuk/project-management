@@ -11,11 +11,10 @@ import { CreateColumnData } from 'services/columnServiceTypes';
 import { addColumnFormCloseThunk } from 'store/thunks/formThunk';
 
 type FormProps = {
-  setNewColumn: (x: boolean) => void;
   id?: string;
 };
 
-const CreateNewColumnForm = ({ setNewColumn, id }: FormProps) => {
+const CreateNewColumnForm = ({ id }: FormProps) => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
   const successEditBoard = useTranslate('alerts.successCreateColumn');
@@ -39,7 +38,6 @@ const CreateNewColumnForm = ({ setNewColumn, id }: FormProps) => {
     try {
       if (id) await dispatch(createNewColumnThunk(id, data));
       addAlert({ type: 'success', message: successEditBoard });
-      setNewColumn(false);
     } catch {
       addAlert({ type: 'error', message: errorEditBoard });
     }
@@ -80,7 +78,7 @@ const CreateNewColumnForm = ({ setNewColumn, id }: FormProps) => {
       <Button
         className={styles.formButton}
         onClick={() => {
-          setNewColumn(false), dispatch(addColumnFormCloseThunk());
+          dispatch(addColumnFormCloseThunk());
         }}
         variant={'outlined'}
         color="error"

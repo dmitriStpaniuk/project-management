@@ -1,14 +1,13 @@
 .wrapper {
   border: solid 2px;
   border-radius: 3px;
-  height: fit-content;
+  max-height: 65vh;
   background-color: #faea73;
   display: flex;
   flex-direction: column;
-  justify-content: end;
   gap: 0.8rem;
   min-width: 250px;
-  margin-bottom: 1rem;
+  overflow: hidden
 }
 .columnDraggingOver {
   border: solid 2px;
@@ -30,16 +29,14 @@
   margin: 0;
 }
 .tasksWrapper {
-  // position: relative;
-  // max-height: 50vh;
+  overflow: auto;
 }
 .taskList {
   flex-direction: column;
   display: flex;
-  // position: absolute;
   gap: 0.8rem;
   min-height: 35px;
-  // max-height: 50vh;
+  margin-right: .5rem;
 }
 .dragactive {
   background-color: rgb(247, 206, 220);
@@ -48,6 +45,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  overflow-y: auto;
 }
 .nodragactive {
   padding: 8px;
@@ -55,6 +53,7 @@
   flex-flow: column nowrap;
   justify-content: end;
   gap: 0.8rem;
+  overflow-y: auto;
 }
 .columnHeaderContext {
   display: flex;

@@ -1,20 +1,17 @@
 import React from 'react';
 import { Button, Paper, Typography } from '@mui/material';
-import { FormBoardInputText } from 'components/FormBoardInputText';
 import { useTranslate } from 'components/languageContext/languageContext';
 import { useAlerts } from 'components/SnackbarPanel';
-import { FormProvider, useForm } from 'react-hook-form';
-import { CreateBoardData } from 'services/boardServiceTypes';
-import { useAppDispatch, useAppSelector } from 'store/store';
-import { deleteBoardByIdThunk, updateBoardThunk } from 'store/thunks/boardThunk';
+import { useAppDispatch } from 'store/store';
+import { deleteBoardByIdThunk } from 'store/thunks/boardThunk';
 import styles from './../../login/Login.module.scss';
 import { addConfirmDeleteBoardFormCloseThunk } from 'store/thunks/formThunk';
 type ConfirmProps = {
-  // setConfirmDeleteBoard: (e: boolean) => void;
+  setConfirmDeleteBoard: (e: boolean) => void;
   id: string;
 };
 
-export const ConfirmBoardRemoval = ({ id }: ConfirmProps) => {
+export const ConfirmBoardRemoval = ({ setConfirmDeleteBoard, id }: ConfirmProps) => {
   const addAlert = useAlerts();
   const dispatch = useAppDispatch();
   const successDeleteBoard = useTranslate('alerts.successDeleteBoard');
@@ -25,19 +22,17 @@ export const ConfirmBoardRemoval = ({ id }: ConfirmProps) => {
 
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
-    dispatch(addConfirmDeleteBoardFormCloseThunk());
     try {
       await dispatch(deleteBoardByIdThunk(id));
       addAlert({ type: 'success', message: successDeleteBoard });
-      // setConfirmDeleteBoard('');
     } catch {
       addAlert({ type: 'error', message: errorDeleteBoard });
     }
+    setConfirmDeleteBoard(false);
   };
   const handleCancel = (e: React.MouseEvent) => {
-    dispatch(addConfirmDeleteBoardFormCloseThunk());
+    setConfirmDeleteBoard(false);
     e.preventDefault();
-    // setConfirmDeleteBoard(false);
   };
   return (
     <Paper

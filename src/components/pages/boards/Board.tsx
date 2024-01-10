@@ -18,7 +18,6 @@ import { addColumnFormOpenThunk } from 'store/thunks/formThunk';
 const Board = () => {
   const dispatch = useAppDispatch();
   const { boardId } = useParams();
-  const [newColumn, setNewColumn] = useState(false);
   const formAddColumn = useAppSelector((state) => state.form.formAddColumn);
   const board = useAppSelector((state) => state.board.boardData);
   const columns = useAppSelector((state) => state.column);
@@ -31,7 +30,7 @@ const Board = () => {
       }
     }
     fetchData();
-  }, [boardId, newColumn, columns, tasks]);
+  }, [boardId, formAddColumn, columns, tasks]);
   const newColumnText = useTranslate('buttons.newColumn');
 
   useEffect(() => {
@@ -96,7 +95,6 @@ const Board = () => {
     if (boardId) dispatch(updateTaskThunk(boardId, start.id, draggableTask.id, taskData));
   };
   const handleNewColumn = () => {
-    setNewColumn(true);
     dispatch(addColumnFormOpenThunk());
   };
 
@@ -142,9 +140,7 @@ const Board = () => {
                       +
                     </button>
                   </div>
-                  {newColumn && formAddColumn ? (
-                    <CreateNewColumnForm setNewColumn={setNewColumn} id={boardId} />
-                  ) : null}
+                  {formAddColumn ? <CreateNewColumnForm id={boardId} /> : null}
                 </div>
                 {provided.placeholder}
               </div>

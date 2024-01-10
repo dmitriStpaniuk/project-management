@@ -6,10 +6,7 @@ import { useAlerts } from 'components/SnackbarPanel';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useAppDispatch } from 'store/store';
 import styles from './../../login/Login.module.scss';
-import {
-  addConfirmEditBoardFormCloseThunk,
-  addConfirmEditTaskFormCloseThunk,
-} from 'store/thunks/formThunk';
+import { addConfirmEditTaskFormCloseThunk } from 'store/thunks/formThunk';
 import { updateTaskThunk } from 'store/thunks/taskThunk';
 import { UpdateTaskData } from 'services/taskServiceTypes';
 import { CreateBoardData } from 'services/boardServiceTypes';
@@ -63,7 +60,6 @@ export const EditTaskName = ({
       columnId: taskData.columnId,
     };
 
-    // dispatch(addConfirmEditBoardFormCloseThunk());
     try {
       await dispatch(updateTaskThunk(boardId, columnId, taskId, data));
       addAlert({ type: 'success', message: successEditBoard });
